@@ -15,9 +15,7 @@ FILE *file;
 int c;
 char path[1075];
 
-FILE * req_file;
-FILE * resp_file;
-FILE * reg_file;
+
 
 /*void main( int argc, char *argv[]){
 	char local[]= "/home/EC11/ra116006/meu-webspace";
@@ -41,7 +39,7 @@ FILE * reg_file;
 }*/
 
 
-int acesso(char *local, char *recurso, char *metodo){
+int acesso(char *local, char *recurso, char *metodo, FILE * resp_file){
 	struct stat statarq;
 	int fd;
 	DIR *dir;
@@ -61,14 +59,14 @@ int acesso(char *local, char *recurso, char *metodo){
 	//caso não ache o recurso
 	
 	if (stat(path, &statarq) == -1){
-		trataMetodo(metodo, 404, fd);
+		trataMetodo(metodo, 404, fd, resp_file);
 		return 404;
 	}
 	else{
 		//printf("access %d",access(path, R_OK));
 		//caso o recurso não dê permissão de acesso
 		if(access(path, R_OK) != 0){
-			trataMetodo(metodo, 403, fd);
+			trataMetodo(metodo, 403, fd, resp_file);
 			return 403;
 		}
 		//recurso existe e tem permissão de acesso
@@ -79,7 +77,7 @@ int acesso(char *local, char *recurso, char *metodo){
 			if((statarq.st_mode & S_IFMT)==S_IFREG){
 				//Abre e imprime o arquivo
 				fd = open(path, O_RDONLY, 0600);
-				trataMetodo(metodo, 200, fd);
+				trataMetodo(metodo, 200, fd, resp_file);
 				write(fd,path, sizeof(path));
 			}
 			else{
@@ -87,7 +85,7 @@ int acesso(char *local, char *recurso, char *metodo){
 				if((statarq.st_mode & S_IFMT)==S_IFDIR){
 					//caso o diretório não tenha permissão de acesso
 					if(access(path, X_OK) != 0) {
-					  trataMetodo(metodo,403, fd);
+					  trataMetodo(metodo,403, fd, resp_file);
 					  return 403;
 					} else {
 						struct dirent *newDir;
@@ -104,14 +102,14 @@ int acesso(char *local, char *recurso, char *metodo){
 								strcat(path, recurso);
 								//o arquivo index foi encontrado, mas não tem permissao
 								if(access(path, R_OK) != 0){
-								  trataMetodo(metodo, 403, fd);
+								  trataMetodo(metodo, 403, fd, resp_file);
 								  return 403;
 								}
 								else{
 									fd = open(path, O_RDONLY, 0600);
 									//write(fd,"", 50);
 									write(fd,path, sizeof(path));
-									trataMetodo(metodo, 200, fd);
+									trataMetodo(metodo, 200, fd, resp_file);
 									return 0;
 								}
 								break;
@@ -122,21 +120,21 @@ int acesso(char *local, char *recurso, char *metodo){
 								strcat(path, recurso);
 								//o arquivo index foi encontrado, mas não tem permissao
 								if(access(path, R_OK) != 0){
-									trataMetodo(metodo, 403,fd);
+									trataMetodo(metodo, 403,fd, resp_file);
 									return 403;
 								}
 								else{
 									fd = open(path, O_RDONLY, 0600);
 									//write(fd,"", 50);
 									write(fd,path, sizeof(path));
-									trataMetodo(metodo, 200, fd);
+									trataMetodo(metodo, 200, fd, resp_file);
 									return 0;
 								}
 								break;
 							}
 						}
 						//caso não tenha achado nenhum arquivo index ou welcome
-						trataMetodo(metodo, 404, fd);
+						trataMetodo(metodo, 404, fd, resp_file);
 						return 404;
 					}
 				}
@@ -148,21 +146,22 @@ int acesso(char *local, char *recurso, char *metodo){
 
 void trataMetodo(char *metodo, int result, int fd){
  //printf("%d\n", result);
+	
   if(strcmp(metodo, "GET")==0){
-      trataGET(result, fd);
+      trataGET(result, fd, resp_file);
   }
   else if(strcmp(metodo, "HEAD")==0){
-      trataHEAD(result, fd);
+      trataHEAD(result, fd, resp_file);
   }
   else if(strcmp(metodo, "TRACE")==0){
-      trataTRACE();
+      trataTRACE(resp_file);
   }
   else if(strcmp(metodo, "OPTIONS")==0){
-      trataOPTIONS();
+      trataOPTIONS(resp_file);
     }
 }
 
-void trataGET(int result, int fd){
+void trataGET(int result, int fd, FILE * resp_file){
   char resultado[]="                                 ";
   char resposta[] = "HTTP 1/1 ";
   time_t rawtime;
@@ -202,12 +201,12 @@ void trataGET(int result, int fd){
     }
   }
   if(result==404)
-    imprime404();
+    imprime404(resp_file);
   if(result==403)
-    imprime403();
+    imprime403(resp_file);
 }
 
-void trataHEAD(int result, int fd){
+void trataHEAD(int result, int fd, FILE * resp_file){
   char resultado[]="                                 ";
   char resposta[] = "HTTP 1/1 ";
   time_t rawtime;
@@ -242,7 +241,7 @@ void trataHEAD(int result, int fd){
   }
 }
 
-void trataTRACE(){
+void trataTRACE(FILE * resp_file){
   char resultado[]="                                 ";
   char resposta[] = "HTTP /1.1 ";
   time_t rawtime;
@@ -250,16 +249,16 @@ void trataTRACE(){
   struct tm * timeinfo;
   strcpy(resultado,"200 OK");
   strcat(resposta, resultado);
-  printf("%s\n", resposta);
+  fprintf (resp_file, "%s\n", resposta);
   time ( &rawtime );
   timeinfo = localtime ( &rawtime );
-  printf ("Date: %s", asctime (timeinfo) );
-  printf("Server: Servidor HTTP ver 0.1 dos Descolados\n");
-  printf("Connection: PEGAR DO PARSER!!!!\n");
-  printf("Content-Type: message/http\n");
+  fprintf(resp_file, "Date: %s", asctime (timeinfo) );
+  fprintf(resp_file, "Server: Servidor HTTP ver 0.1 dos Descolados\n");
+  fprintf(resp_file, "Connection: PEGAR DO PARSER!!!!\n");
+  fprintf(resp_file, "Content-Type: message/http\n");
 }
 
-void trataOPTIONS(){
+void trataOPTIONS(FILE * resp_file){
   char resultado[]="                                 ";
   char resposta[] = "HTTP /1.1 ";
   time_t rawtime;
@@ -277,10 +276,10 @@ void trataOPTIONS(){
   printf("Content-Lenght: 0\n", fileStat.st_size);
 }
 
-void imprime404(){
+void imprime404(FILE * resp_file){
   fprintf(resp_file, "<html><<head>    <title>Página não encontrada</title>    </head><body>  <h1>ERROR 404</h1>  <br>Essa página não existe<br>");
 }
 
-void imprime403(){
+void imprime403(FILE * resp_file){
   printf(resp_file, "<html><<head>    <title>Conteúdo Proibido</title>    </head><body>  <h1>ERROR 403</h1>  <br>Você não tem pemissão de acesso a esse conteúdo<br>");
 }
