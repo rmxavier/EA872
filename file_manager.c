@@ -147,12 +147,18 @@ int acesso(char *local, char *recurso, char *metodo){
 }
 
 void trataMetodo(char *metodo, int result, int fd){
- printf("%d\n", result);
+ //printf("%d\n", result);
   if(strcmp(metodo, "GET")==0){
       trataGET(result, fd);
   }
-    else if(strcmp(metodo, "HEAD")==0){
+  else if(strcmp(metodo, "HEAD")==0){
       trataHEAD(result, fd);
+  }
+  else if(strcmp(metodo, "TRACE")==0){
+      trataTRACE();
+  }
+  else if(strcmp(metodo, "OPTIONS")==0){
+      trataOPTIONS();
     }
 }
 
@@ -234,6 +240,41 @@ void trataHEAD(int result, int fd){
     fprintf(resp_file, "Content-Lenght: %zd\n", fileStat.st_size);
     fprintf(resp_file, "Content-Type: text/html\n");
   }
+}
+
+void trataTRACE(){
+  char resultado[]="                                 ";
+  char resposta[] = "HTTP /1.1 ";
+  time_t rawtime;
+  time_t lastmod = fileStat.st_mtime; 
+  struct tm * timeinfo;
+  strcpy(resultado,"200 OK");
+  strcat(resposta, resultado);
+  printf("%s\n", resposta);
+  time ( &rawtime );
+  timeinfo = localtime ( &rawtime );
+  printf ("Date: %s", asctime (timeinfo) );
+  printf("Server: Servidor HTTP ver 0.1 dos Descolados\n");
+  printf("Connection: PEGAR DO PARSER!!!!\n");
+  printf("Content-Type: message/http\n");
+}
+
+void trataOPTIONS(){
+  char resultado[]="                                 ";
+  char resposta[] = "HTTP /1.1 ";
+  time_t rawtime;
+  time_t lastmod = fileStat.st_mtime; 
+  struct tm * timeinfo;
+  strcpy(resultado,"200 OK");
+  strcat(resposta, resultado);
+  printf("%s\n", resposta);
+  time ( &rawtime );
+  timeinfo = localtime ( &rawtime );
+  printf ("Date: %s", asctime (timeinfo) );
+  printf("Server: Servidor HTTP ver 0.1 dos Descolados\n");
+  printf("Connection: close\n");
+  printf("Allow: GET, HEAD, TRACE, OPTIONS\n");
+  printf("Content-Lenght: 0\n", fileStat.st_size);
 }
 
 void imprime404(){
