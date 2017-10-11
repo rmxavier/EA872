@@ -175,7 +175,7 @@ int main(int argc, char** argv)
 	/* Funcao para obter resultado do parser */
 	result = get_parsed_request();
 	
-	error = acesso("/home/EE09/ra094349/Documentos/meu-webspace", result->params->param, result->params->next->param, resp_file);
+	error = acesso("/home/EE09/ra094349/Documentos/meu-webspace", result->params->param, result->command, resp_file);
 
 	/* Fechando o arquivo... */
 	close(req_file);

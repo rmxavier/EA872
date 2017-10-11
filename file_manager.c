@@ -15,6 +15,8 @@ FILE *file;
 int c;
 char path[1075];
 
+FILE * req_file;
+FILE * reg_file;
 
 
 /*void main( int argc, char *argv[]){
@@ -53,6 +55,8 @@ int acesso(char *local, char *recurso, char *metodo, FILE * resp_file){
 	strcat(path, recurso);  //cooloca o nome do recurso depois do path
 	
 	printf("[FILE_MANAGER] Recurso a ser localizado: %s\n", path);
+	printf("[FILE_MANAGER] local: %s\n", local);
+	printf("[FILE_MANAGER] metodo: %s\n", metodo);
 	//printf("\no path ta aqui: %s\n", path);
 
 	/*****Trecho para buscar o recurso dentro do path passado*****/
@@ -144,8 +148,10 @@ int acesso(char *local, char *recurso, char *metodo, FILE * resp_file){
 	}
 }
 
-void trataMetodo(char *metodo, int result, int fd){
- //printf("%d\n", result);
+void trataMetodo(char *metodo, int result, int fd, FILE * resp_file){
+	printf("[FILE_MANAGER] result: %d\n", result);
+	printf("[FILE_MANAGER] metodo: %s\n", metodo);
+
 	
   if(strcmp(metodo, "GET")==0){
       trataGET(result, fd, resp_file);
@@ -249,13 +255,26 @@ void trataTRACE(FILE * resp_file){
   struct tm * timeinfo;
   strcpy(resultado,"200 OK");
   strcat(resposta, resultado);
+  
+  printf("FUCK FUCK FUCK");
+  
   fprintf (resp_file, "%s\n", resposta);
+  fprintf (reg_file, "%s\n", resposta);
+
   time ( &rawtime );
   timeinfo = localtime ( &rawtime );
   fprintf(resp_file, "Date: %s", asctime (timeinfo) );
   fprintf(resp_file, "Server: Servidor HTTP ver 0.1 dos Descolados\n");
   fprintf(resp_file, "Connection: PEGAR DO PARSER!!!!\n");
   fprintf(resp_file, "Content-Type: message/http\n");
+  
+  fprintf(reg_file, "Date: %s", asctime (timeinfo) );
+  fprintf(reg_file, "Server: Servidor HTTP ver 0.1 dos Descolados\n");
+  fprintf(reg_file, "Connection: PEGAR DO PARSER!!!!\n");
+  fprintf(reg_file, "Content-Type: message/http\n");
+  
+  printf(">>>>FUCK FUCK FUCK");
+
 }
 
 void trataOPTIONS(FILE * resp_file){
