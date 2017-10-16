@@ -33,11 +33,9 @@ FILE * reg_file;
 	
 	printf("Escreva o rescurso:");
 	scanf("%s", recurso);
-
 	int result = acesso(local, recurso, metodo);
 	printf("\n%d", result);
 	return;
-
 }*/
 
 
@@ -153,18 +151,20 @@ void trataMetodo(char *metodo, int result, int fd, FILE * resp_file){
 	printf("[FILE_MANAGER] metodo: %s\n", metodo);
 
 	
-  if(strcmp(metodo, "GET")==0){
-      trataGET(result, fd, resp_file);
-  }
-  else if(strcmp(metodo, "HEAD")==0){
-      trataHEAD(result, fd, resp_file);
-  }
-  else if(strcmp(metodo, "TRACE")==0){
-      trataTRACE(resp_file);
-  }
-  else if(strcmp(metodo, "OPTIONS")==0){
-      trataOPTIONS(resp_file);
-    }
+	if(strcmp(metodo, "GET")==0){
+	    trataGET(result, fd, resp_file);
+	}
+	else if(strcmp(metodo, "HEAD")==0){
+	    trataHEAD(result, fd, resp_file);
+	}
+	else if(strcmp(metodo, "TRACE")==0){
+	    trataTRACE(resp_file);
+	}
+	else if(strcmp(metodo, "OPTIONS")==0){
+	    trataOPTIONS(resp_file);
+	}
+	else{
+		erro(501, metodo);
 }
 
 void trataGET(int result, int fd, FILE * resp_file){
@@ -301,4 +301,10 @@ void imprime404(FILE * resp_file){
 
 void imprime403(FILE * resp_file){
   printf(resp_file, "<html><<head>    <title>Conteúdo Proibido</title>    </head><body>  <h1>ERROR 403</h1>  <br>Você não tem pemissão de acesso a esse conteúdo<br>");
+}
+
+void erro(int error, char *metodo){
+	if(error==501){
+		printf(resp_file, "<html><<head>    <title>501 Metodo não implementado</title>    </head><body>  <h1>ERROR 501</h1>  <br>O método %s que você quer utilizar não existe nesse ser vidor<br>");
+	}
 }
