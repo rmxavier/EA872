@@ -1,5 +1,5 @@
 
-TRACE: /,HTTP/1.1
+GET: /,HTTP/1.1
 Host: localhost:8081
 User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
@@ -8,42 +8,12 @@ Accept Encoding: gzip, deflate
 Connection: keep-alive
 Upgrade Insecure Requests: 1
 
-TRACE: /,HTTP/1.1
-Host: localhost:8081
-User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept Language: pt-BR,pt;q=0.8,en-US;q=0.5,en;q=0.3
-Accept Encoding: gzip, deflate
-Connection: keep-alive
-Upgrade Insecure Requests: 1
-
-TRACE: /,HTTP/1.1
-Host: localhost:8081
-User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept Language: pt-BR,pt;q=0.8,en-US;q=0.5,en;q=0.3
-Accept Encoding: gzip, deflate
-Connection: keep-alive
-Upgrade Insecure Requests: 1
-
-TRACE: /,HTTP/1.1
-Host: localhost:8081
-User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept Language: pt-BR,pt;q=0.8,en-US;q=0.5,en;q=0.3
-Accept Encoding: gzip, deflate
-Connection: keep-alive
-Upgrade Insecure Requests: 1
-
-TRACE: /,HTTP/1.1
-Host: localhost:8081
-User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept Language: pt-BR,pt;q=0.8,en-US;q=0.5,en;q=0.3
-Accept Encoding: gzip, deflate
-Connection: keep-alive
-Upgrade Insecure Requests: 1
-
+Date: Sat Oct 21 16:04:14 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: PEGAR DO PARSER!!!!
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
 
 GET: /,HTTP/1.1
 Host: localhost:8081
@@ -54,3 +24,57 @@ Accept Encoding: gzip, deflate
 Connection: keep-alive
 Upgrade Insecure Requests: 1
 
+Date: Sat Oct 21 16:04:15 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: PEGAR DO PARSER!!!!
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+GET: /,HTTP/1.1
+Host: localhost:8081
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept Language: pt-BR,pt;q=0.8,en-US;q=0.5,en;q=0.3
+Accept Encoding: gzip, deflate
+Connection: keep-alive
+Upgrade Insecure Requests: 1
+
+Date: Sat Oct 21 16:04:16 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: PEGAR DO PARSER!!!!
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+GET: /,HTTP/1.1
+Host: localhost:8081
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept Language: pt-BR,pt;q=0.8,en-US;q=0.5,en;q=0.3
+Accept Encoding: gzip, deflate
+Connection: keep-alive
+Upgrade Insecure Requests: 1
+
+Date: Sat Oct 21 16:07:28 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: PEGAR DO PARSER!!!!
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+GET: /,HTTP/1.1
+Host: localhost:8081
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept Language: pt-BR,pt;q=0.8,en-US;q=0.5,en;q=0.3
+Accept Encoding: gzip, deflate
+Connection: keep-alive
+Upgrade Insecure Requests: 1
+
+Date: Sat Oct 21 16:07:57 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: PEGAR DO PARSER!!!!
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html

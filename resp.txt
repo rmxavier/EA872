@@ -1,5 +1,24 @@
-Date: Sat Oct 21 14:07:03 2017
-Server: Servidor HTTP ver 0.1 dos DescoladosConnection: PEGAR DO PARSER!!!!
+Date: Sat Oct 21 16:07:57 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: PEGAR DO PARSER!!!!
 Last-Modified: Wed Dec 31 21:00:00 1969
 Content-Lenght: 193
 Content-Type: text/html
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>HOME WebSpace</title>
+</head>
+<body>
+Essa é a home do Websapece da diciplina EA872
+<br>
+<br>
+Autores:
+<br>
+Rafael Xavier
+<br>
+Alisson Poli
+
+</body>
+</html>
