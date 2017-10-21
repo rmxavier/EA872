@@ -44,6 +44,7 @@ Accept Encoding: gzip, deflate
 Connection: keep-alive
 Upgrade Insecure Requests: 1
 
+<<<<<<< Updated upstream
 
 GET: /,HTTP/1.1
 Host: localhost:8081
@@ -54,3 +55,5 @@ Accept Encoding: gzip, deflate
 Connection: keep-alive
 Upgrade Insecure Requests: 1
 
+=======
+>>>>>>> Stashed changes
