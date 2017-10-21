@@ -165,6 +165,7 @@ void trataMetodo(char *metodo, int result, int fd, FILE * resp_file){
 	}
 	else{
 		erro(501, metodo);
+	}
 }
 
 void trataGET(int result, int fd, FILE * resp_file){
@@ -305,6 +306,6 @@ void imprime403(FILE * resp_file){
 
 void erro(int error, char *metodo){
 	if(error==501){
-		printf(resp_file, "<html><<head>    <title>501 Metodo não implementado</title>    </head><body>  <h1>ERROR 501</h1>  <br>O método %s que você quer utilizar não existe nesse ser vidor<br>");
+		printf(resp_file, "<html><<head>    <title>501 Metodo não implementado</title>    </head><body>  <h1>ERROR 501</h1>  <br>O método %s que você quer utilizar não existe nesse ser vidor<br>", metodo);
 	}
 }

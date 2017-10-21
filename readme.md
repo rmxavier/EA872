@@ -1,8 +1,3 @@
-lex parser.l
+export WEBSPACE=/home/EE09/ra094349/Documentos/meu-webspace
 
-yacc -d parser.y
-
-gcc -w -o server server.c y.tab.c file_manager.c lex.yy.c -ly -lfl
-
-./server /home/EE09/ra094349/Documentos/EA872/modulo09/ reqTrace.txt resp.txt reg.txt
-
+./build.sh / reqGet.txt resp.txt reg.txt

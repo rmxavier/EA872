@@ -127,17 +127,18 @@ int main(int argc, char** argv)
 {
 	int error;
 	struct command_list *result = NULL;
-	char *path = argv[1];
-	char *arq_req = argv[2];
-	char *arq_res = argv[3];
-	char *arq_reg = argv[4];
+	char *webspace = argv[1];
+	char *path = argv[2];
+	char *arq_req = argv[3];
+	char *arq_res = argv[4];
+	char *arq_reg = argv[5];
 	
 	int r , i , j , sz ;
 	char *req;
 
 	printf("\nStarting program to call the parser and process a request...\n\n");
 		
-	printf("Argumentos:\n  (1) %s\n  (2) %s\n  (3) %s\n\n", arq_req, arq_res, arq_reg);
+	printf("Argumentos:\n  (ENV) webspace: %s\n  (1) path: %s\n  (2) arq_req: %s\n  (3) arq_res: %s\n  (4) arq_reg: %s\n\n", webspace, path, arq_req, arq_res, arq_reg);
 
 	/* argv[1] -> Arquivo contendo a requisicao */
 	if((req_file = fopen(arq_req, "r")) == NULL){
@@ -175,7 +176,7 @@ int main(int argc, char** argv)
 	/* Funcao para obter resultado do parser */
 	result = get_parsed_request();
 	
-	error = acesso("/home/EE09/ra094349/Documentos/meu-webspace", result->params->param, result->command, resp_file);
+	error = acesso(webspace, result->params->param, result->command, resp_file);
 
 	/* Fechando o arquivo... */
 	close(req_file);
