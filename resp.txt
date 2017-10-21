@@ -1,5 +1,0 @@
-Date: Sat Oct 21 14:07:03 2017
-Server: Servidor HTTP ver 0.1 dos DescoladosConnection: PEGAR DO PARSER!!!!
-Last-Modified: Wed Dec 31 21:00:00 1969
-Content-Lenght: 193
-Content-Type: text/html

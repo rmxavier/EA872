@@ -28,6 +28,7 @@ FILE * reg_file;
 
 struct command_list * list = NULL;
 
+
 /*void req_to_server(){
 	//A porta que utilizaremos é 8585
 	unsigned short porta = 8585;
@@ -96,7 +97,9 @@ struct command_list * list = NULL;
 	//exit(5);
 }
 */
-void print_request_to_file() {
+
+void print_request_to_file(FILE * reg_file) {
+	fprintf(reg_file, "\n");
 	command_list * current = list;
 	
 	while (current != NULL) {
@@ -119,7 +122,6 @@ void print_request_to_file() {
 	}
 	fprintf(reg_file, "\n");
 	
-	fclose(reg_file);
 }
 
 void add_command_list(char *command)
@@ -204,27 +206,28 @@ int main(int argc, char** argv)
 	int r , i , j , sz ;
 	char *req;
 
-	printf("\nStarting program to call the parser and process a request...\n\n");
+	printf("\n[SERVER] Starting program to call the parser and process a request...\n\n");
 		
-	printf("Argumentos:\n  (ENV) webspace: %s\n  (1) path: %s\n  (2) arq_req: %s\n  (3) arq_res: %s\n  (4) arq_reg: %s\n\n", webspace, path, arq_req, arq_res, arq_reg);
+	printf("[SERVER] Argumentos:\n[SERVER]  (ENV) webspace: %s\n[SERVER]  (1) path: %s\n[SERVER]  (2) arq_req: %s\n[SERVER]  (3) arq_res: %s\n[SERVER]  (4) arq_reg: %s\n\n", webspace, path, arq_req, arq_res, arq_reg);
 
 	/* argv[1] -> Arquivo contendo a requisicao */
 	if((req_file = fopen(arq_req, "a")) == NULL){
-		printf("Error to open file %s.\n", arq_req);
+		printf("[SERVER] Error to open file %s.\n", arq_req);
 		exit (0);
 	}
 	
 	if((resp_file = fopen(arq_res, "w")) == NULL){
-		printf("Error to open file %s.\n", arq_res);
+		printf("[SERVER] Error to open file %s.\n", arq_res);
 		exit (0);
 	}
 	
 	if((reg_file = fopen(arq_reg, "a")) == NULL){
-		printf("Error to open file %s.\n", arq_reg);
+		printf("[SERVER] Error to open file %s.\n", arq_reg);
 		exit (0);
 	}
 	
 	//req_to_server();
+
 	/* Leitura de dados e escrita no buffer */
 	fseek(req_file, 0, SEEK_END);
 	sz = (int) ftell(req_file);
@@ -239,19 +242,20 @@ int main(int argc, char** argv)
 	yyparse();
 
 	// Printa a lista
-	print_request_to_file();
+	print_request_to_file(reg_file);
 
 	/* Funcao para obter resultado do parser */
 	result = get_parsed_request();
 	
 
-	error = acesso(webspace, result->params->param, result->command, resp_file);
-
+	error = acesso(webspace, result->params->param, result->command, resp_file, reg_file);
 
 	/* Fechando o arquivo... */
 	close(req_file);
 	close(resp_file);
 	close(reg_file);
 
-	printf("\nFinished!\n");
+	printf("\n[SERVER] Finished!\n");
+	
+	return 0;
 }
