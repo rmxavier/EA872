@@ -184,7 +184,8 @@ void trataGET(int result, int fd, FILE * resp_file, FILE * reg_file){
       break;
   }
   strcat(resposta, resultado);
-  printf("%s\n", resposta);
+  fprintf(resp_file, "%s", resposta );
+  fprintf(reg_file, "%s", resposta );
   time ( &rawtime );
   timeinfo = localtime ( &rawtime );
   fprintf(resp_file, "Date: %s", asctime (timeinfo) );

@@ -29,7 +29,7 @@ FILE * reg_file;
 struct command_list * list = NULL;
 
 
-/*void req_to_server(){
+void req_to_server(){
 	//A porta que utilizaremos é 8585
 	unsigned short porta = 8585;
 	char area[1024];		
@@ -96,7 +96,7 @@ struct command_list * list = NULL;
 	//printf("O servidor terminou com erro.\n");
 	//exit(5);
 }
-*/
+
 
 void print_request_to_file(FILE * reg_file) {
 	fprintf(reg_file, "\n");
@@ -211,7 +211,7 @@ int main(int argc, char** argv)
 	printf("[SERVER] Argumentos:\n[SERVER]  (ENV) webspace: %s\n[SERVER]  (1) path: %s\n[SERVER]  (2) arq_req: %s\n[SERVER]  (3) arq_res: %s\n[SERVER]  (4) arq_reg: %s\n\n", webspace, path, arq_req, arq_res, arq_reg);
 
 	/* argv[1] -> Arquivo contendo a requisicao */
-	if((req_file = fopen(arq_req, "a")) == NULL){
+	if((req_file = fopen(arq_req, "r")) == NULL){
 		printf("[SERVER] Error to open file %s.\n", arq_req);
 		exit (0);
 	}
@@ -226,7 +226,7 @@ int main(int argc, char** argv)
 		exit (0);
 	}
 	
-	//req_to_server();
+	req_to_server();
 
 	/* Leitura de dados e escrita no buffer */
 	fseek(req_file, 0, SEEK_END);
