@@ -184,8 +184,8 @@ void trataGET(int result, int fd, FILE * resp_file, FILE * reg_file){
       break;
   }
   strcat(resposta, resultado);
-  fprintf(resp_file, "%s", resposta );
-  fprintf(reg_file, "%s", resposta );
+  fprintf(resp_file, "%s\n", resposta );
+  fprintf(reg_file, "%s\n", resposta );
   time ( &rawtime );
   timeinfo = localtime ( &rawtime );
   fprintf(resp_file, "Date: %s", asctime (timeinfo) );
@@ -244,17 +244,30 @@ void trataHEAD(int result, int fd, FILE * resp_file, FILE * reg_file){
     break;
   }
   strcat(resposta, resultado);
-  printf("%s\n", resposta);
+  fprintf(resp_file, "%s\n", resposta );
+  fprintf(reg_file, "%s\n", resposta );
   time ( &rawtime );
   timeinfo = localtime ( &rawtime );
-  fprintf (resp_file, "Date: %s", asctime (timeinfo) );
-  fprintf(resp_file, "Server: Servidor HTTP ver 0.1 dos Descolados");
+  fprintf(resp_file, "Date: %s", asctime (timeinfo) );
+  fprintf(reg_file, "Date: %s", asctime (timeinfo) );
+  
+  fprintf(resp_file, "Server: Servidor HTTP ver 0.1 dos Descolados\n");
+  fprintf(reg_file, "Server: Servidor HTTP ver 0.1 dos Descolados\n");
+  
   fprintf(resp_file, "Connection: PEGAR DO PARSER!!!!\n");
+  fprintf(reg_file, "Connection: PEGAR DO PARSER!!!!\n");
+  
   timeinfo = localtime(&lastmod);
   if(result == 200){
     fprintf(resp_file, "Last-Modified: %s", asctime(timeinfo));
+    fprintf(reg_file, "Last-Modified: %s", asctime(timeinfo));
+
     fprintf(resp_file, "Content-Lenght: %zd\n", fileStat.st_size);
+    fprintf(reg_file, "Content-Lenght: %zd\n", fileStat.st_size);
+    
     fprintf(resp_file, "Content-Type: text/html\n");
+    fprintf(reg_file, "Content-Type: text/html\n");
+    
   }
 }
 

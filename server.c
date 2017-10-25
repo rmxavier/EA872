@@ -82,8 +82,6 @@ void req_to_server(){
 		perror("Erro em recv().\n");
 		break;
 	}
-	//Isso é um teste para ver o tamanho da mensagem e só escrever uma vez. GET tem tamanho 343
-	//printf("%d", mensagem_compr);
 	
 	printf("\nMensagem recebida:\n");
 	for(i = 0; i < mensagem_compr; i++) fprintf(req_file, "%c", area[i]);
