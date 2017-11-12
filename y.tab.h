@@ -55,14 +55,18 @@ extern int yydebug;
     GET = 265,
     TRACE = 266,
     OPTIONS = 267,
-    HOST = 268,
-    USER_AGENT = 269,
-    ACCEPT = 270,
-    ACCEPT_LANGUAGE = 271,
-    ACCEPT_ENCODING = 272,
-    CONNECTION = 273,
-    UPGRADE_INSECURE_REQUESTS = 274,
-    PARAMETER = 275
+    HEAD = 268,
+    PATCH = 269,
+    HOST = 270,
+    USER_AGENT = 271,
+    ACCEPT = 272,
+    ACCEPT_LANGUAGE = 273,
+    ACCEPT_ENCODING = 274,
+    CONTENT_LENGTH = 275,
+    CONTENT_TYPE = 276,
+    CONNECTION = 277,
+    UPGRADE_INSECURE_REQUESTS = 278,
+    PARAMETER = 279
   };
 #endif
 /* Tokens.  */
@@ -76,14 +80,18 @@ extern int yydebug;
 #define GET 265
 #define TRACE 266
 #define OPTIONS 267
-#define HOST 268
-#define USER_AGENT 269
-#define ACCEPT 270
-#define ACCEPT_LANGUAGE 271
-#define ACCEPT_ENCODING 272
-#define CONNECTION 273
-#define UPGRADE_INSECURE_REQUESTS 274
-#define PARAMETER 275
+#define HEAD 268
+#define PATCH 269
+#define HOST 270
+#define USER_AGENT 271
+#define ACCEPT 272
+#define ACCEPT_LANGUAGE 273
+#define ACCEPT_ENCODING 274
+#define CONTENT_LENGTH 275
+#define CONTENT_TYPE 276
+#define CONNECTION 277
+#define UPGRADE_INSECURE_REQUESTS 278
+#define PARAMETER 279
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -94,7 +102,7 @@ union YYSTYPE
 
 	char * token;
 
-#line 98 "y.tab.h" /* yacc.c:1909  */
+#line 106 "y.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

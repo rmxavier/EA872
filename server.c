@@ -28,11 +28,21 @@ FILE * reg_file;
 
 struct command_list * list = NULL;
 
+struct command_list *result = NULL;
 
-void req_to_server(){
+int error;
+char *webspace;
+
+command_list * get_parsed_request() {
+	return list;
+}
+
+char * req_to_server(){
+	
 	//A porta que utilizaremos é 8585
 	unsigned short porta = 8585;
-	char area[1024];		
+	char request[1024];
+	char * response;
 	struct sockaddr_in cliente;	
 	struct sockaddr_in servidor;	
 	int soquete;			
@@ -40,6 +50,8 @@ void req_to_server(){
 	int nome_compr;			
 	int mensagem_compr;		
 	int i, j;			//j vai controlar o numero de requições no arquivo. nesse caso, apenas uma.
+	
+	printf("[SERVER] Iniciando requisição ao server...");
      
 	if ((soquete = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 	{
@@ -52,11 +64,12 @@ void req_to_server(){
 	servidor.sin_port   	= htons(porta);
 	servidor.sin_addr.s_addr	= INADDR_ANY;
 
-	if (bind(soquete, (struct sockaddr *)&servidor, sizeof(servidor)) < 0)
+	while (bind(soquete, (struct sockaddr *)&servidor, sizeof(servidor)) < 0)
 	{
-	perror("Erro em bind().\n");
-	exit(3);
+	perror(".");
+	//exit(3);
 	}
+	printf("[SERVER] Voa\n");
 
 	
 	if (listen(soquete, 5) != 0)
@@ -69,30 +82,54 @@ void req_to_server(){
 	while (j<1) {
 
 	
-	nome_compr = sizeof(cliente);
-	if ((novo_soquete = accept(soquete, (struct sockaddr *)&cliente, &nome_compr)) == -1)
-	{
-		perror("Erro em accept().\n");
-		break;
+		nome_compr = sizeof(cliente);
+		if ((novo_soquete = accept(soquete, (struct sockaddr *)&cliente, &nome_compr)) == -1)
+		{
+			perror("Erro em accept().\n");
+			break;
+		}
+
+		
+		//if ((mensagem_compr = recv(novo_soquete, request, sizeof(request), 0)) == -1)
+		if ((mensagem_compr = recv(novo_soquete, request, sizeof(request), 0)) == -1)
+		{
+			perror("Erro em recv().\n");
+			break;
+		}
+
+		printf("%s", request);
+		yy_scan_string(request);
+		yyparse();
+
+		// Printa a lista
+		print_request_to_file(reg_file);
+
+		printf("PARSEANDO SSAPORRA ==============================\n");
+		/* Funcao para obter resultado do parser */
+		result = get_parsed_request();
+		printf("~~~~~~~~~~~~~~PARSEANDO SSAPORRA ==============================\n");
+
+		
+		response = malloc(sizeof(char) * 500000);
+		char * mimimi = malloc(sizeof(char) * 500000);
+		mimimi = acesso(webspace, result->params->param, result->command, &response, reg_file);
+		
+				printf("~~~~~~~~~~~~~~PARSEANDO kkkkkk ==============================\n");
+
+		printf("[SERVER] response: %s\n", mimimi);
+		
+		write(novo_soquete, mimimi, strlen(mimimi));
+		
+		j++;
 	}
 
-	
-	if ((mensagem_compr = recv(novo_soquete, area, sizeof(area), 0)) == -1)
-	{
-		perror("Erro em recv().\n");
-		break;
-	}
-	
-	printf("\nMensagem recebida:\n");
-	for(i = 0; i < mensagem_compr; i++) fprintf(req_file, "%c", area[i]);
-	//fflush(req_file);
-	close(novo_soquete);
-	j++;
-	}  
-
-	close(soquete); 
+	close(soquete);
 	//printf("O servidor terminou com erro.\n");
 	//exit(5);
+	
+	printf("RETURN KKKKKKK ===========\n");
+	
+	return "kkkkk";
 }
 
 
@@ -118,7 +155,10 @@ void print_request_to_file(FILE * reg_file) {
 
 		current = current->next;
 	}
+	printf("VAI TOMA NO CU FDP\n");
 	fprintf(reg_file, "\n");
+	printf("VAI TOMA NO CU FDP2\n");
+
 	
 }
 
@@ -187,32 +227,23 @@ void add_param_list(char *param)
 	return;
 }
 
-command_list * get_parsed_request() {
-	return list;
-}
-
 int main(int argc, char** argv)
 {
-	int error;
-	struct command_list *result = NULL;
-	char *webspace = argv[1];
 	char *path = argv[2];
 	char *arq_req = argv[3];
 	char *arq_res = argv[4];
 	char *arq_reg = argv[5];
+	char *area;
 	
 	int r , i , j , sz ;
 	char *req;
+	
+	webspace = argv[1];
+
 
 	printf("\n[SERVER] Starting program to call the parser and process a request...\n\n");
 		
-	printf("[SERVER] Argumentos:\n[SERVER]  (ENV) webspace: %s\n[SERVER]  (1) path: %s\n[SERVER]  (2) arq_req: %s\n[SERVER]  (3) arq_res: %s\n[SERVER]  (4) arq_reg: %s\n\n", webspace, path, arq_req, arq_res, arq_reg);
-
-	/* argv[1] -> Arquivo contendo a requisicao */
-	if((req_file = fopen(arq_req, "r")) == NULL){
-		printf("[SERVER] Error to open file %s.\n", arq_req);
-		exit (0);
-	}
+	printf("[SERVER] Argumentos:\n[SERVER]  (ENV) webspace: %s\n[SERVER]  (1) path: %s\n[SERVER]  (2) arq_res: %s\n[SERVER]  (3) arq_reg: %s\n\n", webspace, path, arq_res, arq_reg);
 	
 	if((resp_file = fopen(arq_res, "w")) == NULL){
 		printf("[SERVER] Error to open file %s.\n", arq_res);
@@ -224,32 +255,11 @@ int main(int argc, char** argv)
 		exit (0);
 	}
 	
-	req_to_server();
-
-	/* Leitura de dados e escrita no buffer */
-	fseek(req_file, 0, SEEK_END);
-	sz = (int) ftell(req_file);
-	req = ( char *) malloc(sz+1);
-	fseek(req_file, 0, SEEK_SET);
-	fread (req, 1, sz, req_file);
-	req[sz] = '\0';
-
-	/* Processando a requisicao no buffer "req" usando o parser */
-	printf("%s", req);
-	yy_scan_string(req);
-	yyparse();
-
-	// Printa a lista
-	print_request_to_file(reg_file);
-
-	/* Funcao para obter resultado do parser */
-	result = get_parsed_request();
+	area = req_to_server();
 	
-
-	error = acesso(webspace, result->params->param, result->command, resp_file, reg_file);
+	printf("[SERVER] Requisição ao server feita.");
 
 	/* Fechando o arquivo... */
-	close(req_file);
 	close(resp_file);
 	close(reg_file);
 

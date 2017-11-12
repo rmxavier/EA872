@@ -37,11 +37,25 @@
 	return TRACE;
 }
 
+"HEAD "       {
+	has_token_separator = 1;
+	token_separator = ' ';
+	printf("[LEXX]    -> Command: HEAD\n");
+	return HEAD;
+}
+
 "OPTIONS "       {
 	has_token_separator = 1;
 	token_separator = ' ';
 	printf("[LEXX]    -> Command: OPTIONS\n");
 	return OPTIONS;
+}
+
+"PATCH "       {
+	has_token_separator = 1;
+	token_separator = ' ';
+	printf("[LEXX]    -> Command: PATCH\n");
+	return PATCH;
 }
 
 "Host: "              {
@@ -73,6 +87,18 @@
 	token_separator = ',';
 	printf("[LEXX]    -> Command: accept-encoding\n");
 	return ACCEPT_ENCODING;
+}
+"Content-Length: "   {
+	has_token_separator = 1;
+	token_separator = ',';
+	printf("[LEXX]    -> Command: content-length\n");
+	return CONTENT_LENGTH;
+}
+"Content-Type: "   {
+	has_token_separator = 1;
+	token_separator = ',';
+	printf("[LEXX]    -> Command: content-type\n");
+	return CONTENT_TYPE;
 }
 "Connection: "        {
 	has_token_separator = 0;

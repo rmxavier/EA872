@@ -10,8 +10,8 @@ void yyerror (char *s);
 %}
 
 %token NL CR COMMA END SLASH BLANK AND
-%token GET TRACE OPTIONS
-%token HOST USER_AGENT ACCEPT ACCEPT_LANGUAGE ACCEPT_ENCODING CONNECTION UPGRADE_INSECURE_REQUESTS
+%token GET TRACE OPTIONS HEAD PATCH
+%token HOST USER_AGENT ACCEPT ACCEPT_LANGUAGE ACCEPT_ENCODING CONTENT_LENGTH CONTENT_TYPE CONNECTION UPGRADE_INSECURE_REQUESTS
 %union {
 	char * token;
 }
@@ -36,9 +36,11 @@ header_structure:
 	;
 
 method: /* Tipos de metodos */
-	GET	{add_command_list("GET");printf("[YACC] Method (GET) \n");}
-	| TRACE	{add_command_list("TRACE");printf("[YACC] Method (TRACE) \n");}
+	GET		{add_command_list("GET");printf("[YACC] Method (GET) \n");}
+	| TRACE		{add_command_list("TRACE");printf("[YACC] Method (TRACE) \n");}
 	| OPTIONS	{add_command_list("OPTIONS");printf("[YACC] Method (OPTIONS) \n");}
+	| HEAD		{add_command_list("HEAD");printf("[YACC] Method (HEAD) \n");}
+	| PATCH		{add_command_list("PATCH");printf("[YACC] Method (PATCH) \n");}
 	;
 
 header: /* Tipos de header  */
@@ -46,6 +48,8 @@ header: /* Tipos de header  */
 	| USER_AGENT			{add_command_list("User-Agent");printf("[YACC] Header (UserAgent)\n");}
 	| ACCEPT			{add_command_list("Accept");printf("[YACC] Header (Accept)\n");}
 	| ACCEPT_ENCODING		{add_command_list("Accept Encoding");printf("[YACC] Header (AcceptEncoding)\n");}
+	| CONTENT_LENGTH		{add_command_list("Content Length");printf("[YACC] Header (ContentLength)\n");}
+	| CONTENT_TYPE			{add_command_list("Content Type");printf("[YACC] Header (ContentType)\n");}
 	| ACCEPT_LANGUAGE		{add_command_list("Accept Language");printf("[YACC] Header (AcceptLanguage)\n");}
 	| UPGRADE_INSECURE_REQUESTS	{add_command_list("Upgrade Insecure Requests");printf("[YACC] Header (UpgradeLanguage)\n");}
 	| HOST				{add_command_list("Host");printf("[YACC] Header (Host)\n");}

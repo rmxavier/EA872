@@ -1,0 +1,86 @@
+
+PATCH: /,HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0
+Accept: */*
+Accept Language: null
+Accept Encoding: gzip, deflate
+Content Length: 0
+Content Type: text/plain;charset=UTF-8
+Connection: keep-alive
+
+Date: Sat Nov 11 22:40:12 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: PEGAR DO PARSER!!!!
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+HTTP/1.1 501 NOT IMPLEMENTED
+Date: Sat Nov 11 22:40:12 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Allow: GET, HEAD, TRACE, OPTIONS
+Content-Type: text/html
+
+
+GET: /,HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0
+Accept: */*
+Accept Language: null
+Accept Encoding: gzip, deflate
+Connection: keep-alive
+
+HTTP/1.1 200 OK
+Date: Sat Nov 11 22:41:14 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Type: text/html
+
+
+OPTIONS: /,HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0
+Accept: */*
+Accept Language: null
+Accept Encoding: gzip, deflate
+Content Length: 0
+Content Type: text/plain;charset=UTF-8
+Connection: keep-alive
+
+HTTP/1.1 200 OK
+Date: Sat Nov 11 22:42:27 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Allow: GET, HEAD, TRACE, OPTIONS
+Content-Type: text/html
+
+
+HEAD: /,HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0
+Accept: */*
+Accept Language: null
+Accept Encoding: gzip, deflate
+Connection: keep-alive
+
+HTTP/1.1 200 OK
+Date: Sat Nov 11 22:43:29 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+
+HEAD: /,HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0
+Accept: */*
+Accept Language: null
+Accept Encoding: gzip, deflate
+Connection: keep-alive
+
+HTTP/1.1 200 OK
+Date: Sat Nov 11 22:44:33 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive

@@ -12,8 +12,11 @@
 
 struct stat fileStat;
 FILE *file;
-int c;
+char c;
+char * str;
 char path[1075];
+
+char original_local[1075];
 
 /*void main( int argc, char *argv[]){
 	char local[]= "/home/EC11/ra116006/meu-webspace";
@@ -34,19 +37,290 @@ char path[1075];
 	return;
 }*/
 
+void print_file_to_string(char * fname, char * response) {
+	FILE *fp;
+	char str[80];
 
-int acesso(char *local, char *recurso, char *metodo, FILE * resp_file, FILE * reg_file){
+	if ((fp= fopen(fname, "r")) == NULL) {
+		printf("cannot open file");
+		exit(1);
+	}
+
+	while(!feof(fp)) {
+		fgets(str,79,fp);
+		printf("%s",str);
+		strcat(response, str);
+	}
+
+	fclose(fp);
+}
+
+void write_header(char * response, char * header, char * info) {
+	
+	info[strlen(info) - 1] = '\0';
+	
+	strcat(response, header);
+	strcat(response, info);
+	strcat(response, "\r\n");
+}
+
+char * trataGET(int result, int fd, char * response, FILE * reg_file){
+	strcpy(response, "HTTP/1.1 ");
+	time_t rawtime;
+	time_t lastmod = fileStat.st_mtime; 
+	struct tm * timeinfo;
+
+	fstat(fd, &fileStat);	
+	switch (result){
+		case 200:
+			strcat(response, "200 OK\r\n");
+			break;
+		case 403:
+			strcat(response, "403 FORBIDDEN\r\n");
+			break;
+		case 404:
+			strcat(response, "404 NOT FOUND\r\n");
+			break;
+	}
+
+	time ( &rawtime );
+	timeinfo = localtime ( &rawtime );
+	write_header(response, "Date: ", asctime (timeinfo));
+
+	strcat(response, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
+
+	// Pegar do parser
+	strcat(response, "Connection: keep-alive\r\n");
+
+	timeinfo = localtime(&lastmod);
+	if(result==200) {
+		write_header(response, "Last-Modified: ", asctime(timeinfo));
+
+		//write_header(&response, "Content-Lenght: %zd\n", fileStat.st_size);
+		strcat(response, "Content-Type: text/html\r\n");
+	}
+	
+	
+	strcat(response, "\r\n");
+	
+	fprintf(reg_file, "%s", response);
+	print_file_to_string(path, response);
+	
+	char * mimimi = malloc(sizeof(char) * 500000);
+	strcpy(mimimi, response);
+
+	return mimimi;
+}
+
+char * trataHEAD(int result, int fd, char * response, FILE * reg_file) {
+	strcpy(response, "HTTP/1.1 ");
+	time_t rawtime;
+	time_t lastmod = fileStat.st_mtime; 
+	struct tm * timeinfo;
+
+	fstat(fd, &fileStat);	
+	switch (result){
+		case 200:
+			strcat(response, "200 OK\r\n");
+			break;
+		case 403:
+			strcat(response, "403 FORBIDDEN\r\n");
+			break;
+		case 404:
+			strcat(response, "404 NOT FOUND\r\n");
+			break;
+	}
+
+	time ( &rawtime );
+	timeinfo = localtime ( &rawtime );
+	write_header(response, "Date: ", asctime (timeinfo));
+
+	strcat(response, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
+
+	// Pegar do parser
+	strcat(response, "Connection: keep-alive\r\n");
+
+	timeinfo = localtime(&lastmod);
+	
+	fprintf(reg_file, "%s", response);
+	char * mimimi = malloc(sizeof(char) * 500000);
+	strcpy(mimimi, response);
+
+	return mimimi;
+}
+
+char * trataTRACE(int result, int fd, char * response, FILE * reg_file) {
+	strcpy(response, "HTTP/1.1 ");
+	time_t rawtime;
+	time_t lastmod = fileStat.st_mtime; 
+	struct tm * timeinfo;
+
+	fstat(fd, &fileStat);
+
+	time ( &rawtime );
+	timeinfo = localtime ( &rawtime );
+	write_header(response, "Date: ", asctime (timeinfo));
+
+	strcat(response, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
+
+	// Pegar do parser
+	strcat(response, "Connection: keep-alive\r\n");
+
+	timeinfo = localtime(&lastmod);
+	if(result==200) {
+		write_header(response, "Last-Modified: ", asctime(timeinfo));
+
+		strcat(response, "Allow: GET, HEAD, TRACE, OPTIONS\n");
+		
+		//write_header(&response, "Content-Lenght: %zd\n", fileStat.st_size);
+		
+		strcat(response, "Content-Type: text/html\r\n");
+
+		strcat(response, "\r\n");
+
+	}
+	fprintf(reg_file, "%s", response);
+	
+	char * mimimi = malloc(sizeof(char) * 500000);
+	strcpy(mimimi, response);
+	return mimimi;
+  
+}
+
+char * trataOPTIONS(int result, int fd, char * response, FILE * reg_file) {
+	strcpy(response, "HTTP/1.1 ");
+	time_t rawtime;
+	time_t lastmod = fileStat.st_mtime; 
+	struct tm * timeinfo;
+
+	fstat(fd, &fileStat);	
+	switch (result){
+		case 200:
+			strcat(response, "200 OK\r\n");
+			break;
+		case 403:
+			strcat(response, "403 FORBIDDEN\r\n");
+			break;
+		case 404:
+			strcat(response, "404 NOT FOUND\r\n");
+			break;
+	}
+
+	time ( &rawtime );
+	timeinfo = localtime ( &rawtime );
+	write_header(response, "Date: ", asctime (timeinfo));
+
+	strcat(response, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
+	// Pegar do parser
+	strcat(response, "Connection: keep-alive\r\n");
+
+	timeinfo = localtime(&lastmod);
+	if(result==200) {
+		write_header(response, "Last-Modified: ", asctime(timeinfo));
+		strcat(response, "Allow: GET, HEAD, TRACE, OPTIONS\n");
+		
+		//write_header(&response, "Content-Lenght: %zd\n", fileStat.st_size);
+		strcat(response, "Content-Type: text/html\r\n");
+		strcat(response, "\r\n");
+
+	}
+	
+	fprintf(reg_file, "%s", response);
+	
+	char * mimimi = malloc(sizeof(char) * 500000);
+	strcpy(mimimi, response);
+
+	return mimimi;
+}
+
+// Erro 501 - Not Implemented
+char * trataNotImplemented(int fd, char * response, FILE * reg_file) {
+	strcpy(response, "HTTP/1.1 ");
+	time_t rawtime;
+	time_t lastmod = fileStat.st_mtime; 
+	struct tm * timeinfo;
+
+	fstat(fd, &fileStat);	
+	strcat(response, "501 NOT IMPLEMENTED\r\n");
+
+	printf(reg_file, "%s\n", response );
+	time ( &rawtime );
+	timeinfo = localtime ( &rawtime );
+	write_header(response, "Date: ", asctime (timeinfo));
+	fprintf(reg_file, "Date: %s", asctime (timeinfo) );
+
+	strcat(response, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
+	fprintf(reg_file, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
+
+	// Pegar do parser
+	strcat(response, "Connection: keep-alive\r\n");
+	fprintf(reg_file, "Connection: PEGAR DO PARSER!!!!\r\n");
+
+	timeinfo = localtime(&lastmod);
+	write_header(response, "Last-Modified: ", asctime(timeinfo));
+	fprintf(reg_file, "Last-Modified: %s", asctime(timeinfo));
+
+	strcat(response, "Allow: GET, HEAD, TRACE, OPTIONS\n");
+	
+	//write_header(&response, "Content-Lenght: %zd\n", fileStat.st_size);
+	fprintf(reg_file, "Content-Lenght: %zd\n", fileStat.st_size);
+	
+	strcat(response, "Content-Type: text/html\r\n");
+	fprintf(reg_file, "Content-Type: text/html\r\n");
+
+	strcat(response, "\r\n");
+	
+	char * error_page = malloc(sizeof(char) * 500000);
+	strcpy(error_page, original_local);
+	strcat(error_page, "/501.html"); 
+	
+	fprintf(reg_file, "%s", response);
+	print_file_to_string(error_page, response);
+	
+	char * mimimi = malloc(sizeof(char) * 500000);
+	strcpy(mimimi, response);
+
+	return mimimi;
+}
+
+char * trataMetodo(char *metodo, int result, int fd, char * response, FILE * reg_file){
+	char * resp;
+	if(strcmp(metodo, "GET")==0){
+		resp = trataGET(result, fd, response, reg_file);
+	}
+	else if(strcmp(metodo, "HEAD")==0){
+		resp = trataHEAD(result, fd, response, reg_file);
+	}
+	else if(strcmp(metodo, "TRACE")==0){
+		resp = trataTRACE(result, fd, response, reg_file);
+	}
+	else if(strcmp(metodo, "OPTIONS")==0){
+		resp = trataOPTIONS(result, fd, response, reg_file);
+	}
+	else {
+		resp = trataNotImplemented(fd, response, reg_file);
+	}
+	
+	return resp;
+}
+
+char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * reg_file){
 	struct stat statarq;
 	int fd;
 	DIR *dir;
 	
 	/*****Trecho para pegar o path do arquivo e incluí-lo em um só*****/
 
-	strcpy (path, local); //copia o local passado ao path
+	strcpy(original_local, local);
+	strcpy(path, local); //copia o local passado ao path
 	if (strncmp("/", recurso, 1) == -1) {
 		strcat(path, "/");//adicona '/' ao path
 	}
+	
 	strcat(path, recurso);  //cooloca o nome do recurso depois do path
+	
+			printf("[FILE_MANAGER] ADICIONANDO BARRA %s\n%s\n", path, recurso);
+
 	
 	printf("[FILE_MANAGER] Recurso a ser localizado: %s\n", path);
 	printf("[FILE_MANAGER] local: %s\n", local);
@@ -57,15 +331,23 @@ int acesso(char *local, char *recurso, char *metodo, FILE * resp_file, FILE * re
 	//caso não ache o recurso
 	
 	if (stat(path, &statarq) == -1){
-		trataMetodo(metodo, 404, fd, resp_file, reg_file);
-		return 404;
+		strcpy(path, local);
+		strcpy(recurso, "/404.html");
+		strcat(path, recurso);
+
+		return trataMetodo(metodo, 404, fd, response, reg_file);
+		//return 404;
 	}
 	else{
 		//printf("access %d",access(path, R_OK));
 		//caso o recurso não dê permissão de acesso
 		if(access(path, R_OK) != 0){
-			trataMetodo(metodo, 403, fd, resp_file, reg_file);
-			return 403;
+			strcpy(path, local);
+			strcpy(recurso, "/403.html");
+			strcat(path, recurso);
+			
+			return trataMetodo(metodo, 403, fd, response, reg_file);
+			//return 403;
 		}
 		//recurso existe e tem permissão de acesso
 		else{
@@ -75,7 +357,7 @@ int acesso(char *local, char *recurso, char *metodo, FILE * resp_file, FILE * re
 			if((statarq.st_mode & S_IFMT)==S_IFREG){
 				//Abre e imprime o arquivo
 				fd = open(path, O_RDONLY, 0600);
-				trataMetodo(metodo, 200, fd, resp_file, reg_file);
+				return trataMetodo(metodo, 200, fd, response, reg_file);
 				write(fd,path, sizeof(path));
 			}
 			else{
@@ -83,8 +365,13 @@ int acesso(char *local, char *recurso, char *metodo, FILE * resp_file, FILE * re
 				if((statarq.st_mode & S_IFMT)==S_IFDIR){
 					//caso o diretório não tenha permissão de acesso
 					if(access(path, X_OK) != 0) {
-					  trataMetodo(metodo,403, fd, resp_file, reg_file);
-					  return 403;
+						
+						strcpy(path, local);
+						strcpy(recurso, "/403.html");
+						strcat(path, recurso);
+				
+						return trataMetodo(metodo, 403, fd, response, reg_file);
+						//return 403;
 					} else {
 						struct dirent *newDir;
 						//abre o diretório
@@ -96,235 +383,59 @@ int acesso(char *local, char *recurso, char *metodo, FILE * resp_file, FILE * re
 							
 							if(strcmp("index.html",newDir->d_name)==0){
 								strcpy (recurso, "index.html");
-								strcat(path, "/");
 								strcat(path, recurso);
 								//o arquivo index foi encontrado, mas não tem permissao
-								if(access(path, R_OK) != 0){
-								  trataMetodo(metodo, 403, fd, resp_file, reg_file);
-								  return 403;
+								if(access(path, R_OK) != 0) {
+									strcpy(path, local);
+									strcpy(recurso, "/403.html");
+									strcat(path, recurso);
+				
+									return trataMetodo(metodo, 403, fd, response, reg_file);
+									//return 403;
 								}
 								else{
+									printf("[FILE_MANAGER] FD FD FD %d", fd);
+									
 									fd = open(path, O_RDONLY, 0600);
 									//write(fd,"", 50);
-									write(fd,path, sizeof(path));
-									trataMetodo(metodo, 200, fd, resp_file, reg_file);
-									return 0;
+									//write(fd,path, sizeof(path));
+									return trataMetodo(metodo, 200, fd, response, reg_file);
+									//return 0;
 								}
 								break;
 							}
 							if(strcmp("welcome.html",newDir->d_name)==0){
 								strcpy (recurso, "welcome.html");
-								strcat(path, "/");
 								strcat(path, recurso);
 								//o arquivo index foi encontrado, mas não tem permissao
 								if(access(path, R_OK) != 0){
-									trataMetodo(metodo, 403,fd, resp_file, reg_file);
-									return 403;
+									strcpy(path, local);
+									strcpy(recurso, "/403.html");
+									strcat(path, recurso);
+				
+									return trataMetodo(metodo, 403,fd, response, reg_file);
+									//return 403;
 								}
 								else{
 									fd = open(path, O_RDONLY, 0600);
 									//write(fd,"", 50);
 									write(fd,path, sizeof(path));
-									trataMetodo(metodo, 200, fd, resp_file, reg_file);
-									return 0;
+									return trataMetodo(metodo, 200, fd, response, reg_file);
+									//return 0;
 								}
 								break;
 							}
 						}
+						strcpy(path, local);
+						strcpy(recurso, "/404.html");
+						strcat(path, recurso);
+						printf("404 da massa!!! ================= %s \n", path);
 						//caso não tenha achado nenhum arquivo index ou welcome
-						trataMetodo(metodo, 404, fd, resp_file, reg_file);
-						return 404;
+						return trataMetodo(metodo, 404, fd, response, reg_file);
+						//return 404;
 					}
 				}
 			}
-			return 0;
 		}
-	}
-}
-
-void trataMetodo(char *metodo, int result, int fd, FILE * resp_file, FILE * reg_file){
-	printf("[FILE_MANAGER] result: %d\n", result);
-	printf("[FILE_MANAGER] metodo: %s\n", metodo);
-
-	
-	if(strcmp(metodo, "GET")==0){
-	    trataGET(result, fd, resp_file, reg_file);
-	}
-	else if(strcmp(metodo, "HEAD")==0){
-	    trataHEAD(result, fd, resp_file, reg_file);
-	}
-	else if(strcmp(metodo, "TRACE")==0){
-	    trataTRACE(resp_file, reg_file);
-	}
-	else if(strcmp(metodo, "OPTIONS")==0){
-	    trataOPTIONS(resp_file, reg_file);
-	}
-	else{
-		erro(501, metodo, reg_file);
-	}
-}
-
-void trataGET(int result, int fd, FILE * resp_file, FILE * reg_file){
-  char resultado[]="                                 ";
-  char resposta[] = "HTTP 1/1 ";
-  time_t rawtime;
-  time_t lastmod = fileStat.st_mtime; 
-  struct tm * timeinfo;
-  fstat(fd, &fileStat);	
-  
-  switch (result){
-    case 200:
-      strcpy(resultado,"200 OK");
-      break;
-    case 403:
-      strcpy(resultado,"403 FORBIDDEN");
-      break;
-    case 404:
-      strcpy(resultado,"404 NOT FOUND");
-      break;
-  }
-  strcat(resposta, resultado);
-  fprintf(resp_file, "%s\n", resposta );
-  fprintf(reg_file, "%s\n", resposta );
-  time ( &rawtime );
-  timeinfo = localtime ( &rawtime );
-  fprintf(resp_file, "Date: %s", asctime (timeinfo) );
-  fprintf(reg_file, "Date: %s", asctime (timeinfo) );
-  
-  fprintf(resp_file, "Server: Servidor HTTP ver 0.1 dos Descolados\n");
-  fprintf(reg_file, "Server: Servidor HTTP ver 0.1 dos Descolados\n");
-  
-  fprintf(resp_file, "Connection: PEGAR DO PARSER!!!!\n");
-  fprintf(reg_file, "Connection: PEGAR DO PARSER!!!!\n");
-  
-  timeinfo = localtime(&lastmod);
-  if(result==200){
-    fprintf(resp_file, "Last-Modified: %s", asctime(timeinfo));
-    fprintf(reg_file, "Last-Modified: %s", asctime(timeinfo));
-
-    fprintf(resp_file, "Content-Lenght: %zd\n", fileStat.st_size);
-    fprintf(reg_file, "Content-Lenght: %zd\n", fileStat.st_size);
-    
-    fprintf(resp_file, "Content-Type: text/html\n");
-    fprintf(reg_file, "Content-Type: text/html\n");
-    
-    fprintf(resp_file, "\n");
-  
-  file = fopen(path, "r");
-    if (file) {
-	while ((c = getc(file)) != EOF)
-	  fprintf(resp_file, "%c", c);
-	  fclose(file);
-    }
-  }
-  if(result==404)
-    imprime404(resp_file);
-  if(result==403)
-    imprime403(resp_file);
-}
-
-void trataHEAD(int result, int fd, FILE * resp_file, FILE * reg_file){
-  char resultado[]="                                 ";
-  char resposta[] = "HTTP 1/1 ";
-  time_t rawtime;
-  time_t lastmod = fileStat.st_mtime; 
-  struct tm * timeinfo;
-  fstat(fd, &fileStat);	
-  
-  
-  switch (result){
-    case 200:
-      strcpy(resultado,"200 OK");
-    break;
-    case 403:
-      strcpy(resultado,"403 FORBIDDEN");
-    break;
-    case 404:
-      strcpy(resultado,"404 NOT FOUND");
-    break;
-  }
-  strcat(resposta, resultado);
-  fprintf(resp_file, "%s\n", resposta );
-  fprintf(reg_file, "%s\n", resposta );
-  time ( &rawtime );
-  timeinfo = localtime ( &rawtime );
-  fprintf(resp_file, "Date: %s", asctime (timeinfo) );
-  fprintf(reg_file, "Date: %s", asctime (timeinfo) );
-  
-  fprintf(resp_file, "Server: Servidor HTTP ver 0.1 dos Descolados\n");
-  fprintf(reg_file, "Server: Servidor HTTP ver 0.1 dos Descolados\n");
-  
-  fprintf(resp_file, "Connection: PEGAR DO PARSER!!!!\n");
-  fprintf(reg_file, "Connection: PEGAR DO PARSER!!!!\n");
-  
-  timeinfo = localtime(&lastmod);
-  if(result == 200){
-    fprintf(resp_file, "Last-Modified: %s", asctime(timeinfo));
-    fprintf(reg_file, "Last-Modified: %s", asctime(timeinfo));
-
-    fprintf(resp_file, "Content-Lenght: %zd\n", fileStat.st_size);
-    fprintf(reg_file, "Content-Lenght: %zd\n", fileStat.st_size);
-    
-    fprintf(resp_file, "Content-Type: text/html\n");
-    fprintf(reg_file, "Content-Type: text/html\n");
-    
-  }
-}
-
-void trataTRACE(FILE * resp_file, FILE * reg_file){
-  char resultado[]="                                 ";
-  char resposta[] = "HTTP /1.1 ";
-  time_t rawtime;
-  time_t lastmod = fileStat.st_mtime; 
-  struct tm * timeinfo;
-  strcpy(resultado,"200 OK");
-  strcat(resposta, resultado);
-    
-  fprintf (resp_file, "%s\n", resposta);
-  fprintf (reg_file, "%s\n", resposta);
-
-  time ( &rawtime );
-  timeinfo = localtime ( &rawtime );
-  fprintf(resp_file, "Date: %s", asctime (timeinfo) );
-  fprintf(resp_file, "Server: Servidor HTTP ver 0.1 dos Descolados\n");
-  fprintf(resp_file, "Connection: PEGAR DO PARSER!!!!\n");
-  fprintf(resp_file, "Content-Type: message/http\n");
-  
-  fprintf(reg_file, "Date: %s", asctime (timeinfo) );
-  fprintf(reg_file, "Server: Servidor HTTP ver 0.1 dos Descolados\n");
-  fprintf(reg_file, "Connection: PEGAR DO PARSER!!!!\n");
-  fprintf(reg_file, "Content-Type: message/http\n");
-  
-}
-
-void trataOPTIONS(FILE * resp_file, FILE * reg_file){
-  char resultado[]="                                 ";
-  char resposta[] = "HTTP /1.1 ";
-  time_t rawtime;
-  time_t lastmod = fileStat.st_mtime; 
-  struct tm * timeinfo;
-  strcpy(resultado,"200 OK");
-  strcat(resposta, resultado);
-  printf("%s\n", resposta);
-  time ( &rawtime );
-  timeinfo = localtime ( &rawtime );
-  printf ("Date: %s", asctime (timeinfo) );
-  printf("Server: Servidor HTTP ver 0.1 dos Descolados\n");
-  printf("Connection: close\n");
-  printf("Allow: GET, HEAD, TRACE, OPTIONS\n");
-  printf("Content-Lenght: 0\n", fileStat.st_size);
-}
-
-void imprime404(FILE * resp_file){
-  fprintf(resp_file, "<html><<head>    <title>Página não encontrada</title>    </head><body>  <h1>ERROR 404</h1>  <br>Essa página não existe<br>");
-}
-
-void imprime403(FILE * resp_file){
-  printf(resp_file, "<html><<head>    <title>Conteúdo Proibido</title>    </head><body>  <h1>ERROR 403</h1>  <br>Você não tem pemissão de acesso a esse conteúdo<br>");
-}
-
-void erro(int error, char *metodo, FILE * resp_file){
-	if(error==501){
-		printf(resp_file, "<html><<head>    <title>501 Metodo não implementado</title>    </head><body>  <h1>ERROR 501</h1>  <br>O método %s que você quer utilizar não existe nesse ser vidor<br>", metodo);
 	}
 }
