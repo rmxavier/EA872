@@ -18,25 +18,6 @@ char path[1075];
 
 char original_local[1075];
 
-/*void main( int argc, char *argv[]){
-	char local[]= "/home/EC11/ra116006/meu-webspace";
-	char recurso[50];
-	char metodo[20];
-	
-	printf("Escreva o método:");
-	scanf("%s", metodo);
-  
-	//printf("Escreva o local:");
-	//scanf("%s", local);
-	
-	
-	printf("Escreva o rescurso:");
-	scanf("%s", recurso);
-	int result = acesso(local, recurso, metodo);
-	printf("\n%d", result);
-	return;
-}*/
-
 void print_file_to_string(char * fname, char * response) {
 	FILE *fp;
 	char str[80];

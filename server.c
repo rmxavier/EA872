@@ -251,8 +251,6 @@ void add_param_list(char *param)
 int main(int argc, char** argv)
 {
 	char *path = argv[2];
-	char *arq_req = argv[3];
-	char *arq_res = argv[4];
 	char *arq_reg = argv[5];
 	char *area;
 	
@@ -264,12 +262,7 @@ int main(int argc, char** argv)
 
 	printf("\n[SERVER] Starting program to call the parser and process a request...\n\n");
 		
-	printf("[SERVER] Argumentos:\n[SERVER]  (ENV) webspace: %s\n[SERVER]  (1) path: %s\n[SERVER]  (2) arq_res: %s\n[SERVER]  (3) arq_reg: %s\n\n", webspace, path, arq_res, arq_reg);
-	
-	if((resp_file = fopen(arq_res, "w")) == NULL){
-		printf("[SERVER] Error to open file %s.\n", arq_res);
-		exit (0);
-	}
+	printf("[SERVER] Argumentos:\n[SERVER]  (ENV) webspace: %s\n[SERVER]  (1) path: %s\n[SERVER]  (2) arq_reg: %s\n\n", webspace, path, arq_reg);
 	
 	if((reg_file = fopen(arq_reg, "a")) == NULL){
 		printf("[SERVER] Error to open file %s.\n", arq_reg);
@@ -281,7 +274,6 @@ int main(int argc, char** argv)
 	printf("[SERVER] Requisição ao server feita.");
 
 	/* Fechando o arquivo... */
-	close(resp_file);
 	close(reg_file);
 
 	printf("\n[SERVER] Finished!\n");
