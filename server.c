@@ -129,7 +129,13 @@ char * req_to_server(){
 		printf("[SERVER] Pegando os comandos e parametros necessarios internamente *****************");
 		command_list * method = result;
 		command_list * connection = get_command_by_name("Connection");
-		mimimi = acesso(webspace, method->params->param, method->command, &response, reg_file, connection->params->param);
+		
+		char * connection_string[100];
+		if (strcmp(connection->command, "Connection") != 0) {
+			strcpy(connection_string, " ");
+		}
+		
+		mimimi = acesso(webspace, method->params->param, method->command, &response, reg_file, connection_string);
 		printf("[SERVER] Terminando de pegar os comandos e parametros necessarios internamente *****************");
 
 		write(novo_soquete, mimimi, strlen(mimimi));
@@ -174,10 +180,15 @@ void print_request_to_file(FILE * reg_file) {
 			} else {
 				fprintf(reg_file, "%s%s", current_param->param, separator);
 			}
+						printf("[SERVER]    NEXT NEXT!!!!!!");
+
 			current_param = current_param->next;
 		}
+						printf("[SERVER]    NEXT NEXT 798789789789798!!!!!!");
 
 		current = current->next;
+								printf("[SERVER]    NEXT NEXT 4as6d4as56d46as4d6as46d!!!!!!");
+
 	}
 	fprintf(reg_file, "\n");
 	
@@ -250,8 +261,7 @@ void add_param_list(char *param)
 
 int main(int argc, char** argv)
 {
-	char *path = argv[2];
-	char *arq_reg = argv[5];
+	char *arq_reg = argv[2];
 	char *area;
 	
 	int r , i , j , sz ;
@@ -262,7 +272,7 @@ int main(int argc, char** argv)
 
 	printf("\n[SERVER] Starting program to call the parser and process a request...\n\n");
 		
-	printf("[SERVER] Argumentos:\n[SERVER]  (ENV) webspace: %s\n[SERVER]  (1) path: %s\n[SERVER]  (2) arq_reg: %s\n\n", webspace, path, arq_reg);
+	printf("[SERVER] Argumentos:\n[SERVER]  (ENV) webspace: %s\n[SERVER]  (1) arq_reg: %s\n\n", webspace, arq_reg);
 	
 	if((reg_file = fopen(arq_reg, "a")) == NULL){
 		printf("[SERVER] Error to open file %s.\n", arq_reg);

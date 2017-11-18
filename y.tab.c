@@ -119,16 +119,19 @@ extern int yydebug;
     OPTIONS = 267,
     HEAD = 268,
     PATCH = 269,
-    HOST = 270,
-    USER_AGENT = 271,
-    ACCEPT = 272,
-    ACCEPT_LANGUAGE = 273,
-    ACCEPT_ENCODING = 274,
-    CONTENT_LENGTH = 275,
-    CONTENT_TYPE = 276,
-    CONNECTION = 277,
-    UPGRADE_INSECURE_REQUESTS = 278,
-    PARAMETER = 279
+    POST = 270,
+    PUT = 271,
+    DELETE = 272,
+    HOST = 273,
+    USER_AGENT = 274,
+    ACCEPT = 275,
+    ACCEPT_LANGUAGE = 276,
+    ACCEPT_ENCODING = 277,
+    CONTENT_LENGTH = 278,
+    CONTENT_TYPE = 279,
+    CONNECTION = 280,
+    UPGRADE_INSECURE_REQUESTS = 281,
+    PARAMETER = 282
   };
 #endif
 /* Tokens.  */
@@ -144,16 +147,19 @@ extern int yydebug;
 #define OPTIONS 267
 #define HEAD 268
 #define PATCH 269
-#define HOST 270
-#define USER_AGENT 271
-#define ACCEPT 272
-#define ACCEPT_LANGUAGE 273
-#define ACCEPT_ENCODING 274
-#define CONTENT_LENGTH 275
-#define CONTENT_TYPE 276
-#define CONNECTION 277
-#define UPGRADE_INSECURE_REQUESTS 278
-#define PARAMETER 279
+#define POST 270
+#define PUT 271
+#define DELETE 272
+#define HOST 273
+#define USER_AGENT 274
+#define ACCEPT 275
+#define ACCEPT_LANGUAGE 276
+#define ACCEPT_ENCODING 277
+#define CONTENT_LENGTH 278
+#define CONTENT_TYPE 279
+#define CONNECTION 280
+#define UPGRADE_INSECURE_REQUESTS 281
+#define PARAMETER 282
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -164,7 +170,7 @@ union YYSTYPE
 
 	char * token;
 
-#line 168 "y.tab.c" /* yacc.c:355  */
+#line 174 "y.tab.c" /* yacc.c:355  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -179,7 +185,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 183 "y.tab.c" /* yacc.c:358  */
+#line 189 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -419,23 +425,23 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  9
+#define YYFINAL  12
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   39
+#define YYLAST   50
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  25
+#define YYNTOKENS  28
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  10
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  27
+#define YYNRULES  32
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  32
+#define YYNSTATES  36
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   279
+#define YYMAXUTOK   282
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -471,16 +477,18 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16,    17,    18,    19,    20,    21,    22,    23,    24
+      15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
+      25,    26,    27
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    22,    22,    23,    26,    29,    30,    34,    35,    39,
-      40,    41,    42,    43,    47,    48,    49,    50,    51,    52,
-      53,    54,    55,    58,    59,    63,    66,    67
+       0,    22,    22,    23,    26,    27,    28,    31,    32,    36,
+      37,    41,    42,    43,    44,    45,    46,    47,    48,    52,
+      53,    54,    55,    56,    57,    58,    59,    60,    63,    64,
+      68,    71,    72
 };
 #endif
 
@@ -490,9 +498,9 @@ static const yytype_uint8 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "NL", "CR", "COMMA", "END", "SLASH",
-  "BLANK", "AND", "GET", "TRACE", "OPTIONS", "HEAD", "PATCH", "HOST",
-  "USER_AGENT", "ACCEPT", "ACCEPT_LANGUAGE", "ACCEPT_ENCODING",
-  "CONTENT_LENGTH", "CONTENT_TYPE", "CONNECTION",
+  "BLANK", "AND", "GET", "TRACE", "OPTIONS", "HEAD", "PATCH", "POST",
+  "PUT", "DELETE", "HOST", "USER_AGENT", "ACCEPT", "ACCEPT_LANGUAGE",
+  "ACCEPT_ENCODING", "CONTENT_LENGTH", "CONTENT_TYPE", "CONNECTION",
   "UPGRADE_INSECURE_REQUESTS", "PARAMETER", "$accept", "requests",
   "request", "headers", "header_structure", "method", "header",
   "parameters", "parameter", "ends", YY_NULLPTR
@@ -506,14 +514,14 @@ static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
-     275,   276,   277,   278,   279
+     275,   276,   277,   278,   279,   280,   281,   282
 };
 # endif
 
-#define YYPACT_NINF -18
+#define YYPACT_NINF -19
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-18)))
+  (!!((Yystate) == (-19)))
 
 #define YYTABLE_NINF -1
 
@@ -524,10 +532,10 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -8,   -18,   -18,   -18,   -18,   -18,     1,   -18,   -17,   -18,
-     -18,   -18,    13,   -18,   -18,   -18,   -18,   -18,   -18,   -18,
-     -18,   -18,   -18,     4,   -18,   -17,   -18,   -18,   -18,     2,
-     -17,   -18
+      -9,   -19,   -19,   -19,   -19,   -19,   -19,   -19,   -19,    32,
+     -19,   -18,   -19,   -19,   -19,    -6,   -19,   -19,   -19,   -19,
+     -19,   -19,   -19,   -19,   -19,   -19,   -19,     4,   -19,   -18,
+     -19,     5,   -19,     5,   -18,   -19
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -535,22 +543,22 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     9,    10,    11,    12,    13,     0,     2,     0,     1,
-       3,    25,     0,    23,    22,    15,    16,    20,    17,    18,
-      19,    14,    21,     0,     5,     7,    24,    26,     6,     4,
-       8,    27
+       0,    11,    12,    13,    14,    15,    16,    17,    18,     0,
+       2,     0,     1,     3,    30,     6,    28,    31,    27,    20,
+      21,    25,    22,    23,    24,    19,    26,     0,     7,     9,
+      29,     5,     8,     4,    10,    32
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -18,   -18,     3,   -18,    -7,   -18,   -18,    14,   -12,   -18
+     -19,   -19,    24,   -19,     7,   -19,   -19,     6,    16,     9
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     6,     7,    23,    24,     8,    25,    12,    13,    29
+      -1,     9,    10,    27,    28,    11,    29,    15,    16,    31
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -558,44 +566,50 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      26,     9,     1,     2,     3,     4,     5,    11,    31,    10,
-      27,     1,     2,     3,     4,     5,    28,     0,    26,    14,
-      15,    16,    17,    18,    19,    20,    21,    22,    14,    15,
-      16,    17,    18,    19,    20,    21,    22,    11,     0,    30
+      17,     1,     2,     3,     4,     5,     6,     7,     8,    14,
+      17,    35,    18,    19,    20,    21,    22,    23,    24,    25,
+      26,    14,    18,    19,    20,    21,    22,    23,    24,    25,
+      26,    30,    12,    13,    32,    34,    33,     0,     0,     0,
+       0,     0,     1,     2,     3,     4,     5,     6,     7,     8,
+      30
 };
 
 static const yytype_int8 yycheck[] =
 {
-      12,     0,    10,    11,    12,    13,    14,    24,     6,     6,
-       6,    10,    11,    12,    13,    14,    23,    -1,    30,    15,
-      16,    17,    18,    19,    20,    21,    22,    23,    15,    16,
-      17,    18,    19,    20,    21,    22,    23,    24,    -1,    25
+       6,    10,    11,    12,    13,    14,    15,    16,    17,    27,
+       6,     6,    18,    19,    20,    21,    22,    23,    24,    25,
+      26,    27,    18,    19,    20,    21,    22,    23,    24,    25,
+      26,    15,     0,     9,    27,    29,    27,    -1,    -1,    -1,
+      -1,    -1,    10,    11,    12,    13,    14,    15,    16,    17,
+      34
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    10,    11,    12,    13,    14,    26,    27,    30,     0,
-      27,    24,    32,    33,    15,    16,    17,    18,    19,    20,
-      21,    22,    23,    28,    29,    31,    33,     6,    29,    34,
-      32,     6
+       0,    10,    11,    12,    13,    14,    15,    16,    17,    29,
+      30,    33,     0,    30,    27,    35,    36,     6,    18,    19,
+      20,    21,    22,    23,    24,    25,    26,    31,    32,    34,
+      36,    37,    32,    37,    35,     6
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    25,    26,    26,    27,    28,    28,    29,    29,    30,
-      30,    30,    30,    30,    31,    31,    31,    31,    31,    31,
-      31,    31,    31,    32,    32,    33,    34,    34
+       0,    28,    29,    29,    30,    30,    30,    31,    31,    32,
+      32,    33,    33,    33,    33,    33,    33,    33,    33,    34,
+      34,    34,    34,    34,    34,    34,    34,    34,    35,    35,
+      36,    37,    37
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     1,     2,     4,     1,     2,     1,     2,     1,
-       1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       1,     1,     1,     1,     2,     1,     1,     2
+       0,     2,     1,     2,     4,     3,     2,     1,     2,     1,
+       2,     1,     1,     1,     1,     1,     1,     1,     1,     1,
+       1,     1,     1,     1,     1,     1,     1,     1,     1,     2,
+       1,     1,     2
 };
 
 
@@ -1274,161 +1288,191 @@ yyreduce:
         case 2:
 #line 22 "parser.y" /* yacc.c:1646  */
     {printf("[YACC] Request\n");}
-#line 1278 "y.tab.c" /* yacc.c:1646  */
+#line 1292 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
 #line 23 "parser.y" /* yacc.c:1646  */
     {printf("[YACC] MoreRequests\n");}
-#line 1284 "y.tab.c" /* yacc.c:1646  */
+#line 1298 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
 #line 26 "parser.y" /* yacc.c:1646  */
     {printf("[YACC] ARequest\n");}
-#line 1290 "y.tab.c" /* yacc.c:1646  */
+#line 1304 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 29 "parser.y" /* yacc.c:1646  */
-    {printf("[YACC] HeaderStructure... \n");}
-#line 1296 "y.tab.c" /* yacc.c:1646  */
+#line 27 "parser.y" /* yacc.c:1646  */
+    {printf("[YACC] ARequest with no headers...\n");}
+#line 1310 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 30 "parser.y" /* yacc.c:1646  */
-    {printf("[YACC] MoreHeaders...\n");}
-#line 1302 "y.tab.c" /* yacc.c:1646  */
+#line 28 "parser.y" /* yacc.c:1646  */
+    {printf("[YACC] ARequest with no headers and no END (weird eh?!)...\n");}
+#line 1316 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 34 "parser.y" /* yacc.c:1646  */
-    {printf("[YACC] Header... \n");}
-#line 1308 "y.tab.c" /* yacc.c:1646  */
+#line 31 "parser.y" /* yacc.c:1646  */
+    {printf("[YACC] HeaderStructure... \n");}
+#line 1322 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 35 "parser.y" /* yacc.c:1646  */
-    {printf("[YACC] HeaderParams... \n");}
-#line 1314 "y.tab.c" /* yacc.c:1646  */
+#line 32 "parser.y" /* yacc.c:1646  */
+    {printf("[YACC] MoreHeaders...\n");}
+#line 1328 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 39 "parser.y" /* yacc.c:1646  */
-    {add_command_list("GET");printf("[YACC] Method (GET) \n");}
-#line 1320 "y.tab.c" /* yacc.c:1646  */
+#line 36 "parser.y" /* yacc.c:1646  */
+    {printf("[YACC] Header... \n");}
+#line 1334 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 40 "parser.y" /* yacc.c:1646  */
-    {add_command_list("TRACE");printf("[YACC] Method (TRACE) \n");}
-#line 1326 "y.tab.c" /* yacc.c:1646  */
+#line 37 "parser.y" /* yacc.c:1646  */
+    {printf("[YACC] HeaderParams... \n");}
+#line 1340 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
 #line 41 "parser.y" /* yacc.c:1646  */
-    {add_command_list("OPTIONS");printf("[YACC] Method (OPTIONS) \n");}
-#line 1332 "y.tab.c" /* yacc.c:1646  */
+    {add_command_list("GET");printf("[YACC] Method (GET) \n");}
+#line 1346 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
 #line 42 "parser.y" /* yacc.c:1646  */
-    {add_command_list("HEAD");printf("[YACC] Method (HEAD) \n");}
-#line 1338 "y.tab.c" /* yacc.c:1646  */
+    {add_command_list("TRACE");printf("[YACC] Method (TRACE) \n");}
+#line 1352 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
 #line 43 "parser.y" /* yacc.c:1646  */
-    {add_command_list("PATCH");printf("[YACC] Method (PATCH) \n");}
-#line 1344 "y.tab.c" /* yacc.c:1646  */
+    {add_command_list("OPTIONS");printf("[YACC] Method (OPTIONS) \n");}
+#line 1358 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 47 "parser.y" /* yacc.c:1646  */
-    {add_command_list("Connection"); printf("[YACC] Header (Connection)\n");}
-#line 1350 "y.tab.c" /* yacc.c:1646  */
+#line 44 "parser.y" /* yacc.c:1646  */
+    {add_command_list("HEAD");printf("[YACC] Method (HEAD) \n");}
+#line 1364 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 48 "parser.y" /* yacc.c:1646  */
-    {add_command_list("User-Agent");printf("[YACC] Header (UserAgent)\n");}
-#line 1356 "y.tab.c" /* yacc.c:1646  */
+#line 45 "parser.y" /* yacc.c:1646  */
+    {add_command_list("PATCH");printf("[YACC] Method (PATCH) \n");}
+#line 1370 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 49 "parser.y" /* yacc.c:1646  */
-    {add_command_list("Accept");printf("[YACC] Header (Accept)\n");}
-#line 1362 "y.tab.c" /* yacc.c:1646  */
+#line 46 "parser.y" /* yacc.c:1646  */
+    {add_command_list("POST");printf("[YACC] Method (POST) \n");}
+#line 1376 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 50 "parser.y" /* yacc.c:1646  */
-    {add_command_list("Accept-Encoding");printf("[YACC] Header (AcceptEncoding)\n");}
-#line 1368 "y.tab.c" /* yacc.c:1646  */
+#line 47 "parser.y" /* yacc.c:1646  */
+    {add_command_list("PUT");printf("[YACC] Method (PUT) \n");}
+#line 1382 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 51 "parser.y" /* yacc.c:1646  */
-    {add_command_list("Content-Length");printf("[YACC] Header (ContentLength)\n");}
-#line 1374 "y.tab.c" /* yacc.c:1646  */
+#line 48 "parser.y" /* yacc.c:1646  */
+    {add_command_list("DELETE");printf("[YACC] Method (DELETE) \n");}
+#line 1388 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
 #line 52 "parser.y" /* yacc.c:1646  */
-    {add_command_list("Content-Type");printf("[YACC] Header (ContentType)\n");}
-#line 1380 "y.tab.c" /* yacc.c:1646  */
+    {add_command_list("Connection"); printf("[YACC] Header (Connection)\n");}
+#line 1394 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
 #line 53 "parser.y" /* yacc.c:1646  */
-    {add_command_list("Accept-Language");printf("[YACC] Header (AcceptLanguage)\n");}
-#line 1386 "y.tab.c" /* yacc.c:1646  */
+    {add_command_list("User-Agent");printf("[YACC] Header (UserAgent)\n");}
+#line 1400 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
 #line 54 "parser.y" /* yacc.c:1646  */
-    {add_command_list("Upgrade-Insecure-Requests");printf("[YACC] Header (UpgradeLanguage)\n");}
-#line 1392 "y.tab.c" /* yacc.c:1646  */
+    {add_command_list("Accept");printf("[YACC] Header (Accept)\n");}
+#line 1406 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
 #line 55 "parser.y" /* yacc.c:1646  */
-    {add_command_list("Host");printf("[YACC] Header (Host)\n");}
-#line 1398 "y.tab.c" /* yacc.c:1646  */
+    {add_command_list("Accept-Encoding");printf("[YACC] Header (AcceptEncoding)\n");}
+#line 1412 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 58 "parser.y" /* yacc.c:1646  */
-    {printf("[YACC] Parameter... \n");}
-#line 1404 "y.tab.c" /* yacc.c:1646  */
+#line 56 "parser.y" /* yacc.c:1646  */
+    {add_command_list("Content-Length");printf("[YACC] Header (ContentLength)\n");}
+#line 1418 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 59 "parser.y" /* yacc.c:1646  */
-    {printf("[YACC] MoreParameters...\n");}
-#line 1410 "y.tab.c" /* yacc.c:1646  */
+#line 57 "parser.y" /* yacc.c:1646  */
+    {add_command_list("Content-Type");printf("[YACC] Header (ContentType)\n");}
+#line 1424 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 63 "parser.y" /* yacc.c:1646  */
-    {add_param_list((char*)(yyvsp[0].token));printf("[YACC] #Parameter (%s)#\n",(char*)(yyvsp[0].token));}
-#line 1416 "y.tab.c" /* yacc.c:1646  */
+#line 58 "parser.y" /* yacc.c:1646  */
+    {add_command_list("Accept-Language");printf("[YACC] Header (AcceptLanguage)\n");}
+#line 1430 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 66 "parser.y" /* yacc.c:1646  */
-    {printf("[YACC] ENDFound\n");}
-#line 1422 "y.tab.c" /* yacc.c:1646  */
+#line 59 "parser.y" /* yacc.c:1646  */
+    {add_command_list("Upgrade-Insecure-Requests");printf("[YACC] Header (UpgradeLanguage)\n");}
+#line 1436 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 67 "parser.y" /* yacc.c:1646  */
+#line 60 "parser.y" /* yacc.c:1646  */
+    {add_command_list("Host");printf("[YACC] Header (Host)\n");}
+#line 1442 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 28:
+#line 63 "parser.y" /* yacc.c:1646  */
+    {printf("[YACC] Parameter... \n");}
+#line 1448 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 29:
+#line 64 "parser.y" /* yacc.c:1646  */
+    {printf("[YACC] MoreParameters...\n");}
+#line 1454 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 30:
+#line 68 "parser.y" /* yacc.c:1646  */
+    {add_param_list((char*)(yyvsp[0].token));printf("[YACC] #Parameter (%s)#\n",(char*)(yyvsp[0].token));}
+#line 1460 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 31:
+#line 71 "parser.y" /* yacc.c:1646  */
+    {printf("[YACC] ENDFound\n");}
+#line 1466 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 32:
+#line 72 "parser.y" /* yacc.c:1646  */
     {printf("[YACC] ENDSFound\n");}
-#line 1428 "y.tab.c" /* yacc.c:1646  */
+#line 1472 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1432 "y.tab.c" /* yacc.c:1646  */
+#line 1476 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1656,7 +1700,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 70 "parser.y" /* yacc.c:1906  */
+#line 75 "parser.y" /* yacc.c:1906  */
 
 
 

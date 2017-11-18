@@ -10,7 +10,7 @@ void yyerror (char *s);
 %}
 
 %token NL CR COMMA END SLASH BLANK AND
-%token GET TRACE OPTIONS HEAD PATCH
+%token GET TRACE OPTIONS HEAD PATCH POST PUT DELETE 
 %token HOST USER_AGENT ACCEPT ACCEPT_LANGUAGE ACCEPT_ENCODING CONTENT_LENGTH CONTENT_TYPE CONNECTION UPGRADE_INSECURE_REQUESTS
 %union {
 	char * token;
@@ -24,6 +24,8 @@ requests: request		{printf("[YACC] Request\n");}		/* Apenas uma requisicao */
 	;
 
 request: method parameters headers ends	{printf("[YACC] ARequest\n");}	/* Estrutura da requisicao: metodo, parametros do metodo, headers (estrutura) e fim */
+	| method parameters ends	{printf("[YACC] ARequest with no headers...\n");}
+	| method parameters		{printf("[YACC] ARequest with no headers and no END (weird eh?!)...\n");}
 	;
 
 headers: header_structure		{printf("[YACC] HeaderStructure... \n");}		/* Header sem parametros */
@@ -41,6 +43,9 @@ method: /* Tipos de metodos */
 	| OPTIONS	{add_command_list("OPTIONS");printf("[YACC] Method (OPTIONS) \n");}
 	| HEAD		{add_command_list("HEAD");printf("[YACC] Method (HEAD) \n");}
 	| PATCH		{add_command_list("PATCH");printf("[YACC] Method (PATCH) \n");}
+	| POST		{add_command_list("POST");printf("[YACC] Method (POST) \n");}
+	| PUT		{add_command_list("PUT");printf("[YACC] Method (PUT) \n");}
+	| DELETE	{add_command_list("DELETE");printf("[YACC] Method (DELETE) \n");}
 	;
 
 header: /* Tipos de header  */

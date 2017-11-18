@@ -58,6 +58,27 @@
 	return PATCH;
 }
 
+"POST"		{
+	has_token_separator = 1;
+	token_separator = ' ';
+	printf("[LEXX]    -> Command: POST\n");
+	return POST;
+}
+
+"PUT"		{
+	has_token_separator = 1;
+	token_separator = ' ';
+	printf("[LEXX]    -> Command: PUT\n");
+	return PUT;
+}
+
+"DELETE"		{
+	has_token_separator = 1;
+	token_separator = ' ';
+	printf("[LEXX]    -> Command: DELETE\n");
+	return DELETE;
+}
+
 "Host: "              {
 	has_token_separator = 0;
 	token_separator = '\n';
