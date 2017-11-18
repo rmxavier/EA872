@@ -37,6 +37,21 @@ command_list * get_parsed_request() {
 	return list;
 }
 
+command_list * get_command_by_name(char command[]) {
+
+	command_list * current = list;
+	
+	// Iterates over the command list looking for a command that matches the parameter
+	while (current != NULL) {
+		if (strcmp(current->command, command) == 0) {
+			break;
+		}
+
+		current = current->next;
+	}
+	return current;
+}
+
 char * req_to_server(){
 	
 	//A porta que utilizaremos é 8585
@@ -104,20 +119,19 @@ char * req_to_server(){
 		// Printa a lista
 		print_request_to_file(reg_file);
 
-		printf("PARSEANDO SSAPORRA ==============================\n");
 		/* Funcao para obter resultado do parser */
 		result = get_parsed_request();
-		printf("~~~~~~~~~~~~~~PARSEANDO SSAPORRA ==============================\n");
 
 		
 		response = malloc(sizeof(char) * 500000);
 		char * mimimi = malloc(sizeof(char) * 500000);
-		mimimi = acesso(webspace, result->params->param, result->command, &response, reg_file);
 		
-				printf("~~~~~~~~~~~~~~PARSEANDO kkkkkk ==============================\n");
+		printf("[SERVER] Pegando os comandos e parametros necessarios internamente *****************");
+		command_list * method = result;
+		command_list * connection = get_command_by_name("Connection");
+		mimimi = acesso(webspace, method->params->param, method->command, &response, reg_file, connection->params->param);
+		printf("[SERVER] Terminando de pegar os comandos e parametros necessarios internamente *****************");
 
-		printf("[SERVER] response: %s\n", mimimi);
-		
 		write(novo_soquete, mimimi, strlen(mimimi));
 		
 		j++;
@@ -134,6 +148,9 @@ char * req_to_server(){
 
 
 void print_request_to_file(FILE * reg_file) {
+	int first_command = 0;
+	char separator[] = " ";
+	
 	fprintf(reg_file, "\n");
 	command_list * current = list;
 	
@@ -142,23 +159,27 @@ void print_request_to_file(FILE * reg_file) {
 		printf("[SERVER] Comando: %s\n", current->command);
 		fprintf(reg_file, "%s: ", current->command);
 		
+		if ((++first_command) == 1) {
+			strcpy(separator, " ");
+		} else {
+			strcpy(separator, ", ");
+		}
+		
 		param_list *current_param = current->params;
 		while(current_param != NULL){
+			
 			printf("[SERVER]     |--> Parâmetro: %s\n", current_param->param);
 			if (current_param->next == NULL) {
 				fprintf(reg_file, "%s\n", current_param->param);
 			} else {
-				fprintf(reg_file, "%s,", current_param->param);
+				fprintf(reg_file, "%s%s", current_param->param, separator);
 			}
 			current_param = current_param->next;
 		}
 
 		current = current->next;
 	}
-	printf("VAI TOMA NO CU FDP\n");
 	fprintf(reg_file, "\n");
-	printf("VAI TOMA NO CU FDP2\n");
-
 	
 }
 

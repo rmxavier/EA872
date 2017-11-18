@@ -55,16 +55,18 @@ void print_file_to_string(char * fname, char * response) {
 	fclose(fp);
 }
 
-void write_header(char * response, char * header, char * info) {
+void write_header(char * response, char * header, char * info, int suppress_last_character) {
 	
-	info[strlen(info) - 1] = '\0';
+	if (suppress_last_character) {
+		info[strlen(info) - 1] = '\0';
+	}
 	
 	strcat(response, header);
 	strcat(response, info);
 	strcat(response, "\r\n");
 }
 
-char * trataGET(int result, int fd, char * response, FILE * reg_file){
+char * trataGET(int result, int fd, char * response, FILE * reg_file, char connection[]){
 	strcpy(response, "HTTP/1.1 ");
 	time_t rawtime;
 	time_t lastmod = fileStat.st_mtime; 
@@ -85,18 +87,22 @@ char * trataGET(int result, int fd, char * response, FILE * reg_file){
 
 	time ( &rawtime );
 	timeinfo = localtime ( &rawtime );
-	write_header(response, "Date: ", asctime (timeinfo));
+	write_header(response, "Date: ", asctime (timeinfo), 1);
 
 	strcat(response, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
 
-	// Pegar do parser
-	strcat(response, "Connection: keep-alive\r\n");
+	strcat(response, "Connection: ");
+	strcat(response, connection);
+	strcat(response, "\r\n");
 
 	timeinfo = localtime(&lastmod);
 	if(result==200) {
-		write_header(response, "Last-Modified: ", asctime(timeinfo));
-
-		//write_header(&response, "Content-Lenght: %zd\n", fileStat.st_size);
+		write_header(response, "Last-Modified: ", asctime(timeinfo), 1);
+		
+		char * content_length;
+		snprintf(content_length, sizeof(content_length), "%zd", fileStat.st_size);
+		
+		write_header(response, "Content-Lenght: ", content_length, 0);
 		strcat(response, "Content-Type: text/html\r\n");
 	}
 	
@@ -112,7 +118,7 @@ char * trataGET(int result, int fd, char * response, FILE * reg_file){
 	return mimimi;
 }
 
-char * trataHEAD(int result, int fd, char * response, FILE * reg_file) {
+char * trataHEAD(int result, int fd, char * response, FILE * reg_file, char connection[]) {
 	strcpy(response, "HTTP/1.1 ");
 	time_t rawtime;
 	time_t lastmod = fileStat.st_mtime; 
@@ -133,12 +139,14 @@ char * trataHEAD(int result, int fd, char * response, FILE * reg_file) {
 
 	time ( &rawtime );
 	timeinfo = localtime ( &rawtime );
-	write_header(response, "Date: ", asctime (timeinfo));
+	write_header(response, "Date: ", asctime (timeinfo), 1);
 
 	strcat(response, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
 
 	// Pegar do parser
-	strcat(response, "Connection: keep-alive\r\n");
+	strcat(response, "Connection: ");
+	strcat(response, connection);
+	strcat(response, "\r\n");
 
 	timeinfo = localtime(&lastmod);
 	
@@ -149,7 +157,7 @@ char * trataHEAD(int result, int fd, char * response, FILE * reg_file) {
 	return mimimi;
 }
 
-char * trataTRACE(int result, int fd, char * response, FILE * reg_file) {
+char * trataTRACE(int result, int fd, char * response, FILE * reg_file, char connection[]) {
 	strcpy(response, "HTTP/1.1 ");
 	time_t rawtime;
 	time_t lastmod = fileStat.st_mtime; 
@@ -159,21 +167,25 @@ char * trataTRACE(int result, int fd, char * response, FILE * reg_file) {
 
 	time ( &rawtime );
 	timeinfo = localtime ( &rawtime );
-	write_header(response, "Date: ", asctime (timeinfo));
+	write_header(response, "Date: ", asctime (timeinfo), 1);
 
 	strcat(response, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
 
 	// Pegar do parser
-	strcat(response, "Connection: keep-alive\r\n");
+	strcat(response, "Connection: ");
+	strcat(response, connection);
+	strcat(response, "\r\n");
 
 	timeinfo = localtime(&lastmod);
 	if(result==200) {
-		write_header(response, "Last-Modified: ", asctime(timeinfo));
+		write_header(response, "Last-Modified: ", asctime(timeinfo), 1);
 
 		strcat(response, "Allow: GET, HEAD, TRACE, OPTIONS\n");
 		
-		//write_header(&response, "Content-Lenght: %zd\n", fileStat.st_size);
+		char * content_length;
+		snprintf(content_length, sizeof(content_length), "%zd", fileStat.st_size);
 		
+		write_header(response, "Content-Lenght: ", content_length, 0);		
 		strcat(response, "Content-Type: text/html\r\n");
 
 		strcat(response, "\r\n");
@@ -187,7 +199,7 @@ char * trataTRACE(int result, int fd, char * response, FILE * reg_file) {
   
 }
 
-char * trataOPTIONS(int result, int fd, char * response, FILE * reg_file) {
+char * trataOPTIONS(int result, int fd, char * response, FILE * reg_file, char connection[]) {
 	strcpy(response, "HTTP/1.1 ");
 	time_t rawtime;
 	time_t lastmod = fileStat.st_mtime; 
@@ -208,18 +220,23 @@ char * trataOPTIONS(int result, int fd, char * response, FILE * reg_file) {
 
 	time ( &rawtime );
 	timeinfo = localtime ( &rawtime );
-	write_header(response, "Date: ", asctime (timeinfo));
+	write_header(response, "Date: ", asctime (timeinfo), 1);
 
 	strcat(response, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
 	// Pegar do parser
-	strcat(response, "Connection: keep-alive\r\n");
+	strcat(response, "Connection: ");
+	strcat(response, connection);
+	strcat(response, "\r\n");
 
 	timeinfo = localtime(&lastmod);
 	if(result==200) {
-		write_header(response, "Last-Modified: ", asctime(timeinfo));
+		write_header(response, "Last-Modified: ", asctime(timeinfo), 1);
 		strcat(response, "Allow: GET, HEAD, TRACE, OPTIONS\n");
 		
-		//write_header(&response, "Content-Lenght: %zd\n", fileStat.st_size);
+		char * content_length;
+		snprintf(content_length, sizeof(content_length), "%zd", fileStat.st_size);
+		
+		write_header(response, "Content-Lenght: ", content_length, 0);
 		strcat(response, "Content-Type: text/html\r\n");
 		strcat(response, "\r\n");
 
@@ -234,7 +251,7 @@ char * trataOPTIONS(int result, int fd, char * response, FILE * reg_file) {
 }
 
 // Erro 501 - Not Implemented
-char * trataNotImplemented(int fd, char * response, FILE * reg_file) {
+char * trataNotImplemented(int fd, char * response, FILE * reg_file, char connection[]) {
 	strcpy(response, "HTTP/1.1 ");
 	time_t rawtime;
 	time_t lastmod = fileStat.st_mtime; 
@@ -246,24 +263,29 @@ char * trataNotImplemented(int fd, char * response, FILE * reg_file) {
 	printf(reg_file, "%s\n", response );
 	time ( &rawtime );
 	timeinfo = localtime ( &rawtime );
-	write_header(response, "Date: ", asctime (timeinfo));
+	write_header(response, "Date: ", asctime (timeinfo), 1);
 	fprintf(reg_file, "Date: %s", asctime (timeinfo) );
 
 	strcat(response, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
 	fprintf(reg_file, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
 
 	// Pegar do parser
-	strcat(response, "Connection: keep-alive\r\n");
+	strcat(response, "Connection: ");
+	strcat(response, connection);
+	strcat(response, "\r\n");
 	fprintf(reg_file, "Connection: PEGAR DO PARSER!!!!\r\n");
 
 	timeinfo = localtime(&lastmod);
-	write_header(response, "Last-Modified: ", asctime(timeinfo));
+	write_header(response, "Last-Modified: ", asctime(timeinfo), 1);
 	fprintf(reg_file, "Last-Modified: %s", asctime(timeinfo));
 
 	strcat(response, "Allow: GET, HEAD, TRACE, OPTIONS\n");
 	
-	//write_header(&response, "Content-Lenght: %zd\n", fileStat.st_size);
-	fprintf(reg_file, "Content-Lenght: %zd\n", fileStat.st_size);
+	char * content_length;
+	snprintf(content_length, sizeof(content_length), "%zd", fileStat.st_size);
+	
+	write_header(response, "Content-Lenght: ", content_length, 0);
+	fprintf(reg_file, "Content-Lenght: %zd\n", fileStat.st_size, 1);
 	
 	strcat(response, "Content-Type: text/html\r\n");
 	fprintf(reg_file, "Content-Type: text/html\r\n");
@@ -283,28 +305,28 @@ char * trataNotImplemented(int fd, char * response, FILE * reg_file) {
 	return mimimi;
 }
 
-char * trataMetodo(char *metodo, int result, int fd, char * response, FILE * reg_file){
+char * trataMetodo(char *metodo, int result, int fd, char * response, FILE * reg_file, char connection[]){
 	char * resp;
 	if(strcmp(metodo, "GET")==0){
-		resp = trataGET(result, fd, response, reg_file);
+		resp = trataGET(result, fd, response, reg_file, connection);
 	}
 	else if(strcmp(metodo, "HEAD")==0){
-		resp = trataHEAD(result, fd, response, reg_file);
+		resp = trataHEAD(result, fd, response, reg_file, connection);
 	}
 	else if(strcmp(metodo, "TRACE")==0){
-		resp = trataTRACE(result, fd, response, reg_file);
+		resp = trataTRACE(result, fd, response, reg_file, connection);
 	}
 	else if(strcmp(metodo, "OPTIONS")==0){
-		resp = trataOPTIONS(result, fd, response, reg_file);
+		resp = trataOPTIONS(result, fd, response, reg_file, connection);
 	}
 	else {
-		resp = trataNotImplemented(fd, response, reg_file);
+		resp = trataNotImplemented(fd, response, reg_file, connection);
 	}
 	
 	return resp;
 }
 
-char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * reg_file){
+char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * reg_file, char connection[]){
 	struct stat statarq;
 	int fd;
 	DIR *dir;
@@ -335,7 +357,7 @@ char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * 
 		strcpy(recurso, "/404.html");
 		strcat(path, recurso);
 
-		return trataMetodo(metodo, 404, fd, response, reg_file);
+		return trataMetodo(metodo, 404, fd, response, reg_file, connection);
 		//return 404;
 	}
 	else{
@@ -346,7 +368,7 @@ char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * 
 			strcpy(recurso, "/403.html");
 			strcat(path, recurso);
 			
-			return trataMetodo(metodo, 403, fd, response, reg_file);
+			return trataMetodo(metodo, 403, fd, response, reg_file, connection);
 			//return 403;
 		}
 		//recurso existe e tem permissão de acesso
@@ -357,8 +379,7 @@ char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * 
 			if((statarq.st_mode & S_IFMT)==S_IFREG){
 				//Abre e imprime o arquivo
 				fd = open(path, O_RDONLY, 0600);
-				return trataMetodo(metodo, 200, fd, response, reg_file);
-				write(fd,path, sizeof(path));
+				return trataMetodo(metodo, 200, fd, response, reg_file, connection);
 			}
 			else{
 				//caso seja diretório
@@ -370,7 +391,7 @@ char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * 
 						strcpy(recurso, "/403.html");
 						strcat(path, recurso);
 				
-						return trataMetodo(metodo, 403, fd, response, reg_file);
+						return trataMetodo(metodo, 403, fd, response, reg_file, connection);
 						//return 403;
 					} else {
 						struct dirent *newDir;
@@ -390,7 +411,7 @@ char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * 
 									strcpy(recurso, "/403.html");
 									strcat(path, recurso);
 				
-									return trataMetodo(metodo, 403, fd, response, reg_file);
+									return trataMetodo(metodo, 403, fd, response, reg_file, connection);
 									//return 403;
 								}
 								else{
@@ -399,7 +420,7 @@ char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * 
 									fd = open(path, O_RDONLY, 0600);
 									//write(fd,"", 50);
 									//write(fd,path, sizeof(path));
-									return trataMetodo(metodo, 200, fd, response, reg_file);
+									return trataMetodo(metodo, 200, fd, response, reg_file, connection);
 									//return 0;
 								}
 								break;
@@ -413,14 +434,14 @@ char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * 
 									strcpy(recurso, "/403.html");
 									strcat(path, recurso);
 				
-									return trataMetodo(metodo, 403,fd, response, reg_file);
+									return trataMetodo(metodo, 403, fd, response, reg_file, connection);
 									//return 403;
 								}
 								else{
 									fd = open(path, O_RDONLY, 0600);
 									//write(fd,"", 50);
 									write(fd,path, sizeof(path));
-									return trataMetodo(metodo, 200, fd, response, reg_file);
+									return trataMetodo(metodo, 200, fd, response, reg_file, connection);
 									//return 0;
 								}
 								break;
@@ -431,7 +452,7 @@ char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * 
 						strcat(path, recurso);
 						printf("404 da massa!!! ================= %s \n", path);
 						//caso não tenha achado nenhum arquivo index ou welcome
-						return trataMetodo(metodo, 404, fd, response, reg_file);
+						return trataMetodo(metodo, 404, fd, response, reg_file, connection);
 						//return 404;
 					}
 				}
