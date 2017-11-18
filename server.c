@@ -21,6 +21,8 @@ char resource[1024];
 int varindex = 0;
 int have_host = 0;
 int InfoViaPostRecived = 0;
+int max_processos = 3;
+int processo;
 
 FILE * req_file;
 FILE * resp_file;
@@ -66,8 +68,9 @@ char * req_to_server(){
 
 	while (bind(soquete, (struct sockaddr *)&servidor, sizeof(servidor)) < 0)
 	{
+		printf("%d", processo);
 	perror(".");
-	//exit(3);
+	exit(3);
 	}
 	printf("[SERVER] Voa\n");
 
@@ -119,7 +122,7 @@ char * req_to_server(){
 		printf("[SERVER] response: %s\n", mimimi);
 		
 		write(novo_soquete, mimimi, strlen(mimimi));
-		
+		//sleep(10);
 		j++;
 	}
 
@@ -128,7 +131,8 @@ char * req_to_server(){
 	//exit(5);
 	
 	printf("RETURN KKKKKKK ===========\n");
-	
+	//sleep(10);
+	exit(0);
 	return "kkkkk";
 }
 
@@ -227,6 +231,20 @@ void add_param_list(char *param)
 	return;
 }
 
+void cria_processos(){
+	char *area;
+	int pid = fork();
+	if(pid==0){
+			area = req_to_server();
+			printf("====================================================FOI CHAMADO REQ2SERVER PARA O PROCESSO %d", processo);
+			processo++;
+			//sleep(10);
+	}else{
+		printf("Não criou outro processo pois o fork não funcionou\n");
+	}
+	return;
+}
+
 int main(int argc, char** argv)
 {
 	char *path = argv[2];
@@ -234,6 +252,7 @@ int main(int argc, char** argv)
 	char *arq_res = argv[4];
 	char *arq_reg = argv[5];
 	char *area;
+	processo = 0;
 	
 	int r , i , j , sz ;
 	char *req;
@@ -254,8 +273,22 @@ int main(int argc, char** argv)
 		printf("[SERVER] Error to open file %s.\n", arq_reg);
 		exit (0);
 	}
-	
-	area = req_to_server();
+	//aqui tem que fazer uma função que cria processo e chama o req_to_server em cada processo
+	//também tem que ser while(1), e tratar depois quando sair.
+	//while(1){
+	while (processo<5){
+		if(processo < max_processos){
+			cria_processos();
+			//o comando abaixo tem que estar em cria_processos
+			//area = req_to_server();
+			sleep(10);
+		}
+		else{
+			printf("JÁ DEU O MÁX DE PROC. E SE COLOCAR SÓ UM IF NO RE_TO_SERVER PARA ELE IMPRIMIR OUTRA PARADA???");
+			//break;
+		}
+		processo++;
+	}
 	
 	printf("[SERVER] Requisição ao server feita.");
 
