@@ -8,7 +8,7 @@
 #include "y.tab.h"
 #include "server.h"
 #include "file_manager.h"
-
+#include <pthread.h>
 /**
  * Para compilar o codigo
  * flex parser.l
@@ -21,8 +21,12 @@ char resource[1024];
 int varindex = 0;
 int have_host = 0;
 int InfoViaPostRecived = 0;
-int max_processos = 3;
-int processo;
+//int max_processos = 3;
+//int processo;
+pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+int tot_thread, num_thread;
+int max_thread = 3;
+pthread_t thread[3]; //ric
 
 FILE * req_file;
 FILE * resp_file;
@@ -54,7 +58,7 @@ command_list * get_command_by_name(char command[]) {
 	return current;
 }
 
-char * req_to_server(){
+void * req_to_server(){
 	
 	//A porta que utilizaremos é 8585
 	unsigned short porta = 8585;
@@ -67,25 +71,30 @@ char * req_to_server(){
 	int nome_compr;			
 	int mensagem_compr;		
 	int i, j;			//j vai controlar o numero de requições no arquivo. nesse caso, apenas uma.
+	//int n;
+	//struct timeval timeout;
+	//fd_set fds;
+	//FD_ZERO(&fds);
+	//timeout.tv_sec = 3; /* máximo de tempo para a requisição */
+	//timeout.tv_usec = 0; /* */
 	
 	printf("[SERVER] Iniciando requisição ao server...");
-     
+	
 	if ((soquete = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 	{
 		perror("Erro em socket()");
 		exit(2);
 	}
 
-	
+	pthread_mutex_lock(&lock);
 	servidor.sin_family 	= AF_INET;
 	servidor.sin_port   	= htons(porta);
 	servidor.sin_addr.s_addr	= INADDR_ANY;
-
+//pthread_t thread[3]; //
 	while (bind(soquete, (struct sockaddr *)&servidor, sizeof(servidor)) < 0)
 	{
-		printf("%d", processo);
 	perror(".");
-	exit(3);
+	//exit(3);
 	}
 	printf("[SERVER] Voa\n");
 
@@ -95,8 +104,12 @@ char * req_to_server(){
 		perror("Erro em listen().\n");
 		exit(4);
 	}
-
-	j=0;	
+	printf("NÚMERO DA THREAD: %d\n", num_thread);
+	printf("total DA THREAD: %d\n", tot_thread);
+	printf("SOCKET: %d", soquete);
+	//FD_SET(soquete, &fds);
+	j=0;
+	//n = select(1, &fds, (fd_set *)0, (fd_set *)0, &timeout);
 	while (j<1) {
 
 	
@@ -129,25 +142,34 @@ char * req_to_server(){
 		response = malloc(sizeof(char) * 500000);
 		char * mimimi = malloc(sizeof(char) * 500000);
 		
-		printf("[SERVER] Pegando os comandos e parametros necessarios internamente *****************");
+		
 		command_list * method = result;
 		command_list * connection = get_command_by_name("Connection");
+		printf("[REQ2SERVER] CHEGOU AQUI!!!!!!!!!!\n");
+		printf("[REQ2SERVER] webspace = %s\n", webspace);
+		printf("[REQ2SERVER] recurso = %s\n", method->params->param);
+		printf("[REQ2SERVER] method = %s\n", method->command);
+		printf("[REQ2SERVER] response = %s\n", response);
+
 		mimimi = acesso(webspace, method->params->param, method->command, &response, reg_file, connection->params->param);
-		printf("[SERVER] Terminando de pegar os comandos e parametros necessarios internamente *****************");
+		printf("[REQ2SERVER] PASSOU DO ACESSO\n");
+
 
 		write(novo_soquete, mimimi, strlen(mimimi));
 		//sleep(10);
 		j++;
 	}
-
+	tot_thread--;
+	pthread_mutex_unlock(&lock);
 	close(soquete);
 	//printf("O servidor terminou com erro.\n");
 	//exit(5);
 	
-	printf("RETURN KKKKKKK ===========\n");
+	//printf("P %d RETURN KKKKKKK ===========\n", processo);
 	//sleep(10);
-	exit(0);
-	return "kkkkk";
+	//exit(0);
+	pthread_exit(NULL);
+	return;
 }
 
 
@@ -158,9 +180,9 @@ void print_request_to_file(FILE * reg_file) {
 	fprintf(reg_file, "\n");
 	command_list * current = list;
 	
-	while (current != NULL) {
+	while (current != NULL) {//pthread_t thread[3]; //
 		
-		printf("[SERVER] Comando: %s\n", current->command);
+		//printf("[SERVER] Comando: %s\n", current->command);
 		fprintf(reg_file, "%s: ", current->command);
 		
 		if ((++first_command) == 1) {
@@ -172,7 +194,7 @@ void print_request_to_file(FILE * reg_file) {
 		param_list *current_param = current->params;
 		while(current_param != NULL){
 			
-			printf("[SERVER]     |--> Parâmetro: %s\n", current_param->param);
+			//printf("[SERVER]     |--> Parâmetro: %s\n", current_param->param);
 			if (current_param->next == NULL) {
 				fprintf(reg_file, "%s\n", current_param->param);
 			} else {
@@ -252,17 +274,41 @@ void add_param_list(char *param)
 	return;
 }
 
-void cria_processos(){
-	char *area;
+void cria_thread(){
+	int pid;
+	int bla = 0;
+	/*char *area;
 	int pid = fork();
 	if(pid==0){
-			area = req_to_server();
-			printf("====================================================FOI CHAMADO REQ2SERVER PARA O PROCESSO %d", processo);
-			processo++;
-			//sleep(10);
+		
+		printf("====================================================vai chamar REQ2SERVER PARA O PROCESSO %d\n", processo);
+		area = req_to_server();
+		printf("====================================================FOI CHAMADO REQ2SERVER PARA O PROCESSO %d\n", processo);
+		processo++;
+		execlp("cal","cal",processo,NULL);
+		//exit(pid);
 	}else{
 		printf("Não criou outro processo pois o fork não funcionou\n");
+	}*/
+	pthread_mutex_lock(&lock); //mutex varivael global compartilhada (numberOfReqs) ric
+	num_thread = tot_thread;//ric
+	pthread_mutex_unlock(&lock);//ric
+	if(num_thread>=max_thread){
+		printf("cria um jeito. tem que levar pro socket tbm mas responder outra coisa\n");
 	}
+	else{
+		pid = pthread_create(&thread[tot_thread], NULL, &req_to_server, NULL); //cria uma nova THREAD
+		if (pid) {
+			printf("\n ERRO: codigo de retorno de pthread_create eh %d \n", pid);
+			exit(1);
+		}
+		pthread_mutex_lock(&lock); 
+		tot_thread++; //incrementa o contador de TREADS'
+		pthread_mutex_unlock(&lock);
+	}
+	
+	
+	
 	return;
 }
 
@@ -273,10 +319,13 @@ int main(int argc, char** argv)
 	char *arq_res = argv[4];
 	char *arq_reg = argv[5];
 	char *area;
-	processo = 0;
-	
+	int processo = 0;
+	//pthread_t thread[3]; //ric
 	int r , i , j , sz ;
 	char *req;
+	pthread_mutex_init(&lock, NULL);//ric
+	tot_thread=0;
+	num_thread=0;
 	
 	webspace = argv[1];
 
@@ -294,22 +343,14 @@ int main(int argc, char** argv)
 		printf("[SERVER] Error to open file %s.\n", arq_reg);
 		exit (0);
 	}
-	//aqui tem que fazer uma função que cria processo e chama o req_to_server em cada processo
-	//também tem que ser while(1), e tratar depois quando sair.
-	//while(1){
-	while (processo<5){
-		if(processo < max_processos){
-			cria_processos();
-			//o comando abaixo tem que estar em cria_processos
-			//area = req_to_server();
-			sleep(10);
-		}
-		else{
-			printf("JÁ DEU O MÁX DE PROC. E SE COLOCAR SÓ UM IF NO RE_TO_SERVER PARA ELE IMPRIMIR OUTRA PARADA???");
-			//break;
-		}
+	
+	/*while(processo<10){
 		processo++;
-	}
+		cria_thread();
+		printf("CADE O RESTO PORRAAAAAAAAAAA\n");
+		sleep(10);
+	}*/
+	req_to_server();
 	
 	printf("[SERVER] Requisição ao server feita.");
 

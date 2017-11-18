@@ -879,7 +879,7 @@ YY_RULE_SETUP
 {
 	has_token_separator = 1;
 	token_separator = ' ';
-	printf("[LEXX]    -> Command: GET\n");
+	////printf("[LEXX]    -> Command: GET\n");
 	return GET;
 }
 	YY_BREAK
@@ -889,7 +889,7 @@ YY_RULE_SETUP
 {
 	has_token_separator = 1;
 	token_separator = ' ';
-	printf("[LEXX]    -> Command: TRACE\n");
+	////printf("[LEXX]    -> Command: TRACE\n");
 	return TRACE;
 }
 	YY_BREAK
@@ -899,7 +899,7 @@ YY_RULE_SETUP
 {
 	has_token_separator = 1;
 	token_separator = ' ';
-	printf("[LEXX]    -> Command: HEAD\n");
+	////printf("[LEXX]    -> Command: HEAD\n");
 	return HEAD;
 }
 	YY_BREAK
@@ -909,7 +909,7 @@ YY_RULE_SETUP
 {
 	has_token_separator = 1;
 	token_separator = ' ';
-	printf("[LEXX]    -> Command: OPTIONS\n");
+	////printf("[LEXX]    -> Command: OPTIONS\n");
 	return OPTIONS;
 }
 	YY_BREAK
@@ -919,7 +919,7 @@ YY_RULE_SETUP
 {
 	has_token_separator = 1;
 	token_separator = ' ';
-	printf("[LEXX]    -> Command: PATCH\n");
+	////printf("[LEXX]    -> Command: PATCH\n");
 	return PATCH;
 }
 	YY_BREAK
@@ -929,7 +929,7 @@ YY_RULE_SETUP
 {
 	has_token_separator = 0;
 	token_separator = '\n';
-	printf("[LEXX]    -> Command: host\n");
+	//printf("[LEXX]    -> Command: host\n");
 	return HOST;
 }
 	YY_BREAK
@@ -939,7 +939,7 @@ YY_RULE_SETUP
 {
 	has_token_separator = 0;
 	token_separator = '\n';
-	printf("[LEXX]    -> Command: user-agent\n");
+	//printf("[LEXX]    -> Command: user-agent\n");
 	return USER_AGENT;
 }
 	YY_BREAK
@@ -949,7 +949,7 @@ YY_RULE_SETUP
 {
 	has_token_separator = 1;
 	token_separator = ',';
-	printf("[LEXX]    -> Command: accept\n");
+	//printf("[LEXX]    -> Command: accept\n");
 	return ACCEPT;
 }
 	YY_BREAK
@@ -959,7 +959,7 @@ YY_RULE_SETUP
 {
 	has_token_separator = 1;
 	token_separator = ',';
-	printf("[LEXX]    -> Command: accept-language\n");
+	//printf("[LEXX]    -> Command: accept-language\n");
 	return ACCEPT_LANGUAGE;
 }
 	YY_BREAK
@@ -969,7 +969,7 @@ YY_RULE_SETUP
 {
 	has_token_separator = 1;
 	token_separator = ',';
-	printf("[LEXX]    -> Command: accept-encoding\n");
+	//printf("[LEXX]    -> Command: accept-encoding\n");
 	return ACCEPT_ENCODING;
 }
 	YY_BREAK
@@ -979,7 +979,7 @@ YY_RULE_SETUP
 {
 	has_token_separator = 1;
 	token_separator = ',';
-	printf("[LEXX]    -> Command: content-length\n");
+	//printf("[LEXX]    -> Command: content-length\n");
 	return CONTENT_LENGTH;
 }
 	YY_BREAK
@@ -989,7 +989,7 @@ YY_RULE_SETUP
 {
 	has_token_separator = 1;
 	token_separator = ',';
-	printf("[LEXX]    -> Command: content-type\n");
+	//printf("[LEXX]    -> Command: content-type\n");
 	return CONTENT_TYPE;
 }
 	YY_BREAK
@@ -999,7 +999,7 @@ YY_RULE_SETUP
 {
 	has_token_separator = 0;
 	token_separator = '\n';
-	printf("[LEXX]    -> Command: connection\n");
+	//printf("[LEXX]    -> Command: connection\n");
 	return CONNECTION;
 }
 	YY_BREAK
@@ -1009,7 +1009,7 @@ YY_RULE_SETUP
 {
 	has_token_separator = 0;
 	token_separator = '\n';
-	printf("[LEXX]    -> Command: upgrade-insecure-requests\n");
+	//printf("[LEXX]    -> Command: upgrade-insecure-requests\n");
 	return UPGRADE_INSECURE_REQUESTS;
 }
 	YY_BREAK
@@ -1018,7 +1018,7 @@ case 17:
 YY_RULE_SETUP
 #line 116 "parser.l"
 {
-	printf("[LEXX]\n[LEXX]---- [END1] Line number: %d ----\n[LEXX]\n", lineno);
+	//printf("[LEXX]\n[LEXX]---- [END1] Line number: %d ----\n[LEXX]\n", lineno);
 	return END;
 }
 	YY_BREAK
@@ -1027,14 +1027,14 @@ case 18:
 YY_RULE_SETUP
 #line 120 "parser.l"
 {
-	printf("[LEXX]\n[LEXX]---- [END2] Line number: %d ----\n[LEXX]\n", lineno);
+	//printf("[LEXX]\n[LEXX]---- [END2] Line number: %d ----\n[LEXX]\n", lineno);
 	return END;
 }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
 #line 124 "parser.l"
 {
-	printf("[LEXX] EOF found\n");
+	//printf("[LEXX] EOF found\n");
 	return 0;
 }
 	YY_BREAK
@@ -1051,7 +1051,7 @@ YY_RULE_SETUP
 	// Imprime o parâmetro
 	if (i_param > 0 && (yytext[0] == '\r' || yytext[0] == '\n' || (has_token_separator && yytext[0] == token_separator))) {
 
-		printf("[LEXX]        |--> param: %s\n", param);
+		//printf("[LEXX]        |--> param: %s\n", param);
 		yylval.token = strdup(param);
 		memset(param, 0, strlen(param));
 		i_param = 0;

@@ -5,7 +5,7 @@ lex parser.l
 echo "[BUILD] Iniciando yacc -----------------------------------"
 yacc -d parser.y
 echo "[BUILD] Compilando o server ------------------------------"
-gcc -w -o server server.c y.tab.c file_manager.c lex.yy.c -ly -lfl
+gcc -w -pthread -o server server.c y.tab.c file_manager.c lex.yy.c -ly -lfl
 echo "[BUILD] Executando o server ------------------------------"
 echo "./server $WEBSPACE $1 $2 $3 $4"
 ./server $WEBSPACE $1 $2 $3 $4

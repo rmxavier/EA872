@@ -202,3 +202,417 @@ Last-Modified: Wed Dec 31 21:00:00 1969
 Content-Lenght: 193
 Content-Type: text/html
 
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1, Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 16:23:36 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1, Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 16:28:27 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1, Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 16:33:20 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1, Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 17:07:54 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 17:09:18 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1, Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 17:10:36 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1, Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 17:12:21 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1, Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 17:13:33 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1, Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 17:14:53 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1, Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 17:16:19 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1, Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 17:17:24 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1, Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 17:19:52 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1, Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 17:29:03 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1, Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 17:30:36 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1, Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 17:31:41 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1, Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 17:33:39 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 20:34:37 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1, Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 20:50:46 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1, Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 21:01:04 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1, Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 21:08:39 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1, Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 21:10:00 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1, Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 21:18:32 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: / HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1, Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Sat Nov 18 21:24:27 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
