@@ -1363,31 +1363,31 @@ yyreduce:
 
   case 17:
 #line 50 "parser.y" /* yacc.c:1646  */
-    {add_command_list("Accept Encoding");printf("[YACC] Header (AcceptEncoding)\n");}
+    {add_command_list("Accept-Encoding");printf("[YACC] Header (AcceptEncoding)\n");}
 #line 1368 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
 #line 51 "parser.y" /* yacc.c:1646  */
-    {add_command_list("Content Length");printf("[YACC] Header (ContentLength)\n");}
+    {add_command_list("Content-Length");printf("[YACC] Header (ContentLength)\n");}
 #line 1374 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
 #line 52 "parser.y" /* yacc.c:1646  */
-    {add_command_list("Content Type");printf("[YACC] Header (ContentType)\n");}
+    {add_command_list("Content-Type");printf("[YACC] Header (ContentType)\n");}
 #line 1380 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
 #line 53 "parser.y" /* yacc.c:1646  */
-    {add_command_list("Accept Language");printf("[YACC] Header (AcceptLanguage)\n");}
+    {add_command_list("Accept-Language");printf("[YACC] Header (AcceptLanguage)\n");}
 #line 1386 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
 #line 54 "parser.y" /* yacc.c:1646  */
-    {add_command_list("Upgrade Insecure Requests");printf("[YACC] Header (UpgradeLanguage)\n");}
+    {add_command_list("Upgrade-Insecure-Requests");printf("[YACC] Header (UpgradeLanguage)\n");}
 #line 1392 "y.tab.c" /* yacc.c:1646  */
     break;
 

@@ -14,10 +14,6 @@ FILE *file;
 int c;
 char path[1075];
 
-char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * reg_file);
+char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * reg_file, char connection[]);
 
-char * trataMetodo(char *metodo, int result, int fd, char * resp_file, FILE * reg_file);
-
-char * trataGET(int result, int fd, char * response, FILE * reg_file);
-
-char * trataHEAD(int result, int fd, char * resp_file, FILE * reg_file);
+char * trataMetodo(char *metodo, int result, int fd, char * resp_file, FILE * reg_file, char connection[]);

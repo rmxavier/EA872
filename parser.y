@@ -47,11 +47,11 @@ header: /* Tipos de header  */
 	CONNECTION			{add_command_list("Connection"); printf("[YACC] Header (Connection)\n");}
 	| USER_AGENT			{add_command_list("User-Agent");printf("[YACC] Header (UserAgent)\n");}
 	| ACCEPT			{add_command_list("Accept");printf("[YACC] Header (Accept)\n");}
-	| ACCEPT_ENCODING		{add_command_list("Accept Encoding");printf("[YACC] Header (AcceptEncoding)\n");}
-	| CONTENT_LENGTH		{add_command_list("Content Length");printf("[YACC] Header (ContentLength)\n");}
-	| CONTENT_TYPE			{add_command_list("Content Type");printf("[YACC] Header (ContentType)\n");}
-	| ACCEPT_LANGUAGE		{add_command_list("Accept Language");printf("[YACC] Header (AcceptLanguage)\n");}
-	| UPGRADE_INSECURE_REQUESTS	{add_command_list("Upgrade Insecure Requests");printf("[YACC] Header (UpgradeLanguage)\n");}
+	| ACCEPT_ENCODING		{add_command_list("Accept-Encoding");printf("[YACC] Header (AcceptEncoding)\n");}
+	| CONTENT_LENGTH		{add_command_list("Content-Length");printf("[YACC] Header (ContentLength)\n");}
+	| CONTENT_TYPE			{add_command_list("Content-Type");printf("[YACC] Header (ContentType)\n");}
+	| ACCEPT_LANGUAGE		{add_command_list("Accept-Language");printf("[YACC] Header (AcceptLanguage)\n");}
+	| UPGRADE_INSECURE_REQUESTS	{add_command_list("Upgrade-Insecure-Requests");printf("[YACC] Header (UpgradeLanguage)\n");}
 	| HOST				{add_command_list("Host");printf("[YACC] Header (Host)\n");}
 	;
 
