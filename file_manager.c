@@ -47,10 +47,8 @@ void write_header(char * response, char * header, char * info, int suppress_last
 	strcat(response, "\r\n");
 }
 
-char * trataGET(int result, int fd, char * response, FILE * reg_file, char connection[]){
-	
-	printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= CAIU NO TRATAGET\n");
-	
+char * trataGET(int result, int fd, char * response, FILE * reg_file, char * connection){
+		
 	strcpy(response, "HTTP/1.1 ");
 	time_t rawtime;
 	time_t lastmod = fileStat.st_mtime; 
@@ -69,49 +67,50 @@ char * trataGET(int result, int fd, char * response, FILE * reg_file, char conne
 			break;
 	}
 	
-	printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= CAIU NO TRATAGET 2\n");
-
 	time ( &rawtime );
 	timeinfo = localtime ( &rawtime );
+	
 	write_header(response, "Date: ", asctime (timeinfo), 1);
-
+	
 	strcat(response, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
-
 	strcat(response, "Connection: ");
 	strcat(response, connection);
 	strcat(response, "\r\n");
-	printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= CAIU NO TRATAGET 123\n");
+	
+
 	timeinfo = localtime(&lastmod);
 	if(result==200) {
-			printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= CAIU NO TRATAGET aaaaa\n");
 
 		write_header(response, "Last-Modified: ", asctime(timeinfo), 1);
-		printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= CAIU NO TRATAGET bbbbbb\n");
 		
 		char content_length[1024];
 		snprintf(content_length, sizeof(content_length), "%zd", fileStat.st_size);
 		
-		printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= CAIU NO TRATAGET ccccccc\n");
-		
+	
 		write_header(response, "Content-Lenght: ", content_length, 0);
 		strcat(response, "Content-Type: text/html\r\n");
-		printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= CAIU NO TRATAGET dddddddd\n");
 	}
 	
-		printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= CAIU NO TRATAGET 2342\n");
-
 	strcat(response, "\r\n");
+
+	//fprintf(reg_file, "%s", response);
+	//print_file_to_string(path, response);
 	
-	fprintf(reg_file, "%s", response);
-	print_file_to_string(path, response);
+		printf("MIMIMIMIMIMI SERA SETADO! \n");
+				printf("RESPONSE>>>>>\n %s! \n", response);
+
+
 	
 	char * mimimi = malloc(sizeof(char) * 500000);
-	strcpy(mimimi, response);
+	memset(mimimi, 0, strlen(mimimi));
+	//strcpy(mimimi, response);
+	
+	printf("MIMIMIMIMIMI SETADO");
 
 	return mimimi;
 }
 
-char * trataHEAD(int result, int fd, char * response, FILE * reg_file, char connection[]) {
+char * trataHEAD(int result, int fd, char * response, FILE * reg_file, char * connection) {
 	strcpy(response, "HTTP/1.1 ");
 	time_t rawtime;
 	time_t lastmod = fileStat.st_mtime; 
@@ -150,7 +149,7 @@ char * trataHEAD(int result, int fd, char * response, FILE * reg_file, char conn
 	return mimimi;
 }
 
-char * trataTRACE(int result, int fd, char * response, FILE * reg_file, char connection[]) {
+char * trataTRACE(int result, int fd, char * response, FILE * reg_file, char * connection) {
 	strcpy(response, "HTTP/1.1 ");
 	time_t rawtime;
 	time_t lastmod = fileStat.st_mtime; 
@@ -192,7 +191,7 @@ char * trataTRACE(int result, int fd, char * response, FILE * reg_file, char con
   
 }
 
-char * trataOPTIONS(int result, int fd, char * response, FILE * reg_file, char connection[]) {
+char * trataOPTIONS(int result, int fd, char * response, FILE * reg_file, char * connection) {
 	strcpy(response, "HTTP/1.1 ");
 	time_t rawtime;
 	time_t lastmod = fileStat.st_mtime; 
@@ -244,7 +243,7 @@ char * trataOPTIONS(int result, int fd, char * response, FILE * reg_file, char c
 }
 
 // Erro 501 - Not Implemented
-char * trataNotImplemented(int fd, char * response, FILE * reg_file, char connection[]) {
+char * trataNotImplemented(int fd, char * response, FILE * reg_file, char * connection) {
 	strcpy(response, "HTTP/1.1 ");
 	time_t rawtime;
 	time_t lastmod = fileStat.st_mtime; 
@@ -298,7 +297,7 @@ char * trataNotImplemented(int fd, char * response, FILE * reg_file, char connec
 	return mimimi;
 }
 
-char * trataPOST(int result, int fd, char * response, FILE * reg_file, char connection[]){
+char * trataPOST(int result, int fd, char * response, FILE * reg_file, char * connection){
 	
 	printf("TRATAPOST TRATAPOST TRATAPOST XXXX\n");
 	
@@ -361,10 +360,10 @@ char * trataPOST(int result, int fd, char * response, FILE * reg_file, char conn
 }
 
 
-char * trataMetodo(char *metodo, int result, int fd, char * response, FILE * reg_file, char connection[]){
+char * trataMetodo(char *metodo, int result, int fd, char * response, FILE * reg_file, char * connection){
 	char * resp;
 	
-	printf("METODO!!! %s*/-*/-*/-*/-*/-*/-*/-*/-*/-*/-*/-*/-*\n", metodo);
+	printf("METODO!!!>>>>>>>>>> %s, %s!\n", metodo, connection);
 	
 	if(strcmp(metodo, "GET")==0){
 		resp = trataGET(result, fd, response, reg_file, connection);
@@ -388,7 +387,7 @@ char * trataMetodo(char *metodo, int result, int fd, char * response, FILE * reg
 	return resp;
 }
 
-char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * reg_file, char connection[]){
+char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * reg_file, char * connection){
 	struct stat statarq;
 	int fd;
 	DIR *dir;
@@ -442,8 +441,7 @@ char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * 
 			if((statarq.st_mode & S_IFMT)==S_IFREG){
 				//Abre e imprime o arquivo
 				fd = open(path, O_RDONLY, 0600);
-				
-				printf("CAIU AQUI CARAY!!!!!!!! 547789789789789789789798");
+					printf(">>>>>>>> CONNECTION ACESSO: %s", connection);
 				
 				return trataMetodo(metodo, 200, fd, response, reg_file, connection);
 			}

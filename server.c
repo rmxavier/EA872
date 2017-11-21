@@ -124,19 +124,21 @@ char * req_to_server(){
 
 		
 		response = malloc(sizeof(char) * 500000);
+		memset(response, 0, strlen(response));
 		char * mimimi = malloc(sizeof(char) * 500000);
+		memset(mimimi, 0, strlen(mimimi));
 		
-		printf("[SERVER] Pegando os comandos e parametros necessarios internamente *****************");
 		command_list * method = result;
 		command_list * connection = get_command_by_name("Connection");
 		
-		char * connection_string[100];
+		char * connection_string = malloc(sizeof(char) * 100);
 		if (strcmp(connection->command, "Connection") != 0) {
-			strcpy(connection_string, " ");
+			strcpy(connection_string, "keep-alive");
+		} else {
+			strcpy(connection_string, connection->params->param);
 		}
 		
 		mimimi = acesso(webspace, method->params->param, method->command, &response, reg_file, connection_string);
-		printf("[SERVER] Terminando de pegar os comandos e parametros necessarios internamente *****************");
 
 		write(novo_soquete, mimimi, strlen(mimimi));
 		
@@ -146,8 +148,6 @@ char * req_to_server(){
 	close(soquete);
 	//printf("O servidor terminou com erro.\n");
 	//exit(5);
-	
-	printf("RETURN KKKKKKK ===========\n");
 	
 	return "kkkkk";
 }
@@ -180,14 +180,11 @@ void print_request_to_file(FILE * reg_file) {
 			} else {
 				fprintf(reg_file, "%s%s", current_param->param, separator);
 			}
-						printf("[SERVER]    NEXT NEXT!!!!!!");
 
 			current_param = current_param->next;
 		}
-						printf("[SERVER]    NEXT NEXT 798789789789798!!!!!!");
 
 		current = current->next;
-								printf("[SERVER]    NEXT NEXT 4as6d4as56d46as4d6as46d!!!!!!");
 
 	}
 	fprintf(reg_file, "\n");
