@@ -586,8 +586,10 @@ char *yytext;
 	int i_param = 0;
 	int has_token_separator = 0;
 	char token_separator = '\0';
+	int has_query_string = 0;
+	int query_string = 0;
 
-#line 591 "lex.yy.c"
+#line 593 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -777,10 +779,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 18 "parser.l"
+#line 20 "parser.l"
 
 
-#line 784 "lex.yy.c"
+#line 786 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -867,100 +869,108 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 20 "parser.l"
+#line 22 "parser.l"
 {
 }
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 23 "parser.l"
+#line 25 "parser.l"
 {
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 26 "parser.l"
+#line 28 "parser.l"
 {
 	has_token_separator = 1;
 	token_separator = ' ';
+	has_query_string = 0;
 	printf("[LEXX]    -> Command: GET\n");
 	return GET;
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 33 "parser.l"
+#line 36 "parser.l"
 {
 	has_token_separator = 1;
 	token_separator = ' ';
+	has_query_string = 0;
 	printf("[LEXX]    -> Command: TRACE\n");
 	return TRACE;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 40 "parser.l"
+#line 44 "parser.l"
 {
 	has_token_separator = 1;
 	token_separator = ' ';
+	has_query_string = 0;
 	printf("[LEXX]    -> Command: HEAD\n");
 	return HEAD;
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 47 "parser.l"
+#line 52 "parser.l"
 {
 	has_token_separator = 1;
 	token_separator = ' ';
+	has_query_string = 0;
 	printf("[LEXX]    -> Command: OPTIONS\n");
 	return OPTIONS;
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 54 "parser.l"
+#line 60 "parser.l"
 {
 	has_token_separator = 1;
 	token_separator = ' ';
+	has_query_string = 0;
 	printf("[LEXX]    -> Command: PATCH\n");
 	return PATCH;
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 61 "parser.l"
+#line 68 "parser.l"
 {
 	has_token_separator = 1;
 	token_separator = ' ';
+	has_query_string = 1;
 	printf("[LEXX]    -> Command: POST\n");
 	return POST;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 68 "parser.l"
+#line 76 "parser.l"
 {
 	has_token_separator = 1;
 	token_separator = ' ';
+	has_query_string = 0;
 	printf("[LEXX]    -> Command: PUT\n");
 	return PUT;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 75 "parser.l"
+#line 84 "parser.l"
 {
 	has_token_separator = 1;
 	token_separator = ' ';
+	has_query_string = 0;
 	printf("[LEXX]    -> Command: DELETE\n");
 	return DELETE;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 82 "parser.l"
+#line 92 "parser.l"
 {
 	has_token_separator = 0;
 	token_separator = '\n';
@@ -970,7 +980,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 88 "parser.l"
+#line 98 "parser.l"
 {
 	has_token_separator = 0;
 	token_separator = '\n';
@@ -980,7 +990,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 94 "parser.l"
+#line 104 "parser.l"
 {
 	has_token_separator = 1;
 	token_separator = ',';
@@ -990,7 +1000,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 100 "parser.l"
+#line 110 "parser.l"
 {
 	has_token_separator = 1;
 	token_separator = ',';
@@ -1000,7 +1010,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 106 "parser.l"
+#line 116 "parser.l"
 {
 	has_token_separator = 1;
 	token_separator = ',';
@@ -1010,7 +1020,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 112 "parser.l"
+#line 122 "parser.l"
 {
 	has_token_separator = 1;
 	token_separator = ',';
@@ -1020,7 +1030,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 118 "parser.l"
+#line 128 "parser.l"
 {
 	has_token_separator = 1;
 	token_separator = ',';
@@ -1030,7 +1040,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 124 "parser.l"
+#line 134 "parser.l"
 {
 	has_token_separator = 0;
 	token_separator = '\n';
@@ -1040,7 +1050,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 130 "parser.l"
+#line 140 "parser.l"
 {
 	has_token_separator = 0;
 	token_separator = '\n';
@@ -1051,31 +1061,49 @@ YY_RULE_SETUP
 case 20:
 /* rule 20 can match eol */
 YY_RULE_SETUP
-#line 137 "parser.l"
+#line 147 "parser.l"
 {
-	printf("[LEXX]\n[LEXX]---- [END1] Line number: %d ----\n[LEXX]\n", lineno);
-	return END;
+	if (has_query_string == 0) {
+		printf("[LEXX]\n[LEXX]---- [END1] Line number: %d ----\n[LEXX]\n", lineno);
+		return END;
+	} else {
+		query_string = 1;
+	}
 }
 	YY_BREAK
 case 21:
 /* rule 21 can match eol */
 YY_RULE_SETUP
-#line 141 "parser.l"
+#line 155 "parser.l"
 {
-	printf("[LEXX]\n[LEXX]---- [END2] Line number: %d ----\n[LEXX]\n", lineno);
-	return END;
+	if (has_query_string == 0) {
+		printf("[LEXX]\n[LEXX]---- [END2] Line number: %d ----\n[LEXX]\n", lineno);
+		return END;
+	} else {
+		query_string = 1;
+	}
 }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 145 "parser.l"
+#line 163 "parser.l"
 {
-	printf("[LEXX] EOF found\n");
-	return 0;
+	if (query_string == 1) {
+		printf("[LEXX]    -> Query string: %s\n", param);
+		yylval.token = strdup(param);
+		memset(param, 0, strlen(param));
+		i_param = 0;
+
+		return QUERY_STRING;
+	} else {
+		
+		printf("[LEXX] EOF found\n");
+		return 0;
+	}
 }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 150 "parser.l"
+#line 178 "parser.l"
 {
 	
 	// Constrói o parâmetro
@@ -1097,10 +1125,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 169 "parser.l"
+#line 197 "parser.l"
 ECHO;
 	YY_BREAK
-#line 1104 "lex.yy.c"
+#line 1132 "lex.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2099,7 +2127,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 169 "parser.l"
+#line 197 "parser.l"
 
 
 

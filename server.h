@@ -30,6 +30,7 @@ typedef struct command_list{
 	char command[30];
 	struct command_list *next;
 	struct param_list *params;
+	char query_string[1024];
 } command_list;
 
 typedef struct param_list{

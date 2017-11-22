@@ -12,6 +12,8 @@
 	int i_param = 0;
 	int has_token_separator = 0;
 	char token_separator = '\0';
+	int has_query_string = 0;
+	int query_string = 0;
 
 %}
 
@@ -26,6 +28,7 @@
 "GET "       {
 	has_token_separator = 1;
 	token_separator = ' ';
+	has_query_string = 0;
 	printf("[LEXX]    -> Command: GET\n");
 	return GET;
 }
@@ -33,6 +36,7 @@
 "TRACE "       {
 	has_token_separator = 1;
 	token_separator = ' ';
+	has_query_string = 0;
 	printf("[LEXX]    -> Command: TRACE\n");
 	return TRACE;
 }
@@ -40,6 +44,7 @@
 "HEAD "       {
 	has_token_separator = 1;
 	token_separator = ' ';
+	has_query_string = 0;
 	printf("[LEXX]    -> Command: HEAD\n");
 	return HEAD;
 }
@@ -47,6 +52,7 @@
 "OPTIONS "       {
 	has_token_separator = 1;
 	token_separator = ' ';
+	has_query_string = 0;
 	printf("[LEXX]    -> Command: OPTIONS\n");
 	return OPTIONS;
 }
@@ -54,6 +60,7 @@
 "PATCH "       {
 	has_token_separator = 1;
 	token_separator = ' ';
+	has_query_string = 0;
 	printf("[LEXX]    -> Command: PATCH\n");
 	return PATCH;
 }
@@ -61,6 +68,7 @@
 "POST"		{
 	has_token_separator = 1;
 	token_separator = ' ';
+	has_query_string = 1;
 	printf("[LEXX]    -> Command: POST\n");
 	return POST;
 }
@@ -68,6 +76,7 @@
 "PUT"		{
 	has_token_separator = 1;
 	token_separator = ' ';
+	has_query_string = 0;
 	printf("[LEXX]    -> Command: PUT\n");
 	return PUT;
 }
@@ -75,6 +84,7 @@
 "DELETE"		{
 	has_token_separator = 1;
 	token_separator = ' ';
+	has_query_string = 0;
 	printf("[LEXX]    -> Command: DELETE\n");
 	return DELETE;
 }
@@ -135,16 +145,34 @@
 }
 
 \n\n	{
-	printf("[LEXX]\n[LEXX]---- [END1] Line number: %d ----\n[LEXX]\n", lineno);
-	return END;
+	if (has_query_string == 0) {
+		printf("[LEXX]\n[LEXX]---- [END1] Line number: %d ----\n[LEXX]\n", lineno);
+		return END;
+	} else {
+		query_string = 1;
+	}
 }
 \n\r\n	{
-	printf("[LEXX]\n[LEXX]---- [END2] Line number: %d ----\n[LEXX]\n", lineno);
-	return END;
+	if (has_query_string == 0) {
+		printf("[LEXX]\n[LEXX]---- [END2] Line number: %d ----\n[LEXX]\n", lineno);
+		return END;
+	} else {
+		query_string = 1;
+	}
 }
 <<eof>>	{
-	printf("[LEXX] EOF found\n");
-	return 0;
+	if (query_string == 1) {
+		printf("[LEXX]    -> Query string: %s\n", param);
+		yylval.token = strdup(param);
+		memset(param, 0, strlen(param));
+		i_param = 0;
+
+		return QUERY_STRING;
+	} else {
+		
+		printf("[LEXX] EOF found\n");
+		return 0;
+	}
 }
 
 .	{

@@ -112,13 +112,15 @@ char * req_to_server(){
 			break;
 		}
 
-		printf("%s", request);
+		printf("[SERVER] Raw request:\n====\n%s\n====\n", request);
 		yy_scan_string(request);
 		yyparse();
 
 		// Printa a lista
 		print_request_to_file(reg_file);
 
+		
+		
 		/* Funcao para obter resultado do parser */
 		result = get_parsed_request();
 
@@ -140,6 +142,7 @@ char * req_to_server(){
 		
 		mimimi = acesso(webspace, method->params->param, method->command, &response, reg_file, connection_string);
 
+		printf("MIMIMI = %s\n", mimimi);
 		write(novo_soquete, mimimi, strlen(mimimi));
 		
 		j++;
@@ -159,6 +162,7 @@ void print_request_to_file(FILE * reg_file) {
 	
 	fprintf(reg_file, "\n");
 	command_list * current = list;
+	
 	
 	while (current != NULL) {
 		
@@ -187,6 +191,14 @@ void print_request_to_file(FILE * reg_file) {
 		current = current->next;
 
 	}
+	
+	if (strcmp(list-> query_string," ") != 0) {
+		printf("[SERVER] Query String: %s\n", list->query_string);
+		fprintf(reg_file, "\n");
+		fprintf(reg_file, list-> query_string);
+		fprintf(reg_file, "\n");
+	}
+	
 	fprintf(reg_file, "\n");
 	
 }
@@ -199,6 +211,7 @@ void add_command_list(char *command)
     		list = malloc(sizeof(command_list));
 
     		strcpy(list->command, command);
+		strcpy(list->query_string, " ");
     		list->next = NULL;
     		list->params = NULL;
 
@@ -215,6 +228,14 @@ void add_command_list(char *command)
 	strcpy(current->next->command, command);
 	current->next->next = NULL;
 	current->next->params = NULL;	
+
+	return;
+}
+
+void add_query_string(char * query_string) {
+	command_list * current = list;
+	
+	strcpy(list->query_string, query_string);
 
 	return;
 }

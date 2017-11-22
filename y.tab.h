@@ -69,7 +69,8 @@ extern int yydebug;
     CONTENT_TYPE = 279,
     CONNECTION = 280,
     UPGRADE_INSECURE_REQUESTS = 281,
-    PARAMETER = 282
+    PARAMETER = 282,
+    QUERY_STRING = 283
   };
 #endif
 /* Tokens.  */
@@ -98,6 +99,7 @@ extern int yydebug;
 #define CONNECTION 280
 #define UPGRADE_INSECURE_REQUESTS 281
 #define PARAMETER 282
+#define QUERY_STRING 283
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -108,7 +110,7 @@ union YYSTYPE
 
 	char * token;
 
-#line 112 "y.tab.h" /* yacc.c:1909  */
+#line 114 "y.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

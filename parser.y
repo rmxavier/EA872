@@ -17,15 +17,17 @@ void yyerror (char *s);
 }
 
 %token <token> PARAMETER;
+%token <token> QUERY_STRING;
 %%
 
 requests: request		{printf("[YACC] Request\n");}		/* Apenas uma requisicao */
 	| requests request	{printf("[YACC] MoreRequests\n");}	/* Varias requisicoes */
 	;
 
-request: method parameters headers ends	{printf("[YACC] ARequest\n");}	/* Estrutura da requisicao: metodo, parametros do metodo, headers (estrutura) e fim */
-	| method parameters ends	{printf("[YACC] ARequest with no headers...\n");}
-	| method parameters		{printf("[YACC] ARequest with no headers and no END (weird eh?!)...\n");}
+request: method parameters headers ends		{printf("[YACC] ARequest\n");}	/* Estrutura da requisicao: metodo, parametros do metodo, headers (estrutura) e fim */
+	| method parameters ends		{printf("[YACC] ARequest with no headers...\n");}
+	| method parameters			{printf("[YACC] ARequest with no headers and no END (weird eh?!)...\n");}
+	| method parameters headers query	{printf("[YACC] ARequest with query string...\n"); return 0;}
 	;
 
 headers: header_structure		{printf("[YACC] HeaderStructure... \n");}		/* Header sem parametros */
@@ -66,6 +68,9 @@ parameters: parameter		{printf("[YACC] Parameter... \n");}
 
 
 parameter: PARAMETER	{add_param_list((char*)$1);printf("[YACC] #Parameter (%s)#\n",(char*)$1);}
+	;
+
+query: QUERY_STRING	{add_query_string((char*)$1);printf("[YACC] #QueryStr: (%s)#\n",(char*)$1);}
 	;
 
 ends: END		{printf("[YACC] ENDFound\n");}

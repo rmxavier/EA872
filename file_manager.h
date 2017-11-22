@@ -13,3 +13,5 @@ struct stat fileStat;
 FILE *file;
 int c;
 char path[1075];
+
+char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * reg_file, char * connection);
