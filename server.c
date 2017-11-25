@@ -65,90 +65,104 @@ char * req_to_server(){
 	int nome_compr;			
 	int mensagem_compr;		
 	int i, j;			//j vai controlar o numero de requições no arquivo. nesse caso, apenas uma.
-	
-	printf("[SERVER] Iniciando requisição ao server...");
+	int option = 1;
+	int k = 0;
      
-	if ((soquete = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-	{
-		perror("Erro em socket()");
-		exit(2);
-	}
-
-	
-	servidor.sin_family 	= AF_INET;
-	servidor.sin_port   	= htons(porta);
-	servidor.sin_addr.s_addr	= INADDR_ANY;
-
-	while (bind(soquete, (struct sockaddr *)&servidor, sizeof(servidor)) < 0)
-	{
-	perror(".");
-	//exit(3);
-	}
-	printf("[SERVER] Voa\n");
-
-	
-	if (listen(soquete, 5) != 0)
-	{
-		perror("Erro em listen().\n");
-		exit(4);
-	}
-
-	j=0;	
-	while (j<1) {
-
-	
-		nome_compr = sizeof(cliente);
-		if ((novo_soquete = accept(soquete, (struct sockaddr *)&cliente, &nome_compr)) == -1)
+	while (1) {
+		
+		printf("[SERVER] Iniciando requisição ao server [%d]...\n", k);
+		
+		memset(request, 0, sizeof(request));
+		list = NULL;
+		result = NULL;
+		
+		if ((soquete = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 		{
-			perror("Erro em accept().\n");
-			break;
+			perror("Erro em socket()");
+			exit(2);
 		}
+		
+		// Para parar de dar erro no bind
+		setsockopt(soquete, SOL_SOCKET, SO_REUSEADDR, &option, sizeof(option));
 
 		
-		//if ((mensagem_compr = recv(novo_soquete, request, sizeof(request), 0)) == -1)
-		if ((mensagem_compr = recv(novo_soquete, request, sizeof(request), 0)) == -1)
+		servidor.sin_family 	= AF_INET;
+		servidor.sin_port   	= htons(porta);
+		servidor.sin_addr.s_addr	= INADDR_ANY;
+
+		while (bind(soquete, (struct sockaddr *)&servidor, sizeof(servidor)) < 0)
 		{
-			perror("Erro em recv().\n");
-			break;
+		perror(".///");
+		//exit(3);
+		}
+		printf("[SERVER] Voa\n");
+
+		
+		if (listen(soquete, 5) != 0)
+		{
+			perror("Erro em listen().\n");
+			exit(4);
 		}
 
-		printf("[SERVER] Raw request:\n====\n%s\n====\n", request);
-		yy_scan_string(request);
-		yyparse();
+		j=0;	
+		while (j<1) {
+		
+			nome_compr = sizeof(cliente);
+			if ((novo_soquete = accept(soquete, (struct sockaddr *)&cliente, &nome_compr)) == -1)
+			{
+				perror("Erro em accept().\n");
+				break;
+			}
 
-		// Printa a lista
-		print_request_to_file(reg_file);
+			
+			//if ((mensagem_compr = recv(novo_soquete, request, sizeof(request), 0)) == -1)
+			if ((mensagem_compr = recv(novo_soquete, request, sizeof(request), 0)) == -1)
+			{
+				perror("Erro em recv().\n");
+				break;
+			}
 
-		
-		
-		/* Funcao para obter resultado do parser */
-		result = get_parsed_request();
+			printf("[SERVER] Raw request:\n====\n%s\n====\n", request);
+			yy_scan_string(request);
+			yyparse();
 
-		
-		response = malloc(sizeof(char) * 500000);
-		memset(response, 0, strlen(response));
-		char * mimimi = malloc(sizeof(char) * 500000);
-		memset(mimimi, 0, strlen(mimimi));
-		
-		command_list * method = result;
-		command_list * connection = get_command_by_name("Connection");
-		
-		char * connection_string = malloc(sizeof(char) * 100);
-		if (strcmp(connection->command, "Connection") != 0) {
-			strcpy(connection_string, "keep-alive");
-		} else {
-			strcpy(connection_string, connection->params->param);
+			// Printa a lista
+			print_request_to_file(reg_file);
+
+			
+			
+			/* Funcao para obter resultado do parser */
+			result = get_parsed_request();
+
+			
+			response = malloc(sizeof(char) * 50000000);
+			memset(response, 0, strlen(response));
+			char * mimimi = malloc(sizeof(char) * 50000000);
+			memset(mimimi, 0, strlen(mimimi));
+			
+			command_list * method = result;
+			command_list * connection = get_command_by_name("Connection");
+			
+			char * connection_string = malloc(sizeof(char) * 100);
+			if (strcmp(connection->command, "Connection") != 0) {
+				strcpy(connection_string, "keep-alive");
+			} else {
+				strcpy(connection_string, connection->params->param);
+			}
+			
+			mimimi = acesso(webspace, method->params->param, method->command, &response, reg_file, connection_string);
+
+			printf("MIMIMI = %s\n", mimimi);
+			printf("PASSOU POR QUI ------------------------\n");
+			write(novo_soquete, mimimi, strlen(mimimi));
+			
+			j++;
 		}
 		
-		mimimi = acesso(webspace, method->params->param, method->command, &response, reg_file, connection_string);
-
-		printf("MIMIMI = %s\n", mimimi);
-		write(novo_soquete, mimimi, strlen(mimimi));
-		
-		j++;
+		close(novo_soquete);
+		close(soquete);
+		k++;
 	}
-
-	close(soquete);
 	//printf("O servidor terminou com erro.\n");
 	//exit(5);
 	

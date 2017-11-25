@@ -20,18 +20,21 @@ char original_local[1075];
 
 void print_file_to_string(char * fname, char * response) {
 	FILE *fp;
-	char str[80];
+	char str[1];
+	int i = 0;
 
 	if ((fp= fopen(fname, "r")) == NULL) {
 		printf("cannot open file");
 		exit(1);
 	}
 
-	while(!feof(fp)) {
-		fgets(str,79,fp);
-		printf("%s",str);
+	printf("---- IMAGEM -----\n");
+	while((str[0] = fgetc(fp))!=EOF) {
 		strcat(response, str);
+		printf("%s",str);
 	}
+	printf("---- /IMAGEM -----\n");
+
 
 	fclose(fp);
 }
@@ -67,6 +70,8 @@ char * trataGET(int result, int fd, char * response, FILE * reg_file, char * con
 			break;
 	}
 	
+	printf("PASSOU POR QUI 2\n");
+	
 	time ( &rawtime );
 	timeinfo = localtime ( &rawtime );
 	
@@ -77,11 +82,15 @@ char * trataGET(int result, int fd, char * response, FILE * reg_file, char * con
 	strcat(response, connection);
 	strcat(response, "\r\n");
 	
+	printf("PASSOU POR QUI 23\n");
+	
 
 	timeinfo = localtime(&lastmod);
 	if(result==200) {
 
 		write_header(response, "Last-Modified: ", asctime(timeinfo), 1);
+		
+		printf("PASSOU POR QUI 5\n");
 		
 		char content_length[1024];
 		snprintf(content_length, sizeof(content_length), "%zd", fileStat.st_size);
@@ -89,17 +98,24 @@ char * trataGET(int result, int fd, char * response, FILE * reg_file, char * con
 	
 		write_header(response, "Content-Lenght: ", content_length, 0);
 		strcat(response, "Content-Type: text/html\r\n");
-	}
+	}printf("PASSOU POR QUI 89\n");
 	
 	strcat(response, "\r\n");
+	printf("PASSOU POR QUI 233333333333333333333333\n");
 
 	fprintf(reg_file, "%s", response);
-	print_file_to_string(path, response);
-
-	char * mimimi = malloc(sizeof(char) * 500000);
-	memset(mimimi, 0, strlen(mimimi));
-	strcpy(mimimi, response);
 	
+	printf("PASSOU POR QUI 55555555555555555555552\n");
+	print_file_to_string(path, response);
+	printf("PASSOU POR QUI 2rrrrrrrrrrrrrrrrrrrr\n");
+
+	char * mimimi = malloc(sizeof(char) * 50000000);
+	
+	printf("PASSOU POR QUI xxxxxxxxxxxxxxxxx2\n");
+	memset(mimimi, 0, strlen(mimimi));
+	printf("PASSOU POR QUI yyyyyyyyyyyyyyyyyyyyyyyyyyy\n");
+	strcpy(mimimi, response);
+	printf("PASSOU POR QUI 234234W2\n");
 	return mimimi;
 }
 
@@ -136,7 +152,7 @@ char * trataHEAD(int result, int fd, char * response, FILE * reg_file, char * co
 	timeinfo = localtime(&lastmod);
 	
 	fprintf(reg_file, "%s", response);
-	char * mimimi = malloc(sizeof(char) * 500000);
+	char * mimimi = malloc(sizeof(char) * 50000000);
 	strcpy(mimimi, response);
 
 	return mimimi;
@@ -178,7 +194,7 @@ char * trataTRACE(int result, int fd, char * response, FILE * reg_file, char * c
 	}
 	fprintf(reg_file, "%s", response);
 	
-	char * mimimi = malloc(sizeof(char) * 500000);
+	char * mimimi = malloc(sizeof(char) * 50000000);
 	strcpy(mimimi, response);
 	return mimimi;
   
@@ -229,7 +245,7 @@ char * trataOPTIONS(int result, int fd, char * response, FILE * reg_file, char *
 	
 	fprintf(reg_file, "%s", response);
 	
-	char * mimimi = malloc(sizeof(char) * 500000);
+	char * mimimi = malloc(sizeof(char) * 50000000);
 	strcpy(mimimi, response);
 
 	return mimimi;
@@ -277,14 +293,14 @@ char * trataNotImplemented(int fd, char * response, FILE * reg_file, char * conn
 
 	strcat(response, "\r\n");
 	
-	char * error_page = malloc(sizeof(char) * 500000);
+	char * error_page = malloc(sizeof(char) * 50000000);
 	strcpy(error_page, original_local);
 	strcat(error_page, "/501.html"); 
 	
 	fprintf(reg_file, "%s", response);
 	print_file_to_string(error_page, response);
 	
-	char * mimimi = malloc(sizeof(char) * 500000);
+	char * mimimi = malloc(sizeof(char) * 50000000);
 	strcpy(mimimi, response);
 
 	return mimimi;
@@ -336,9 +352,45 @@ char * trataPOST(int result, int fd, char * response, FILE * reg_file, char * co
 	fprintf(reg_file, "%s", response);
 	print_file_to_string(path, response);
 	
-	char * mimimi = malloc(sizeof(char) * 500000);
+	char * mimimi = malloc(sizeof(char) * 50000000);
 	strcpy(mimimi, response);
 
+	return mimimi;
+}
+
+char * trataDELETE(int result, int fd, char * response, FILE * reg_file, char * connection){
+		
+	strcpy(response, "HTTP/1.1 ");
+	time_t rawtime;
+	time_t lastmod = fileStat.st_mtime; 
+	struct tm * timeinfo;
+
+	fstat(fd, &fileStat);	
+
+	strcat(response, "204 NO CONTENT\r\n");
+	
+	time ( &rawtime );
+	timeinfo = localtime ( &rawtime );
+	
+	write_header(response, "Date: ", asctime (timeinfo), 1);
+	
+	strcat(response, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
+	strcat(response, "Connection: ");
+	strcat(response, connection);
+	strcat(response, "\r\n\r\n");
+
+	fprintf(reg_file, "%s", response);
+		
+	if (remove(path) == 0) {
+		printf("[FILE_MANAGER] Removido com sucesso\n");
+	} else {
+		printf("[FILE_MANAGER] Removido sem sucesso\n");
+	}
+	
+	char * mimimi = malloc(sizeof(char) * 50000000);
+	
+	memset(mimimi, 0, strlen(mimimi));
+	strcpy(mimimi, response);
 	return mimimi;
 }
 
@@ -360,6 +412,9 @@ char * trataMetodo(char *metodo, int result, int fd, char * response, FILE * reg
 	}
 	else if (strcmp(metodo, "POST")==0) {
 		resp = trataPOST(result, fd, response, reg_file, connection);
+	}
+	else if (strcmp(metodo, "DELETE")==0) {
+		resp = trataDELETE(result, fd, response, reg_file, connection);
 	}
 	else {
 		resp = trataNotImplemented(fd, response, reg_file, connection);
@@ -391,7 +446,10 @@ char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * 
 	// Trecho para buscar o recurso dentro do path passado
 	//caso não ache o recurso
 	
-	if (stat(path, &statarq) == -1){
+	if (strcmp(metodo, "DELETE")) {
+		trataMetodo(metodo, 204, fd, response, reg_file, connection);
+	}
+	else if (stat(path, &statarq) == -1){
 		
 		strcpy(path, local);
 		strcpy(recurso, "/404.html");
@@ -419,7 +477,7 @@ char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * 
 			if((statarq.st_mode & S_IFMT)==S_IFREG){
 				//Abre e imprime o arquivo
 				fd = open(path, O_RDONLY, 0600);
-				
+				printf("PASSOU POR AQUI!!!");
 				return trataMetodo(metodo, 200, fd, response, reg_file, connection);
 			}
 			else{

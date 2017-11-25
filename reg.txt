@@ -1,71 +1,58 @@
 
-POST: /post.html HTTP/1.1
+GET: /form.html HTTP/1.1
 Host: localhost:8585
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0
 Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
-Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
-Accept-Encoding: gzip,  deflate, Referer: http://localhost:8585/form.html
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 65
+Accept-Language: en-US, en;q=0.5
+Accept-Encoding: gzip,  deflate
 Connection: keep-alive
 Upgrade-Insecure-Requests: 1
 
-nomeusuario=Nome+de+usuario&telefone=19999186245&confirmar=Enviar,›
+HTTP/1.1 200 OK
+Date: Sat Nov 25 19:58:56 2017
+Server: Servidor HTTP ver 0.1 dos Descolados
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 1069
+Content-Type: text/html
+
+
+POST: /post.html HTTP/1.1
+Host: localhost:8585
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: en-US, en;q=0.5
+Accept-Encoding: gzip,  deflate
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 51, Referer: http://localhost:8585/form.html
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+
+nomeusuario=asdasd&telefone=asdasd&confirmar=Enviar
 
 HTTP/1.1 200 OK
-Date: Tue Nov 21 22:46:28 2017
+Date: Sat Nov 25 19:59:00 2017
 Server: Servidor HTTP ver 0.1 dos Descolados
 Connection: keep-alive
-Last-Modified: Wed Dec 31 21:00:00 1969
-Content-Lenght: 536
+Last-Modified: Tue Nov 21 19:53:03 2017
+Content-Lenght: 482
 Content-Type: text/html
 
 
-DELETE: /exemplo.html HTTP/1.1
+GET: /post.html HTTP/1.1
 Host: localhost:8585
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
-Accept: */*
-Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
-Accept-Encoding: gzip,  deflate, origin: moz-extension://b2290f8f-0954-45a4-b334-7ce59bb60c71
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: en-US, en;q=0.5
+Accept-Encoding: gzip,  deflate
 Connection: keep-alive
+Upgrade-Insecure-Requests: 1
 
-Date: Tue Nov 21 22:55:13 2017
+HTTP/1.1 200 OK
+Date: Sat Nov 25 19:59:04 2017
 Server: Servidor HTTP ver 0.1 dos Descolados
 Connection: keep-alive
-Last-Modified: Wed Dec 31 21:00:00 1969
-Content-Lenght: 0
-Content-Type: text/html
-HTTP/1.1 501 NOT IMPLEMENTED
-Date: Tue Nov 21 22:55:13 2017
-Server: Servidor HTTP ver 0.1 dos Descolados
-Connection: keep-alive
-Last-Modified: Wed Dec 31 21:00:00 1969
-Allow: GET, HEAD, TRACE, OPTIONS
-Content-Lenght: 0
-Content-Type: text/html
-
-
-PUT: /nova_pagina.html HTTP/1.1
-Host: localhost:8585
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
-Accept: */*
-Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
-Accept-Encoding: gzip,  deflate, content-type: text/plain;charset=UTF-8, origin: moz-extension://b2290f8f-0954-45a4-b334-7ce59bb60c71
-Content-Length: 93
-Connection: keep-alive
-
-Date: Tue Nov 21 22:58:39 2017
-Server: Servidor HTTP ver 0.1 dos Descolados
-Connection: keep-alive
-Last-Modified: Wed Dec 31 21:00:00 1969
-Content-Lenght: 0
-Content-Type: text/html
-HTTP/1.1 501 NOT IMPLEMENTED
-Date: Tue Nov 21 22:58:39 2017
-Server: Servidor HTTP ver 0.1 dos Descolados
-Connection: keep-alive
-Last-Modified: Wed Dec 31 21:00:00 1969
-Allow: GET, HEAD, TRACE, OPTIONS
-Content-Lenght: 0
+Last-Modified: Sat Nov 25 19:38:23 2017
+Content-Lenght: 482
 Content-Type: text/html
 
