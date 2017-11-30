@@ -76,7 +76,7 @@
 "PUT"		{
 	has_token_separator = 1;
 	token_separator = ' ';
-	has_query_string = 0;
+	has_query_string = 1;
 	printf("[LEXX]    -> Command: PUT\n");
 	return PUT;
 }

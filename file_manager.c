@@ -17,26 +17,63 @@ char * str;
 char path[1075];
 
 char original_local[1075];
+char original_resource[1075];
 
-void print_file_to_string(char * fname, char * response) {
-	FILE *fp;
-	char str[1];
-	int i = 0;
-
-	if ((fp= fopen(fname, "r")) == NULL) {
-		printf("cannot open file");
-		exit(1);
+void print_file_to_string(int result, char * fname, char * response) {
+	
+	printf("PRINTANDO ARQUIVO %s NA RESPONSE!!\n", fname);
+	
+	switch (result){
+		case 200:
+			break;
+		case 403:
+			memset(fname, 0, sizeof(fname));
+			strcpy(fname, "error_pages/403.html");		
+			break;
+		case 404:
+			memset(fname, 0, sizeof(fname));
+			strcpy(fname, "error_pages/404.html");
+			break;
+		case 501:
+			memset(fname, 0, sizeof(fname));
+			strcpy(fname, "error_pages/501.html");
+			break;
 	}
+	printf("Printing %s to string (status %d)\n", fname, result);
+	
+	int fh;
+        char buffer[64];
+        int gotten;
+	int total = 0;
+	
+	char * mimimi = malloc(sizeof(char) * 5000000);
+	mimimi[0] = '\0';
+	printf(">>>>>>>>>>>>>>MIMI\n%s))))))))))\n", mimimi);
+	printf(">>>>>>>>>>>>>>RESP\n%s))))))))))\n", response);
 
-	printf("---- IMAGEM -----\n");
-	while((str[0] = fgetc(fp))!=EOF) {
-		strcat(response, str);
-		printf("%s",str);
+        fh = open(fname,O_RDONLY);
+        printf ("!!!!!!!!!!!!!!!File handle %d\n",fh);
+	
+	
+        while (gotten = read(fh,buffer,64)) {
+		total = total + gotten;
+		//buffer[gotten] = '\0';
+		//printf("%d|%d|%s\n", total, gotten, buffer);
+		strcat(mimimi, buffer);
+		memset(buffer, 0, sizeof(buffer));
 	}
-	printf("---- /IMAGEM -----\n");
+	
+	char * new_mimimi = malloc(sizeof(char)*strlen(mimimi)+sizeof(char)*strlen(response));
+	strcpy(new_mimimi, mimimi);
+	
+	printf("\n\nTERMINOU DE IMPRIMIR ESSA MERDA\n\n");
+	printf("RESPONSE %s\n\nTAMANHO DA CARALHA:%d\n", response, strlen(response));
+	new_mimimi[strlen(new_mimimi)]='\0';
+	strcat(new_mimimi, response);
+	strcat(new_mimimi, mimimi);
+	printf("\n\nTERMINOU DE CONCATENAR ESSA MERDA\n\n");
 
-
-	fclose(fp);
+	printf("%s\nTAMANHO DAs KRLAs!!! %d; %d; %d\n", mimimi, strlen(response), strlen(mimimi), total);
 }
 
 void write_header(char * response, char * header, char * info, int suppress_last_character) {
@@ -50,7 +87,7 @@ void write_header(char * response, char * header, char * info, int suppress_last
 	strcat(response, "\r\n");
 }
 
-char * trataGET(int result, int fd, char * response, FILE * reg_file, char * connection){
+char * trataGET(int result, int fd, char * response, FILE * reg_file, char * connection, char * content_type){
 		
 	strcpy(response, "HTTP/1.1 ");
 	time_t rawtime;
@@ -69,9 +106,6 @@ char * trataGET(int result, int fd, char * response, FILE * reg_file, char * con
 			strcat(response, "404 NOT FOUND\r\n");
 			break;
 	}
-	
-	printf("PASSOU POR QUI 2\n");
-	
 	time ( &rawtime );
 	timeinfo = localtime ( &rawtime );
 	
@@ -82,44 +116,33 @@ char * trataGET(int result, int fd, char * response, FILE * reg_file, char * con
 	strcat(response, connection);
 	strcat(response, "\r\n");
 	
-	printf("PASSOU POR QUI 23\n");
-	
-
 	timeinfo = localtime(&lastmod);
 	if(result==200) {
 
 		write_header(response, "Last-Modified: ", asctime(timeinfo), 1);
-		
-		printf("PASSOU POR QUI 5\n");
 		
 		char content_length[1024];
 		snprintf(content_length, sizeof(content_length), "%zd", fileStat.st_size);
 		
 	
 		write_header(response, "Content-Lenght: ", content_length, 0);
-		strcat(response, "Content-Type: text/html\r\n");
-	}printf("PASSOU POR QUI 89\n");
+		write_header(response, "Content-Type: ", content_type, 0);
+	}
 	
 	strcat(response, "\r\n");
-	printf("PASSOU POR QUI 233333333333333333333333\n");
 
 	fprintf(reg_file, "%s", response);
 	
-	printf("PASSOU POR QUI 55555555555555555555552\n");
-	print_file_to_string(path, response);
-	printf("PASSOU POR QUI 2rrrrrrrrrrrrrrrrrrrr\n");
+	print_file_to_string(result, path, response);
 
 	char * mimimi = malloc(sizeof(char) * 50000000);
 	
-	printf("PASSOU POR QUI xxxxxxxxxxxxxxxxx2\n");
-	memset(mimimi, 0, strlen(mimimi));
-	printf("PASSOU POR QUI yyyyyyyyyyyyyyyyyyyyyyyyyyy\n");
+	memset(mimimi, 0, sizeof(mimimi));
 	strcpy(mimimi, response);
-	printf("PASSOU POR QUI 234234W2\n");
 	return mimimi;
 }
 
-char * trataHEAD(int result, int fd, char * response, FILE * reg_file, char * connection) {
+char * trataHEAD(int result, int fd, char * response, FILE * reg_file, char * connection, char * content_type) {
 	strcpy(response, "HTTP/1.1 ");
 	time_t rawtime;
 	time_t lastmod = fileStat.st_mtime; 
@@ -158,7 +181,7 @@ char * trataHEAD(int result, int fd, char * response, FILE * reg_file, char * co
 	return mimimi;
 }
 
-char * trataTRACE(int result, int fd, char * response, FILE * reg_file, char * connection) {
+char * trataTRACE(int result, int fd, char * response, FILE * reg_file, char * connection, char * content_type) {
 	strcpy(response, "HTTP/1.1 ");
 	time_t rawtime;
 	time_t lastmod = fileStat.st_mtime; 
@@ -187,7 +210,7 @@ char * trataTRACE(int result, int fd, char * response, FILE * reg_file, char * c
 		snprintf(content_length, sizeof(content_length), "%zd", fileStat.st_size);
 		
 		write_header(response, "Content-Lenght: ", content_length, 0);		
-		strcat(response, "Content-Type: text/html\r\n");
+		write_header(response, "Content-Type: ", content_type, 0);
 
 		strcat(response, "\r\n");
 
@@ -200,7 +223,7 @@ char * trataTRACE(int result, int fd, char * response, FILE * reg_file, char * c
   
 }
 
-char * trataOPTIONS(int result, int fd, char * response, FILE * reg_file, char * connection) {
+char * trataOPTIONS(int result, int fd, char * response, FILE * reg_file, char * connection, char * content_type) {
 	strcpy(response, "HTTP/1.1 ");
 	time_t rawtime;
 	time_t lastmod = fileStat.st_mtime; 
@@ -238,7 +261,7 @@ char * trataOPTIONS(int result, int fd, char * response, FILE * reg_file, char *
 		snprintf(content_length, sizeof(content_length), "%zd", fileStat.st_size);
 		
 		write_header(response, "Content-Lenght: ", content_length, 0);
-		strcat(response, "Content-Type: text/html\r\n");
+		write_header(response, "Content-Type: ", content_type, 0);
 		strcat(response, "\r\n");
 
 	}
@@ -252,7 +275,7 @@ char * trataOPTIONS(int result, int fd, char * response, FILE * reg_file, char *
 }
 
 // Erro 501 - Not Implemented
-char * trataNotImplemented(int fd, char * response, FILE * reg_file, char * connection) {
+char * trataNotImplemented(int fd, char * response, FILE * reg_file, char * connection, char * content_type) {
 	strcpy(response, "HTTP/1.1 ");
 	time_t rawtime;
 	time_t lastmod = fileStat.st_mtime; 
@@ -288,8 +311,8 @@ char * trataNotImplemented(int fd, char * response, FILE * reg_file, char * conn
 	write_header(response, "Content-Lenght: ", content_length, 0);
 	fprintf(reg_file, "Content-Lenght: %zd\n", fileStat.st_size, 1);
 	
-	strcat(response, "Content-Type: text/html\r\n");
-	fprintf(reg_file, "Content-Type: text/html\r\n");
+	write_header(response, "Content-Type: ", content_type, 0);
+	fprintf(reg_file, "Content-Type: %s\r\n", content_type);
 
 	strcat(response, "\r\n");
 	
@@ -298,7 +321,7 @@ char * trataNotImplemented(int fd, char * response, FILE * reg_file, char * conn
 	strcat(error_page, "/501.html"); 
 	
 	fprintf(reg_file, "%s", response);
-	print_file_to_string(error_page, response);
+	print_file_to_string(501, error_page, response);
 	
 	char * mimimi = malloc(sizeof(char) * 50000000);
 	strcpy(mimimi, response);
@@ -306,7 +329,7 @@ char * trataNotImplemented(int fd, char * response, FILE * reg_file, char * conn
 	return mimimi;
 }
 
-char * trataPOST(int result, int fd, char * response, FILE * reg_file, char * connection){
+char * trataPOST(int result, int fd, char * response, FILE * reg_file, char * connection, char * content_type, char * request_body){
 	
 	strcpy(response, "HTTP/1.1 ");
 	time_t rawtime;
@@ -344,13 +367,13 @@ char * trataPOST(int result, int fd, char * response, FILE * reg_file, char * co
 		snprintf(content_length, sizeof(content_length), "%zd", fileStat.st_size);
 		
 		write_header(response, "Content-Lenght: ", content_length, 0);
-		strcat(response, "Content-Type: text/html\r\n");
+		write_header(response, "Content-Type: ", content_type, 0);
 	}
 
 	strcat(response, "\r\n");
 	
 	fprintf(reg_file, "%s", response);
-	print_file_to_string(path, response);
+	print_file_to_string(result, path, response);
 	
 	char * mimimi = malloc(sizeof(char) * 50000000);
 	strcpy(mimimi, response);
@@ -358,7 +381,7 @@ char * trataPOST(int result, int fd, char * response, FILE * reg_file, char * co
 	return mimimi;
 }
 
-char * trataDELETE(int result, int fd, char * response, FILE * reg_file, char * connection){
+char * trataDELETE(int result, int fd, char * response, FILE * reg_file, char * connection, char * content_type){
 		
 	strcpy(response, "HTTP/1.1 ");
 	time_t rawtime;
@@ -389,48 +412,91 @@ char * trataDELETE(int result, int fd, char * response, FILE * reg_file, char * 
 	
 	char * mimimi = malloc(sizeof(char) * 50000000);
 	
-	memset(mimimi, 0, strlen(mimimi));
+	memset(mimimi, 0, sizeof(mimimi));
+	strcpy(mimimi, response);
+	return mimimi;
+}
+
+char * trataPUT(int result, int fd, char * response, FILE * reg_file, char * connection, char * content_type, char * request_body){
+	
+	FILE * new_file;
+	
+	strcpy(response, "HTTP/1.1 ");
+	strcat(response, "HTTP/1.1 201 Created\r\n");
+	write_header(response, "Content-Location: ", original_resource, 0);
+	
+	strcat(response, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
+	strcat(response, "\r\n");
+
+	fprintf(reg_file, "%s", response);
+		
+	if (remove(path) == 0) {
+		printf("[FILE_MANAGER] Removido com sucesso\n");
+	} else {
+		printf("[FILE_MANAGER] Removido sem sucesso\n");
+	}
+	
+	if((new_file = fopen(path, "w")) == NULL){
+		printf("[SERVER] Error to open file %s.\n", path);
+		exit (0);
+	}
+	
+	// Escreve o conteudo do arquivo
+	fprintf(new_file, request_body);
+	
+	fclose(new_file);
+	
+	char * mimimi = malloc(sizeof(char) * 50000000);
+	
+	memset(mimimi, 0, sizeof(mimimi));
 	strcpy(mimimi, response);
 	return mimimi;
 }
 
 
-char * trataMetodo(char *metodo, int result, int fd, char * response, FILE * reg_file, char * connection){
+char * trataMetodo(char *metodo, int result, int fd, char * response, FILE * reg_file, char * connection, char * content_type, char * request_body){
 	char * resp;
 		
 	if(strcmp(metodo, "GET")==0){
-		resp = trataGET(result, fd, response, reg_file, connection);
+		resp = trataGET(result, fd, response, reg_file, connection, content_type);
 	}
 	else if(strcmp(metodo, "HEAD")==0){
-		resp = trataHEAD(result, fd, response, reg_file, connection);
+		resp = trataHEAD(result, fd, response, reg_file, connection, content_type);
 	}
 	else if(strcmp(metodo, "TRACE")==0){
-		resp = trataTRACE(result, fd, response, reg_file, connection);
+		resp = trataTRACE(result, fd, response, reg_file, connection, content_type);
 	}
 	else if(strcmp(metodo, "OPTIONS")==0){
-		resp = trataOPTIONS(result, fd, response, reg_file, connection);
+		resp = trataOPTIONS(result, fd, response, reg_file, connection, content_type);
 	}
 	else if (strcmp(metodo, "POST")==0) {
-		resp = trataPOST(result, fd, response, reg_file, connection);
+		resp = trataPOST(result, fd, response, reg_file, connection, content_type, request_body);
 	}
 	else if (strcmp(metodo, "DELETE")==0) {
-		resp = trataDELETE(result, fd, response, reg_file, connection);
+		resp = trataDELETE(result, fd, response, reg_file, connection, content_type);
+	}
+	else if (strcmp(metodo, "PUT")==0) {
+		resp = trataPUT(result, fd, response, reg_file, connection, content_type, request_body);
 	}
 	else {
-		resp = trataNotImplemented(fd, response, reg_file, connection);
+		resp = trataNotImplemented(fd, response, reg_file, connection, content_type);
 	}
 	
 	return resp;
 }
 
-char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * reg_file, char * connection){
+char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * reg_file, char * connection, char * content_type, char * request_body){
 	struct stat statarq;
 	int fd;
 	DIR *dir;
 	
 	/*****Trecho para pegar o path do arquivo e incluí-lo em um só*****/
 
+	memset(original_local, 0, sizeof(original_local));
+	memset(original_resource, 0, sizeof(original_resource));
+	
 	strcpy(original_local, local);
+	strcpy(original_resource, recurso);
 	strcpy(path, local); //copia o local passado ao path
 	if (strncmp("/", recurso, 1) == -1) {
 		strcat(path, "/");//adicona '/' ao path
@@ -446,51 +512,38 @@ char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * 
 	// Trecho para buscar o recurso dentro do path passado
 	//caso não ache o recurso
 	
-	if (strcmp(metodo, "DELETE")) {
-		trataMetodo(metodo, 204, fd, response, reg_file, connection);
+	printf("METODO --------[%s]\n", metodo);
+	
+	if (strcmp(metodo, "DELETE") == 0) {
+		printf("\n---- Metodo DELETE ---\n");
+		
+		trataMetodo(metodo, 204, fd, response, reg_file, connection, content_type, request_body);
 	}
 	else if (stat(path, &statarq) == -1){
-		
-		strcpy(path, local);
-		strcpy(recurso, "/404.html");
-		strcat(path, recurso);
-
-		return trataMetodo(metodo, 404, fd, response, reg_file, connection);
-		//return 404;
+		return trataMetodo(metodo, 404, fd, response, reg_file, connection, content_type, request_body);
 	}
 	else{
 		//printf("access %d",access(path, R_OK));
 		//caso o recurso não dê permissão de acesso
 		if(access(path, R_OK) != 0){
-			strcpy(path, local);
-			strcpy(recurso, "/403.html");
-			strcat(path, recurso);
-			
-			return trataMetodo(metodo, 403, fd, response, reg_file, connection);
-			//return 403;
+			return trataMetodo(metodo, 403, fd, response, reg_file, connection, content_type, request_body);
 		}
 		//recurso existe e tem permissão de acesso
 		else{
 			// Trecho para ler e tratar se é um arquivo ou diretório
-			
 			//caso seja um arquivo
 			if((statarq.st_mode & S_IFMT)==S_IFREG){
 				//Abre e imprime o arquivo
 				fd = open(path, O_RDONLY, 0600);
-				printf("PASSOU POR AQUI!!!");
-				return trataMetodo(metodo, 200, fd, response, reg_file, connection);
+				return trataMetodo(metodo, 200, fd, response, reg_file, connection, content_type, request_body);
 			}
 			else{
 				//caso seja diretório
 				if((statarq.st_mode & S_IFMT)==S_IFDIR){
 					//caso o diretório não tenha permissão de acesso
 					if(access(path, X_OK) != 0) {
-						
-						strcpy(path, local);
-						strcpy(recurso, "/403.html");
-						strcat(path, recurso);
 				
-						return trataMetodo(metodo, 403, fd, response, reg_file, connection);
+						return trataMetodo(metodo, 403, fd, response, reg_file, connection, content_type, request_body);
 						//return 403;
 					} else {
 						struct dirent *newDir;
@@ -498,28 +551,17 @@ char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * 
 						dir = opendir(path);
 						//le os arquivos até achar um index ou welcome
 						while(newDir = readdir(dir)){
-							
-							printf("%s\n",newDir->d_name);
-							
+
 							if(strcmp("index.html",newDir->d_name)==0){
 								strcpy (recurso, "index.html");
 								strcat(path, recurso);
 								//o arquivo index foi encontrado, mas não tem permissao
 								if(access(path, R_OK) != 0) {
-									strcpy(path, local);
-									strcpy(recurso, "/403.html");
-									strcat(path, recurso);
-				
-									return trataMetodo(metodo, 403, fd, response, reg_file, connection);
-									//return 403;
+									return trataMetodo(metodo, 403, fd, response, reg_file, connection, content_type, request_body);
 								}
-								else{
-									printf("[FILE_MANAGER] FD FD FD %d", fd);
-									
+								else{									
 									fd = open(path, O_RDONLY, 0600);
-// 									//write(fd,"", 50);
-// 									//write(fd,path, sizeof(path));
-									return trataMetodo(metodo, 200, fd, response, reg_file, connection);
+									return trataMetodo(metodo, 200, fd, response, reg_file, connection, content_type, request_body);
 								}
 								break;
 							}
@@ -528,30 +570,19 @@ char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * 
 								strcat(path, recurso);
 								//o arquivo index foi encontrado, mas não tem permissao
 								if(access(path, R_OK) != 0){
-									strcpy(path, local);
-									strcpy(recurso, "/403.html");
-									strcat(path, recurso);
-				
-									return trataMetodo(metodo, 403, fd, response, reg_file, connection);
-									//return 403;
+									return trataMetodo(metodo, 403, fd, response, reg_file, connection, content_type, request_body);
 								}
 								else{
 									fd = open(path, O_RDONLY, 0600);
 									//write(fd,"", 50);
 									write(fd,path, sizeof(path));
-									return trataMetodo(metodo, 200, fd, response, reg_file, connection);
-									//return 0;
+									return trataMetodo(metodo, 200, fd, response, reg_file, connection, content_type, request_body);
 								}
 								break;
 							}
 						}
-						strcpy(path, local);
-						strcpy(recurso, "/404.html");
-						strcat(path, recurso);
-						printf("404 da massa!!! ================= %s \n", path);
 						//caso não tenha achado nenhum arquivo index ou welcome
-						return trataMetodo(metodo, 404, fd, response, reg_file, connection);
-						//return 404;
+						return trataMetodo(metodo, 404, fd, response, reg_file, connection, content_type, request_body);
 					}
 				}
 			}

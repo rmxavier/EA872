@@ -14,4 +14,4 @@ FILE *file;
 int c;
 char path[1075];
 
-char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * reg_file, char * connection);
+char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * reg_file, char * connection, char * content_type, char * request_body);

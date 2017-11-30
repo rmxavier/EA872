@@ -52,6 +52,42 @@ command_list * get_command_by_name(char command[]) {
 	return current;
 }
 
+const char *get_content_type(char *filename_param) {
+	char * filename = malloc(sizeof(char)*1024);;
+	strcpy(filename, filename_param);
+	
+	char *content_type = malloc(sizeof(char)*1024);
+	const char *dot = strrchr(filename, '.');
+	
+	if(!dot || dot == filename || sizeof(filename) == sizeof(char)) {
+			printf("\n\n*ENTROU CARAIIOOO\n\n");
+
+		strcpy(content_type,"text/html");
+	} else {
+		content_type = dot + 1;
+		
+		if (strcmp(content_type, "html") == 0 || strcmp(content_type, "htm") == 0) {
+			strcpy(content_type, "text/html");
+		} else if (strcmp(content_type, "jpg") == 0 || strcmp(content_type, "jpeg") == 0) {
+			strcpy(content_type, "image/jpeg");
+		} else if (strcmp(content_type, "png") == 0 || strcmp(content_type, "png") == 0) {
+			strcpy(content_type, "image/png");
+		} else if (strcmp(content_type, "ico") == 0 || strcmp(content_type, "ico") == 0) {
+			strcpy(content_type, "image/ico");
+		} else if (strcmp(content_type, "gif") == 0 || strcmp(content_type, "gif") == 0) {
+			strcpy(content_type, "image/gif");
+		} else if (strcmp(content_type, "pdf") == 0) {
+			strcpy(content_type, "application/pdf");
+		} else if (strcmp(content_type, "txt") == 0) {
+			strcpy(content_type, "text/plain");
+		} else {
+			strcpy(content_type, "text/html");
+		}
+	}
+		
+	return content_type;
+}
+
 char * req_to_server(){
 	
 	//A porta que utilizaremos é 8585
@@ -134,15 +170,17 @@ char * req_to_server(){
 			/* Funcao para obter resultado do parser */
 			result = get_parsed_request();
 
-			
 			response = malloc(sizeof(char) * 50000000);
-			memset(response, 0, strlen(response));
+			response[0]='\0';
+			//memset(response, 0, sizeof(response));
+			
 			char * mimimi = malloc(sizeof(char) * 50000000);
-			memset(mimimi, 0, strlen(mimimi));
+			mimimi[0]='\0';
+			//memset(mimimi, 0, sizeof(mimimi));
 			
 			command_list * method = result;
-			command_list * connection = get_command_by_name("Connection");
 			
+			command_list * connection = get_command_by_name("Connection");
 			char * connection_string = malloc(sizeof(char) * 100);
 			if (strcmp(connection->command, "Connection") != 0) {
 				strcpy(connection_string, "keep-alive");
@@ -150,7 +188,12 @@ char * req_to_server(){
 				strcpy(connection_string, connection->params->param);
 			}
 			
-			mimimi = acesso(webspace, method->params->param, method->command, &response, reg_file, connection_string);
+			printf("GETTING CONTENT TYPE ((((((((((((((((((((((((((%s)\n", method->params->param);
+			char * content_type_string = get_content_type(method->params->param);
+			
+			printf("/*/*/*/*/*/*/*/*/*/*/*\n ContentTypr |%s|, RequestBody |%s|\n*/*/*/*/*/*/*/*/*/*/\n", content_type_string, method->query_string);
+			
+			mimimi = acesso(webspace, method->params->param, method->command, &response, reg_file, connection_string, content_type_string, method->query_string);
 
 			printf("MIMIMI = %s\n", mimimi);
 			printf("PASSOU POR QUI ------------------------\n");
