@@ -20,9 +20,7 @@ char original_local[1075];
 char original_resource[1075];
 
 void print_file_to_string(int result, char * fname, char * response) {
-	
-	printf("PRINTANDO ARQUIVO %s NA RESPONSE!!\n", fname);
-	
+		
 	switch (result){
 		case 200:
 			break;
@@ -39,41 +37,17 @@ void print_file_to_string(int result, char * fname, char * response) {
 			strcpy(fname, "error_pages/501.html");
 			break;
 	}
-	printf("Printing %s to string (status %d)\n", fname, result);
-	
-	int fh;
-        char buffer[64];
-        int gotten;
-	int total = 0;
-	
-	char * mimimi = malloc(sizeof(char) * 5000000);
-	mimimi[0] = '\0';
-	printf(">>>>>>>>>>>>>>MIMI\n%s))))))))))\n", mimimi);
-	printf(">>>>>>>>>>>>>>RESP\n%s))))))))))\n", response);
-
-        fh = open(fname,O_RDONLY);
-        printf ("!!!!!!!!!!!!!!!File handle %d\n",fh);
-	
-	
-        while (gotten = read(fh,buffer,64)) {
-		total = total + gotten;
-		//buffer[gotten] = '\0';
-		//printf("%d|%d|%s\n", total, gotten, buffer);
-		strcat(mimimi, buffer);
-		memset(buffer, 0, sizeof(buffer));
-	}
-	
-	char * new_mimimi = malloc(sizeof(char)*strlen(mimimi)+sizeof(char)*strlen(response));
-	strcpy(new_mimimi, mimimi);
-	
-	printf("\n\nTERMINOU DE IMPRIMIR ESSA MERDA\n\n");
-	printf("RESPONSE %s\n\nTAMANHO DA CARALHA:%d\n", response, strlen(response));
-	new_mimimi[strlen(new_mimimi)]='\0';
-	strcat(new_mimimi, response);
-	strcat(new_mimimi, mimimi);
-	printf("\n\nTERMINOU DE CONCATENAR ESSA MERDA\n\n");
-
-	printf("%s\nTAMANHO DAs KRLAs!!! %d; %d; %d\n", mimimi, strlen(response), strlen(mimimi), total);
+	long fileLength;
+	char * buffer;
+	FILE * requested_file = fopen(fname, "rb");
+	fseek (requested_file, 0, SEEK_END);
+	fileLength = ftell(requested_file);
+	rewind(requested_file);
+		
+	buffer = (char*) malloc (sizeof(char)*fileLength);
+	size_t results = fread(buffer, 1, fileLength, requested_file);
+	        
+	strcat(response,buffer);
 }
 
 void write_header(char * response, char * header, char * info, int suppress_last_character) {
@@ -111,7 +85,7 @@ char * trataGET(int result, int fd, char * response, FILE * reg_file, char * con
 	
 	write_header(response, "Date: ", asctime (timeinfo), 1);
 	
-	strcat(response, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
+	strcat(response, "Server: Server Rafael/Alisson Beta 1.0\r\n");
 	strcat(response, "Connection: ");
 	strcat(response, connection);
 	strcat(response, "\r\n");
@@ -165,7 +139,7 @@ char * trataHEAD(int result, int fd, char * response, FILE * reg_file, char * co
 	timeinfo = localtime ( &rawtime );
 	write_header(response, "Date: ", asctime (timeinfo), 1);
 
-	strcat(response, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
+	strcat(response, "Server: Server Rafael/Alisson Beta 1.0\r\n");
 
 	// Pegar do parser
 	strcat(response, "Connection: ");
@@ -193,7 +167,7 @@ char * trataTRACE(int result, int fd, char * response, FILE * reg_file, char * c
 	timeinfo = localtime ( &rawtime );
 	write_header(response, "Date: ", asctime (timeinfo), 1);
 
-	strcat(response, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
+	strcat(response, "Server: Server Rafael/Alisson Beta 1.0\r\n");
 
 	// Pegar do parser
 	strcat(response, "Connection: ");
@@ -246,7 +220,7 @@ char * trataOPTIONS(int result, int fd, char * response, FILE * reg_file, char *
 	timeinfo = localtime ( &rawtime );
 	write_header(response, "Date: ", asctime (timeinfo), 1);
 
-	strcat(response, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
+	strcat(response, "Server: Server Rafael/Alisson Beta 1.0\r\n");
 	// Pegar do parser
 	strcat(response, "Connection: ");
 	strcat(response, connection);
@@ -288,31 +262,25 @@ char * trataNotImplemented(int fd, char * response, FILE * reg_file, char * conn
 	time ( &rawtime );
 	timeinfo = localtime ( &rawtime );
 	write_header(response, "Date: ", asctime (timeinfo), 1);
-	fprintf(reg_file, "Date: %s", asctime (timeinfo) );
 
-	strcat(response, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
-	fprintf(reg_file, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
+	strcat(response, "Server: Server Rafael/Alisson Beta 1.0\r\n");
 
 	// Pegar do parser
 	strcat(response, "Connection: ");
 	strcat(response, connection);
 	strcat(response, "\r\n");
-	fprintf(reg_file, "Connection: %s\r\n", connection);
 
 	timeinfo = localtime(&lastmod);
 	write_header(response, "Last-Modified: ", asctime(timeinfo), 1);
-	fprintf(reg_file, "Last-Modified: %s", asctime(timeinfo));
 
-	strcat(response, "Allow: GET, HEAD, TRACE, OPTIONS\n");
+	strcat(response, "Allow: GET, HEAD, TRACE, OPTIONS, PUT, POST, DELETE\n");
 	
 	char content_length[1024];
 	snprintf(content_length, sizeof(content_length), "%zd", fileStat.st_size);
 	
 	write_header(response, "Content-Lenght: ", content_length, 0);
-	fprintf(reg_file, "Content-Lenght: %zd\n", fileStat.st_size, 1);
 	
 	write_header(response, "Content-Type: ", content_type, 0);
-	fprintf(reg_file, "Content-Type: %s\r\n", content_type);
 
 	strcat(response, "\r\n");
 	
@@ -353,7 +321,7 @@ char * trataPOST(int result, int fd, char * response, FILE * reg_file, char * co
 	timeinfo = localtime ( &rawtime );
 	write_header(response, "Date: ", asctime (timeinfo), 1);
 
-	strcat(response, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
+	strcat(response, "Server: Server Rafael/Alisson Beta 1.0\r\n");
 
 	strcat(response, "Connection: ");
 	strcat(response, connection);
@@ -397,7 +365,7 @@ char * trataDELETE(int result, int fd, char * response, FILE * reg_file, char * 
 	
 	write_header(response, "Date: ", asctime (timeinfo), 1);
 	
-	strcat(response, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
+	strcat(response, "Server: Server Rafael/Alisson Beta 1.0\r\n");
 	strcat(response, "Connection: ");
 	strcat(response, connection);
 	strcat(response, "\r\n\r\n");
@@ -425,7 +393,7 @@ char * trataPUT(int result, int fd, char * response, FILE * reg_file, char * con
 	strcat(response, "HTTP/1.1 201 Created\r\n");
 	write_header(response, "Content-Location: ", original_resource, 0);
 	
-	strcat(response, "Server: Servidor HTTP ver 0.1 dos Descolados\r\n");
+	strcat(response, "Server: Server Rafael/Alisson Beta 1.0\r\n");
 	strcat(response, "\r\n");
 
 	fprintf(reg_file, "%s", response);
@@ -511,12 +479,8 @@ char * acesso(char *local, char *recurso, char *metodo, char * response, FILE * 
 
 	// Trecho para buscar o recurso dentro do path passado
 	//caso não ache o recurso
-	
-	printf("METODO --------[%s]\n", metodo);
-	
-	if (strcmp(metodo, "DELETE") == 0) {
-		printf("\n---- Metodo DELETE ---\n");
 		
+	if (strcmp(metodo, "DELETE") == 0) {		
 		trataMetodo(metodo, 204, fd, response, reg_file, connection, content_type, request_body);
 	}
 	else if (stat(path, &statarq) == -1){

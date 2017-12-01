@@ -1,0 +1,487 @@
+Iniciando log reg.txt...
+
+
+GET: / HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+
+HTTP/1.1 200 OK
+Date: Fri Dec  1 06:02:35 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: /favicon.ico HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: */*
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+
+HTTP/1.1 404 NOT FOUND
+Date: Fri Dec  1 06:02:35 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+
+
+GET: /favicon.ico HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+
+HTTP/1.1 404 NOT FOUND
+Date: Fri Dec  1 06:02:35 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+
+
+GET: /index.html HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+
+HTTP/1.1 200 OK
+Date: Fri Dec  1 06:02:54 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+Last-Modified: Fri Dec  1 06:02:35 2017
+Content-Lenght: 193
+Content-Type: text/html
+
+
+GET: /form.html HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+
+HTTP/1.1 200 OK
+Date: Fri Dec  1 06:03:07 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+Last-Modified: Sat Oct  7 14:21:22 2017
+Content-Lenght: 1069
+Content-Type: text/html
+
+
+POST: /post.html HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate, Referer: http://localhost:8593/form.html
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 54
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+
+nomeusuario=Primeiro&telefone=Segundo&confirmar=Enviar
+
+HTTP/1.1 200 OK
+Date: Fri Dec  1 06:03:21 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+Last-Modified: Tue Nov 21 19:53:03 2017
+Content-Lenght: 482
+Content-Type: text/html
+
+
+PATCH: /novoArquivo.html HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: */*
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate, content-type: text/plain;charset=UTF-8, origin: moz-extension://b2290f8f-0954-45a4-b334-7ce59bb60c71
+Content-Length: 48
+Connection: keep-alive
+
+Date: Fri Dec  1 06:04:24 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+Last-Modified: Sat Nov 25 19:38:23 2017
+Content-Lenght: 0
+Content-Type: text/html
+HTTP/1.1 501 NOT IMPLEMENTED
+Date: Fri Dec  1 06:04:24 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+Last-Modified: Sat Nov 25 19:38:23 2017
+Allow: GET, HEAD, TRACE, OPTIONS
+Content-Lenght: 0
+Content-Type: text/html
+
+
+PUT: /novoArquivo.html HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: */*
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate, content-type: text/plain;charset=UTF-8, origin: moz-extension://b2290f8f-0954-45a4-b334-7ce59bb60c71
+Content-Length: 48
+Connection: keep-alive
+
+<html><body><b>Novo arquivo2</b></body></html>
+
+HTTP/1.1 HTTP/1.1 201 Created
+Content-Location: /novoArquivo.html
+Server: Server Rafael/Alisson Beta 1.0
+
+
+GET: /novoArquivo.html HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+
+HTTP/1.1 200 OK
+Date: Fri Dec  1 06:05:48 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+Last-Modified: Fri Dec  1 06:04:24 2017
+Content-Lenght: 46
+Content-Type: text/html
+
+
+PUT: /novoArquivo.html HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: */*
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate, content-type: text/plain;charset=UTF-8, origin: moz-extension://b2290f8f-0954-45a4-b334-7ce59bb60c71
+Content-Length: 49
+Connection: keep-alive
+
+<html><body><b>Novo arquivo!!</b></body></html>
+
+HTTP/1.1 HTTP/1.1 201 Created
+Content-Location: /novoArquivo.html
+Server: Server Rafael/Alisson Beta 1.0
+
+
+GET: /novoArquivo.html HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+
+HTTP/1.1 200 OK
+Date: Fri Dec  1 06:06:05 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+Last-Modified: Fri Dec  1 06:05:17 2017
+Content-Lenght: 47
+Content-Type: text/html
+
+
+DELETE: /novoArquivo.html HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: */*
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate, content-type: text/plain;charset=UTF-8, origin: moz-extension://b2290f8f-0954-45a4-b334-7ce59bb60c71
+Content-Length: 49
+Connection: keep-alive
+
+HTTP/1.1 204 NO CONTENT
+Date: Fri Dec  1 06:06:25 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+
+
+GET: /novoArquivo.html HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+
+HTTP/1.1 404 NOT FOUND
+Date: Fri Dec  1 06:06:36 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+
+
+GET: /dir2 HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+
+HTTP/1.1 403 FORBIDDEN
+Date: Fri Dec  1 06:06:45 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+
+
+PATCH: /novoArquivo.html HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: */*
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate, content-type: text/plain;charset=UTF-8, origin: moz-extension://b2290f8f-0954-45a4-b334-7ce59bb60c71
+Content-Length: 49
+Connection: keep-alive
+
+Date: Fri Dec  1 06:07:07 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+Last-Modified: Fri Dec  1 06:06:45 2017
+Content-Lenght: 0
+Content-Type: text/html
+HTTP/1.1 501 NOT IMPLEMENTED
+Date: Fri Dec  1 06:07:07 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+Last-Modified: Fri Dec  1 06:06:45 2017
+Allow: GET, HEAD, TRACE, OPTIONS
+Content-Lenght: 0
+Content-Type: text/html
+
+Iniciando log reg.txt...
+
+Iniciando log reg.txt...
+
+
+PATCH: /novoArquivo.html HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: */*
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate, content-type: text/plain;charset=UTF-8, origin: moz-extension://b2290f8f-0954-45a4-b334-7ce59bb60c71
+Content-Length: 49
+Connection: keep-alive
+
+HTTP/1.1 501 NOT IMPLEMENTED
+Date: Fri Dec  1 06:08:45 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Allow: GET, HEAD, TRACE, OPTIONS
+Content-Lenght: 0
+Content-Type: text/html
+
+Iniciando log reg.txt...
+
+
+PATCH: /novoArquivo.html HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: */*
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate, content-type: text/plain;charset=UTF-8, origin: moz-extension://b2290f8f-0954-45a4-b334-7ce59bb60c71
+Content-Length: 49
+Connection: keep-alive
+
+HTTP/1.1 501 NOT IMPLEMENTED
+Date: Fri Dec  1 06:09:41 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Allow: GET, HEAD, TRACE, OPTIONS
+Content-Lenght: 0
+Content-Type: text/html
+
+Iniciando log reg.txt...
+
+Iniciando log reg.txt...
+
+
+PATCH: /novoArquivo.html HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: */*
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate, content-type: text/plain;charset=UTF-8, origin: moz-extension://b2290f8f-0954-45a4-b334-7ce59bb60c71
+Content-Length: 49
+Connection: keep-alive
+
+HTTP/1.1 501 NOT IMPLEMENTED
+Date: Fri Dec  1 06:09:54 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+Last-Modified: Wed Dec 31 21:00:00 1969
+Allow: GET, HEAD, TRACE, OPTIONS, PUT, POST, DELETE
+Content-Lenght: 0
+Content-Type: text/html
+
+
+GET: <html><body><b>Novo arquivo!!</b></body></html>/dir1 HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+
+HTTP/1.1 404 NOT FOUND
+Date: Fri Dec  1 06:10:02 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+
+
+GET: /dir2 HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+
+HTTP/1.1 403 FORBIDDEN
+Date: Fri Dec  1 06:10:06 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+
+
+PATCH: /novoArquivo.html HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: */*
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate, content-type: text/plain;charset=UTF-8, origin: moz-extension://b2290f8f-0954-45a4-b334-7ce59bb60c71
+Content-Length: 49
+Connection: keep-alive
+
+HTTP/1.1 501 NOT IMPLEMENTED
+Date: Fri Dec  1 06:10:13 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+Last-Modified: Fri Dec  1 06:10:02 2017
+Allow: GET, HEAD, TRACE, OPTIONS, PUT, POST, DELETE
+Content-Lenght: 0
+Content-Type: text/html
+
+
+GET: <html><body><b>Novo arquivo!!</b></body></html>/ HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+
+HTTP/1.1 404 NOT FOUND
+Date: Fri Dec  1 06:10:22 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+
+
+GET: /txt.txt HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+
+HTTP/1.1 200 OK
+Date: Fri Dec  1 06:10:29 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+Last-Modified: Fri Dec  1 06:10:22 2017
+Content-Lenght: 16
+Content-Type: text/plain
+
+
+GET: /image.png HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+
+HTTP/1.1 404 NOT FOUND
+Date: Fri Dec  1 06:10:44 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+
+
+GET: /foto.jpg HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+
+HTTP/1.1 200 OK
+Date: Fri Dec  1 06:10:57 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+Last-Modified: Fri Dec  1 06:10:44 2017
+Content-Lenght: 164314
+Content-Type: image/jpeg
+
+
+GET: /trump.gif HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+
+HTTP/1.1 200 OK
+Date: Fri Dec  1 06:11:05 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+Last-Modified: Sat Nov 25 19:02:22 2017
+Content-Lenght: 3198423
+Content-Type: image/gif
+
+
+GET: /mozilla.pdf HTTP/1.1
+Host: localhost:8593
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
+Accept-Language: pt-BR, pt;q=0.8, en-US;q=0.5, en;q=0.3
+Accept-Encoding: gzip,  deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+
+HTTP/1.1 200 OK
+Date: Fri Dec  1 06:11:13 2017
+Server: Server Rafael/Alisson Beta 1.0
+Connection: keep-alive
+Last-Modified: Sat Nov 25 18:27:57 2017
+Content-Lenght: 48670
+Content-Type: application/pdf
+

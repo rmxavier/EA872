@@ -60,8 +60,6 @@ const char *get_content_type(char *filename_param) {
 	const char *dot = strrchr(filename, '.');
 	
 	if(!dot || dot == filename || sizeof(filename) == sizeof(char)) {
-			printf("\n\n*ENTROU CARAIIOOO\n\n");
-
 		strcpy(content_type,"text/html");
 	} else {
 		content_type = dot + 1;
@@ -88,10 +86,10 @@ const char *get_content_type(char *filename_param) {
 	return content_type;
 }
 
-char * req_to_server(){
+char * req_to_server(char * port, char * arq_reg){
 	
 	//A porta que utilizaremos é 8585
-	unsigned short porta = 8585;
+	unsigned short porta = (unsigned short) strtoul(port, NULL, 0);
 	char request[1024];
 	char * response;
 	struct sockaddr_in cliente;	
@@ -105,6 +103,11 @@ char * req_to_server(){
 	int k = 0;
      
 	while (1) {
+		
+		if((reg_file = fopen(arq_reg, "a")) == NULL){
+			printf("[SERVER] Error to open file %s.\n", arq_reg);
+			exit (0);
+		}
 		
 		printf("[SERVER] Iniciando requisição ao server [%d]...\n", k);
 		
@@ -131,8 +134,6 @@ char * req_to_server(){
 		perror(".///");
 		//exit(3);
 		}
-		printf("[SERVER] Voa\n");
-
 		
 		if (listen(soquete, 5) != 0)
 		{
@@ -158,7 +159,6 @@ char * req_to_server(){
 				break;
 			}
 
-			printf("[SERVER] Raw request:\n====\n%s\n====\n", request);
 			yy_scan_string(request);
 			yyparse();
 
@@ -171,12 +171,11 @@ char * req_to_server(){
 			result = get_parsed_request();
 
 			response = malloc(sizeof(char) * 50000000);
-			response[0]='\0';
-			//memset(response, 0, sizeof(response));
+			//response[0]='\0';
+			memset(response, 0, sizeof(response));
 			
 			char * mimimi = malloc(sizeof(char) * 50000000);
 			mimimi[0]='\0';
-			//memset(mimimi, 0, sizeof(mimimi));
 			
 			command_list * method = result;
 			
@@ -188,19 +187,18 @@ char * req_to_server(){
 				strcpy(connection_string, connection->params->param);
 			}
 			
-			printf("GETTING CONTENT TYPE ((((((((((((((((((((((((((%s)\n", method->params->param);
 			char * content_type_string = get_content_type(method->params->param);
-			
-			printf("/*/*/*/*/*/*/*/*/*/*/*\n ContentTypr |%s|, RequestBody |%s|\n*/*/*/*/*/*/*/*/*/*/\n", content_type_string, method->query_string);
-			
+						
 			mimimi = acesso(webspace, method->params->param, method->command, &response, reg_file, connection_string, content_type_string, method->query_string);
 
-			printf("MIMIMI = %s\n", mimimi);
-			printf("PASSOU POR QUI ------------------------\n");
 			write(novo_soquete, mimimi, strlen(mimimi));
 			
 			j++;
 		}
+		
+		/* Fechando o arquivo... */
+		fflush(reg_file);
+		close(reg_file);
 		
 		close(novo_soquete);
 		close(soquete);
@@ -209,7 +207,7 @@ char * req_to_server(){
 	//printf("O servidor terminou com erro.\n");
 	//exit(5);
 	
-	return "kkkkk";
+	return "Terminou";
 }
 
 
@@ -250,7 +248,11 @@ void print_request_to_file(FILE * reg_file) {
 	}
 	
 	if (strcmp(list-> query_string," ") != 0) {
-		printf("[SERVER] Query String: %s\n", list->query_string);
+		if (strcmp(list->command, "POST") == 0) {
+			printf("[SERVER] Query String: %s\n", list->query_string);
+		} else {
+			printf("[SERVER] Body: %s\n", list->query_string);
+		}
 		fprintf(reg_file, "\n");
 		fprintf(reg_file, list-> query_string);
 		fprintf(reg_file, "\n");
@@ -336,7 +338,8 @@ void add_param_list(char *param)
 
 int main(int argc, char** argv)
 {
-	char *arq_reg = argv[2];
+	char *port = argv[2];
+	char *arq_reg = argv[3];
 	char *area;
 	
 	int r , i , j , sz ;
@@ -344,22 +347,21 @@ int main(int argc, char** argv)
 	
 	webspace = argv[1];
 
-
 	printf("\n[SERVER] Starting program to call the parser and process a request...\n\n");
 		
-	printf("[SERVER] Argumentos:\n[SERVER]  (ENV) webspace: %s\n[SERVER]  (1) arq_reg: %s\n\n", webspace, arq_reg);
+	printf("[SERVER] Arguments:\n[SERVER]  (ENV) webspace: %s\n[SERVER]  (1) PORT: %s\n[SERVER]  (2) arq_reg: %s\n\n", webspace, port, arq_reg);
 	
 	if((reg_file = fopen(arq_reg, "a")) == NULL){
 		printf("[SERVER] Error to open file %s.\n", arq_reg);
 		exit (0);
+	} else {
+		fprintf(reg_file, "Iniciando log %s...\r\n\r\n", arq_reg);
+		fflush(reg_file);
+		close(reg_file);
 	}
 	
-	area = req_to_server();
+	area = req_to_server(port, arq_reg);
 	
-	printf("[SERVER] Requisição ao server feita.");
-
-	/* Fechando o arquivo... */
-	close(reg_file);
 
 	printf("\n[SERVER] Finished!\n");
 	
